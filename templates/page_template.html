@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <style>
+        /* Add some basic styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: white; /* Change the background color to white */
+            color: #333; /* Change the text color to dark */
+            text-align: center;
+            padding: 10px;
+            position: relative;
+        }
+
+        #logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 100px; /* Adjust the width as needed */
+            height: auto; /* This ensures the aspect ratio is maintained */
+        }
+
+        /* Add a yellow line below the header */
+        header::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 2px; /* Adjust the thickness of the line */
+            background-color: yellow;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        /* Create a left sidebar with a yellow border */
+        #sidebar {
+            width: 10%; /* Adjust the width as needed */
+            height: 100vh;
+            background-color: #333;
+            border-right: 2px solid yellow; /* Adjust the thickness of the border */
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* Add margin to the content to prevent overlap with the sidebar */
+        main {
+            margin-left: 10%; /* Set to the same width as the sidebar */
+            padding: 20px; /* Add some padding for content */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Website</h1>
+    </header>
+
+    <!-- Logo placed in the top left corner -->
+    <img id="logo" src="your-logo.png" alt="Website Logo">
+
+    <!-- Left sidebar with yellow border -->
+    <div id="sidebar"></div>
+
+    <main>
+        <!-- Your content goes here -->
+        <p>This is the main content of your webpage.</p>
+    </main>
+</body>
+</html>
