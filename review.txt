@@ -1,0 +1,68 @@
+import subprocess
+from fuzzywuzzy import fuzz
+from pymongo import MongoClient
+import transmit
+import camvid_out
+
+# MongoDB connection details
+mongo_connection_string = 'mongodb+srv://doadmin:NX09a6Z7m28K3d1E@Subc-36597421.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=Subc'
+
+# Function to connect to MongoDB and search for words in a specified collection
+def search_word_in_collection(word, collection_name):
+    client = MongoClient(mongo_connection_string)
+    db = client.get_default_database()
+    collection = db[collection_name]
+
+    result = collection.find_one({"word": {"$regex": word, "$options": "i"}})
+    client.close()
+    return result is not None
+
+def detect_negative_words(text):
+    client = MongoClient(mongo_connection_string)
+    negative_collection = client.get_default_database()["negative_collection"]
+
+    negative_keywords = negative_collection.find({})
+
+    for word in negative_keywords:
+        similarity_ratio = fuzz.partial_ratio(word["word"].lower(), text.lower())
+        if similarity_ratio > 70:
+            print("Negative keywords detected.")
+
+            # Run program 1
+            transmit.play_mp3('transmit.mp3')
+            camvid_out.rec_vid()
+
+            return True
+    return False
+
+def detect_positive_words(text):
+    client = MongoClient(mongo_connection_string)
+    positive_collection = client.get_default_database()["positive_collection"]
+
+    positive_keywords = positive_collection.find({})
+
+    for word in positive_keywords:
+        similarity_ratio = fuzz.partial_ratio(word["word"].lower(), text.lower())
+        if similarity_ratio > 5:
+            print("Positive keywords detected.")
+            return True
+    return False
+
+while True:
+    # Taking user input or obtaining text from some external source
+    input_text = input("Enter the text (or type 'exit' to stop): ")
+
+    # Check if the user wants to exit
+    if input_text.lower() == 'exit':
+        break
+
+    # Detect and handle negative words
+    if detect_negative_words(input_text):
+        continue  # Continue to the next iteration
+
+    # Detect and log positive words
+    if detect_positive_words(input_text):
+        pass  # You can add actions for positive words here if needed
+
+    # If no negative or positive words are detected, you can add actions here if needed
+    print("No significant keywords detected.")
