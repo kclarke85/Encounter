@@ -1,0 +1,2250 @@
+<!--&lt;!&ndash;<!DOCTYPE html>&ndash;&gt;-->
+<!--&lt;!&ndash;<html lang="en">&ndash;&gt;-->
+<!--&lt;!&ndash;<head>&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta charset="UTF-8">&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta name="viewport" content="width=device-width, initial-scale=1.0">&ndash;&gt;-->
+<!--&lt;!&ndash;<style>&ndash;&gt;-->
+<!--&lt;!&ndash;        body {&ndash;&gt;-->
+<!--&lt;!&ndash;            margin: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: #f4f4f4;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #333;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        header {&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: #1f2937;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #fff;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 1.5rem;&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex;&ndash;&gt;-->
+<!--&lt;!&ndash;            justify-content: space-between;&ndash;&gt;-->
+<!--&lt;!&ndash;            align-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .logo {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 1.5rem;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-weight: bold;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .nav-links {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex;&ndash;&gt;-->
+<!--&lt;!&ndash;            gap: 1.5rem;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 0.95rem;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .nav-links a {&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #fff;&ndash;&gt;-->
+<!--&lt;!&ndash;            text-decoration: none;&ndash;&gt;-->
+<!--&lt;!&ndash;            transition: color 0.3s ease;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .nav-links a:hover {&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #9ca3af;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .hero {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: grid;&ndash;&gt;-->
+<!--&lt;!&ndash;            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));&ndash;&gt;-->
+<!--&lt;!&ndash;            gap: 1rem;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 2rem;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .hero img {&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 100%;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .content {&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 2rem;&ndash;&gt;-->
+<!--&lt;!&ndash;            max-width: 900px;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin: auto;&ndash;&gt;-->
+<!--&lt;!&ndash;            background: #ffffff;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 12px;&ndash;&gt;-->
+<!--&lt;!&ndash;            box-shadow: 0 0 12px rgba(0,0,0,0.05);&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        h1, h2 {&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #111827;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        p {&ndash;&gt;-->
+<!--&lt;!&ndash;            line-height: 1.6;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        footer {&ndash;&gt;-->
+<!--&lt;!&ndash;            text-align: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 1rem;&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: #1f2937;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;            position: relative;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .footer-content-wrapper {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex;&ndash;&gt;-->
+<!--&lt;!&ndash;            justify-content: space-between; /* Pushes content to the edges */&ndash;&gt;-->
+<!--&lt;!&ndash;            align-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 100%;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 0 20px; /* Add some horizontal padding for spacing */&ndash;&gt;-->
+<!--&lt;!&ndash;            box-sizing: border-box; /* Include padding in width calculation */&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .footer-left-labels {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex;&ndash;&gt;-->
+<!--&lt;!&ndash;            gap: 15px; /* Space between labels */&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 0.8rem;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .footer-left-labels span {&ndash;&gt;-->
+<!--&lt;!&ndash;            cursor: pointer; /* Indicate clickable labels */&ndash;&gt;-->
+<!--&lt;!&ndash;            transition: color 0.3s ease;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .footer-left-labels span:hover {&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #9ca3af; /* Hover effect for labels */&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .footer-center-copyright {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 0.8rem;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .footer-made-with-love {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 0.8rem;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex;&ndash;&gt;-->
+<!--&lt;!&ndash;            align-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            gap: 5px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .footer-made-with-love .heart {&ndash;&gt;-->
+<!--&lt;!&ndash;            color: red;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        /* Styles for the Popup Modals */&ndash;&gt;-->
+<!--&lt;!&ndash;        .modal {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: none; /* Hidden by default */&ndash;&gt;-->
+<!--&lt;!&ndash;            position: fixed; /* Stay in place */&ndash;&gt;-->
+<!--&lt;!&ndash;            z-index: 1000; /* Sit on top, higher than other content */&ndash;&gt;-->
+<!--&lt;!&ndash;            left: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;            top: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 100%; /* Full width */&ndash;&gt;-->
+<!--&lt;!&ndash;            height: 100%; /* Full height */&ndash;&gt;-->
+<!--&lt;!&ndash;            overflow: auto; /* Enable scroll if content is too large */&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: rgba(0,0,0,0.6); /* Darker overlay */&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex; /* Use flexbox for centering */&ndash;&gt;-->
+<!--&lt;!&ndash;            align-items: center; /* Center vertically */&ndash;&gt;-->
+<!--&lt;!&ndash;            justify-content: center; /* Center horizontally */&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .modal-content {&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: #fefefe;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin: auto;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid #888;&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 90%; /* Responsive width */&ndash;&gt;-->
+<!--&lt;!&ndash;            max-width: 800px; /* Increased max-width for embedded widgets */&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;            box-shadow: 0 5px 15px rgba(0,0,0,0.5); /* Stronger shadow */&ndash;&gt;-->
+<!--&lt;!&ndash;            position: relative;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #333;&ndash;&gt;-->
+<!--&lt;!&ndash;            max-height: 90vh; /* Increased max-height for embedded widgets */&ndash;&gt;-->
+<!--&lt;!&ndash;            overflow-y: auto; /* Scroll if content exceeds max-height */&ndash;&gt;-->
+<!--&lt;!&ndash;            text-align: left; /* Align text left within the modal content */&ndash;&gt;-->
+<!--&lt;!&ndash;            display: flex; /* Ensure flex for centering embedded widget if it's smaller */&ndash;&gt;-->
+<!--&lt;!&ndash;            flex-direction: column;&ndash;&gt;-->
+<!--&lt;!&ndash;            align-items: center; /* Center embedded widget horizontally */&ndash;&gt;-->
+<!--&lt;!&ndash;            justify-content: center; /* Center embedded widget vertically */&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .modal-content h2 {&ndash;&gt;-->
+<!--&lt;!&ndash;            text-align: center; /* Center headings within the modal */&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-top: 0; /* Remove top margin */&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #1f2937; /* Darker heading for modals */&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .close-button {&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #aaa;&ndash;&gt;-->
+<!--&lt;!&ndash;            position: absolute;&ndash;&gt;-->
+<!--&lt;!&ndash;            top: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;            right: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 28px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-weight: bold;&ndash;&gt;-->
+<!--&lt;!&ndash;            cursor: pointer;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .close-button:hover,&ndash;&gt;-->
+<!--&lt;!&ndash;        .close-button:focus {&ndash;&gt;-->
+<!--&lt;!&ndash;            color: black;&ndash;&gt;-->
+<!--&lt;!&ndash;            text-decoration: none;&ndash;&gt;-->
+<!--&lt;!&ndash;            cursor: pointer;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        /* Styles for Forms (kept for other modals, but not for demo form) */&ndash;&gt;-->
+<!--&lt;!&ndash;        .account-form label {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: block;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-bottom: 5px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-weight: bold;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #333;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .account-form input[type="text"],&ndash;&gt;-->
+<!--&lt;!&ndash;        .account-form input[type="email"],&ndash;&gt;-->
+<!--&lt;!&ndash;        .account-form input[type="password"] {&ndash;&gt;-->
+<!--&lt;!&ndash;            width: calc(100% - 22px); /* Account for padding and border */&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-bottom: 15px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid #ccc;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 5px;&ndash;&gt;-->
+<!--&lt;!&ndash;            box-sizing: border-box; /* Include padding and border in the element's total width and height */&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .account-form button {&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: #1f2937;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 10px 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: none;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 5px;&ndash;&gt;-->
+<!--&lt;!&ndash;            cursor: pointer;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 1rem;&ndash;&gt;-->
+<!--&lt;!&ndash;            transition: background-color 0.3s ease;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .account-form button:hover {&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: #374151;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        #form-message, #login-form-message { /* Apply to message areas for other modals */&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-top: 15px;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 5px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-weight: bold;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .success-message {&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: #d4edda;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #155724;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-color: #c3e6cb;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .error-message {&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: #f8d7da;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #721c24;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-color: #f5c6cb;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .disabled-link {&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #6b7280 !important; /* Grey out the link */&ndash;&gt;-->
+<!--&lt;!&ndash;            cursor: not-allowed; /* Show 'not-allowed' cursor */&ndash;&gt;-->
+<!--&lt;!&ndash;            pointer-events: none; /* Disable click events */&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        /* New styles for the subtext */&ndash;&gt;-->
+<!--&lt;!&ndash;        .logo-subtext {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 0.9rem; /* Smaller font size for subtext */&ndash;&gt;-->
+<!--&lt;!&ndash;            font-weight: normal; /* Normal weight for subtext */&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #ccc; /* Slightly lighter color for subtext */&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-top: 5px; /* Add some space above the subtext */&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        /* Styles for Use Cases Modal */&ndash;&gt;-->
+<!--&lt;!&ndash;        .use-case-item {&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-bottom: 15px;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid #eee;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 8px;&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: #f9f9f9;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .use-case-item h3 {&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #1f2937;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-top: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-bottom: 5px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .use-case-item ul {&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-top: 5px;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding-left: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .use-case-item li {&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-bottom: 3px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        /* Styles for Audit Framework Adherence Modal */&ndash;&gt;-->
+<!--&lt;!&ndash;        .assertion-content {&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 15px;&ndash;&gt;-->
+<!--&lt;!&ndash;            /* Removed background-color and border-left */&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 5px;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-top: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;            text-align: left;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #333;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .assertion-content p {&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-bottom: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .assertion-content p:last-child {&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-bottom: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;    </style>&ndash;&gt;-->
+<!--&lt;!&ndash;</head>&ndash;&gt;-->
+<!--&lt;!&ndash;<body>&ndash;&gt;-->
+<!--&lt;!&ndash;    <header>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="logo">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div>Encounter Engineering</div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="logo-subtext">Expert AEDT Audit Validation</div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <nav class="nav-links">&ndash;&gt;-->
+<!--&lt;!&ndash;            <a href="#" id="about-us-link">About Us</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            <a href="#" id="account-link">Account</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            <a href="#" id="login-link">Login</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            <a href="#" id="platform-link" class="disabled-link">Platform</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            <a href="#" id="schedule-demo-link">Schedule a Demo</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            <a href="#" id="pricing-link">Pricing</a>&ndash;&gt;-->
+<!--&lt;!&ndash;        </nav>&ndash;&gt;-->
+<!--&lt;!&ndash;    </header>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <section class="hero">&ndash;&gt;-->
+<!--&lt;!&ndash;        <img src="https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YWl8ZW58MHx8MHx8fDA%3D" alt="AI Image">&ndash;&gt;-->
+<!--&lt;!&ndash;        <img src="https://media.istockphoto.com/id/2175463114/photo/compliance-related-words-written-wood-blocks-on-blue-background-compliance-concept.webp?a=1&b=1&s=612x612&w=0&k=20&c=yRa6z_iEcArFsCuHZXqbccdN3U_vXyfGbF2cZVM9_9Q=" alt="Compliance Words">&ndash;&gt;-->
+<!--&lt;!&ndash;        <img src="https://media.istockphoto.com/id/2131920683/photo/businessman-filling-out-employee-evaluation-form-online-human-resource-management-human.webp?a=1&b=1&s=612x612&w=0&k=20&c=qQ5Sbiartf6aEVDde0SVOgW7aQ9ZgIkWwnRSTsp7ZaQ=" alt="HR Evaluation">&ndash;&gt;-->
+<!--&lt;!&ndash;    </section>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <section class="content">&ndash;&gt;-->
+<!--&lt;!&ndash;        </section>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <footer id="main-footer">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="footer-content-wrapper">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="footer-left-labels">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span id="footer-use-cases-label">Use Cases</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span id="footer-audit-framework-label">Audit Framework Adherence</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="footer-center-copyright">&ndash;&gt;-->
+<!--&lt;!&ndash;                &copy; 2025 Encounter Engineering. All rights reserved.&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="footer-made-with-love">&ndash;&gt;-->
+<!--&lt;!&ndash;                Made with love in Atlanta, Georgia <span class="heart">♥</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </footer>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div id="aboutModal" class="modal" style="display: none;">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="modal-content">&ndash;&gt;-->
+<!--&lt;!&ndash;            <span class="close-button" id="close-about-modal">&times;</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div id="modal-about-content"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div id="accountModal" class="modal" style="display: none;">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="modal-content">&ndash;&gt;-->
+<!--&lt;!&ndash;            <span class="close-button" id="close-account-modal">&times;</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            <h2>Create Account</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;            <form class="account-form" id="signup-form">&ndash;&gt;-->
+<!--&lt;!&ndash;                <label for="username">Username:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <input type="text" id="username" name="username" required>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                <label for="email">Email:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <input type="email" id="email" name="email" required>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                <label for="password">Password:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <input type="password" id="password" name="password" required>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                <label for="confirm-password">Confirm Password:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <input type="password" id="confirm-password" name="confirm-password" required>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                <button type="submit">Create Account</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div id="form-message"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </form>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div id="loginModal" class="modal" style="display: none;">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="modal-content">&ndash;&gt;-->
+<!--&lt;!&ndash;            <span class="close-button" id="close-login-modal">&times;</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            <h2>Login to Your Account</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;            <form class="account-form" id="login-form">&ndash;&gt;-->
+<!--&lt;!&ndash;                <label for="login-username">Username or Email:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <input type="text" id="login-username" name="username_or_email" required>&ndash;&gt;-->
+<!--&lt;!&ndash;                <label for="login-password">Password:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <input type="password" id="login-password" name="password" required>&ndash;&gt;-->
+<!--&lt;!&ndash;                <button type="submit">Login</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div id="login-form-message"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </form>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div id="scheduleDemoModal" class="modal" style="display: none;">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="modal-content">&ndash;&gt;-->
+<!--&lt;!&ndash;            <span class="close-button" id="close-schedule-demo-modal">&times;</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            <h2>Schedule Your Demo</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="calendly-inline-widget" data-url="https://calendly.com/kwclarke72" style="min-width:320px;height:700px;"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div id="pricingModal" class="modal" style="display: none;">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="modal-content">&ndash;&gt;-->
+<!--&lt;!&ndash;            <span class="close-button" id="close-pricing-modal">&times;</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            <h2>Our Pricing Plans</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;            <stripe-pricing-table&ndash;&gt;-->
+<!--&lt;!&ndash;              pricing-table-id="prctbl_1RTYxmINyTq5ytGdU76P5Tr0"&ndash;&gt;-->
+<!--&lt;!&ndash;              publishable-key="pk_test_51RTW8AINyTq5ytGd7d3irYxGb3TvwE0XxPePKPBadxcKN2zRasMp2Yu1Aha4KC0NaFrYkSHfX8B4dpFkigawUO5B001D1vpq9N"&ndash;&gt;-->
+<!--&lt;!&ndash;            >&ndash;&gt;-->
+<!--&lt;!&ndash;            </stripe-pricing-table>&ndash;&gt;-->
+<!--&lt;!&ndash;            <script src="https://js.stripe.com/v3/pricing-table.js" async></script>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div id="useCasesModal" class="modal" style="display: none;">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="modal-content">&ndash;&gt;-->
+<!--&lt;!&ndash;            <span class="close-button" id="close-use-cases-modal">&times;</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            <h2>EquiSet AI Use Cases for Clients</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div id="use-cases-content" style="width: 100%;">&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div id="auditFrameworkModal" class="modal" style="display: none;">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="modal-content">&ndash;&gt;-->
+<!--&lt;!&ndash;            <span class="close-button" id="close-audit-framework-modal">&times;</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            <h2>Assertion on NIST AI RMF for AI Bias Audits</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div id="audit-framework-content" class="assertion-content">&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;    <script>&ndash;&gt;-->
+<!--&lt;!&ndash;        // -&#45;&#45; Global Variables and Initial Setup -&#45;&#45;&ndash;&gt;-->
+<!--&lt;!&ndash;        // Get references to modal elements&ndash;&gt;-->
+<!--&lt;!&ndash;        var aboutModal = document.getElementById("aboutModal");&ndash;&gt;-->
+<!--&lt;!&ndash;        var accountModal = document.getElementById("accountModal");&ndash;&gt;-->
+<!--&lt;!&ndash;        var loginModal = document.getElementById("loginModal");&ndash;&gt;-->
+<!--&lt;!&ndash;        var scheduleDemoModal = document.getElementById("scheduleDemoModal");&ndash;&gt;-->
+<!--&lt;!&ndash;        var pricingModal = document.getElementById("pricingModal");&ndash;&gt;-->
+<!--&lt;!&ndash;        var useCasesModal = document.getElementById("useCasesModal");&ndash;&gt;-->
+<!--&lt;!&ndash;        var auditFrameworkModal = document.getElementById("auditFrameworkModal");&ndash;&gt;-->
+
+<!--&lt;!&ndash;        // Get references to close buttons&ndash;&gt;-->
+<!--&lt;!&ndash;        var closeAboutModalButton = document.getElementById("close-about-modal");&ndash;&gt;-->
+<!--&lt;!&ndash;        var closeAccountModalButton = document.getElementById("close-account-modal");&ndash;&gt;-->
+<!--&lt;!&ndash;        var closeLoginModalButton = document.getElementById("close-login-modal");&ndash;&gt;-->
+<!--&lt;!&ndash;        var closeScheduleDemoModalButton = document.getElementById("close-schedule-demo-modal");&ndash;&gt;-->
+<!--&lt;!&ndash;        var closePricingModalButton = document.getElementById("close-pricing-modal");&ndash;&gt;-->
+<!--&lt;!&ndash;        var closeUseCasesModalButton = document.getElementById("close-use-cases-modal");&ndash;&gt;-->
+<!--&lt;!&ndash;        var closeAuditFrameworkModalButton = document.getElementById("close-audit-framework-modal");&ndash;&gt;-->
+
+<!--&lt;!&ndash;        // Get references to navigation links&ndash;&gt;-->
+<!--&lt;!&ndash;        var aboutUsLink = document.getElementById("about-us-link");&ndash;&gt;-->
+<!--&lt;!&ndash;        var accountLink = document.getElementById("account-link");&ndash;&gt;-->
+<!--&lt;!&ndash;        var loginLink = document.getElementById("login-link");&ndash;&gt;-->
+<!--&lt;!&ndash;        var platformLink = document.getElementById("platform-link");&ndash;&gt;-->
+<!--&lt;!&ndash;        var scheduleDemoLink = document.getElementById("schedule-demo-link");&ndash;&gt;-->
+<!--&lt;!&ndash;        var pricingLink = document.getElementById("pricing-link");&ndash;&gt;-->
+
+<!--&lt;!&ndash;        // Get references to footer labels&ndash;&gt;-->
+<!--&lt;!&ndash;        var footerUseCasesLabel = document.getElementById("footer-use-cases-label");&ndash;&gt;-->
+<!--&lt;!&ndash;        var footerAuditFrameworkLabel = document.getElementById("footer-audit-framework-label");&ndash;&gt;-->
+
+<!--&lt;!&ndash;        // Get references to forms and message divs&ndash;&gt;-->
+<!--&lt;!&ndash;        var signupForm = document.getElementById("signup-form");&ndash;&gt;-->
+<!--&lt;!&ndash;        var formMessage = document.getElementById("form-message");&ndash;&gt;-->
+<!--&lt;!&ndash;        var loginForm = document.getElementById("login-form");&ndash;&gt;-->
+<!--&lt;!&ndash;        var loginFormMessage = document.getElementById("login-form-message");&ndash;&gt;-->
+
+<!--&lt;!&ndash;        // -&#45;&#45; Helper Function to Close All Modals -&#45;&#45;&ndash;&gt;-->
+<!--&lt;!&ndash;        function closeAllModals() {&ndash;&gt;-->
+<!--&lt;!&ndash;            aboutModal.style.display = "none";&ndash;&gt;-->
+<!--&lt;!&ndash;            accountModal.style.display = "none";&ndash;&gt;-->
+<!--&lt;!&ndash;            loginModal.style.display = "none";&ndash;&gt;-->
+<!--&lt;!&ndash;            scheduleDemoModal.style.display = "none";&ndash;&gt;-->
+<!--&lt;!&ndash;            pricingModal.style.display = "none";&ndash;&gt;-->
+<!--&lt;!&ndash;            useCasesModal.style.display = "none";&ndash;&gt;-->
+<!--&lt;!&ndash;            auditFrameworkModal.style.display = "none";&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        // -&#45;&#45; About Us Modal Logic -&#45;&#45;&ndash;&gt;-->
+<!--&lt;!&ndash;        var aboutContentHTML = `&ndash;&gt;-->
+<!--&lt;!&ndash;            <h2>Our Mission</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p>To build a world where AI systems are as fair and unbiased as they are intelligent. EquiSet AI uses a novel Set Theory–based engine to detect, visualize, and explain racial bias in AI prompt responses.</p>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <h2>Why It Matters</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p>As AI influences decisions in hiring, finance, and healthcare, hidden biases can lead to unfair outcomes. Our solution transforms these outputs into mathematical sets, compares across groups, and highlights disparities.</p>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <h2>Use Cases</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;            <ul>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li>Bias auditing for internal AI systems</li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li>Vendor AI models evaluation and procurement checks</li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li>Compliance with EEOC, GDPR, EU AI Act, and more</li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li>Proof for ESG and AI governance reporting</li>&ndash;&gt;-->
+<!--&lt;!&ndash;            </ul>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <h2>Who Benefits?</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p>Our platform serves enterprise AI teams, compliance officers, ethics consultants, and educational institutions aiming to ensure AI is transparent and fair.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;        `;&ndash;&gt;-->
+
+<!--&lt;!&ndash;        aboutUsLink.onclick = function(event) {&ndash;&gt;-->
+<!--&lt;!&ndash;            event.preventDefault(); // Prevent default link behavior (e.g., navigating to '#')&ndash;&gt;-->
+<!--&lt;!&ndash;            closeAllModals(); // Close any other open modals&ndash;&gt;-->
+<!--&lt;!&ndash;            aboutModal.style.display = "flex"; // Show the about modal&ndash;&gt;-->
+<!--&lt;!&ndash;            document.getElementById("modal-about-content").innerHTML = aboutContentHTML;&ndash;&gt;-->
+<!--&lt;!&ndash;        };&ndash;&gt;-->
+
+<!--&lt;!&ndash;        // -&#45;&#45; Account Modal Logic -&#45;&#45;&ndash;&gt;-->
+<!--&lt;!&ndash;        accountLink.onclick = function(event) {&ndash;&gt;-->
+<!--&lt;!&ndash;            event.preventDefault();&ndash;&gt;-->
+<!--&lt;!&ndash;            closeAllModals();&ndash;&gt;-->
+<!--&lt;!&ndash;            accountModal.style.display = "flex";&ndash;&gt;-->
+<!--&lt;!&ndash;            formMessage.textContent = ''; // Clear previous messages&ndash;&gt;-->
+<!--&lt;!&ndash;            formMessage.className = ''; // Clear previous styles&ndash;&gt;-->
+<!--&lt;!&ndash;        };&ndash;&gt;-->
+
+<!--&lt;!&ndash;        closeAccountModalButton.onclick = closeAllModals;&ndash;&gt;-->
+
+<!--&lt;!&ndash;        signupForm.onsubmit = async function(event) {&ndash;&gt;-->
+<!--&lt;!&ndash;            event.preventDefault(); // Prevent default form submission&ndash;&gt;-->
+
+<!--&lt;!&ndash;            const username = document.getElementById("username").value;&ndash;&gt;-->
+<!--&lt;!&ndash;            const email = document.getElementById("email").value;&ndash;&gt;-->
+<!--&lt;!&ndash;            const password = document.getElementById("password").value;&ndash;&gt;-->
+<!--&lt;!&ndash;            const confirmPassword = document.getElementById("confirm-password").value;&ndash;&gt;-->
+
+<!--&lt;!&ndash;            if (password !== confirmPassword) {&ndash;&gt;-->
+<!--&lt;!&ndash;                formMessage.textContent = 'Passwords do not match.';&ndash;&gt;-->
+<!--&lt;!&ndash;                formMessage.className = 'error-message';&ndash;&gt;-->
+<!--&lt;!&ndash;                return;&ndash;&gt;-->
+<!--&lt;!&ndash;            }&ndash;&gt;-->
+
+<!--&lt;!&ndash;            try {&ndash;&gt;-->
+<!--&lt;!&ndash;                const response = await fetch('/signup', {&ndash;&gt;-->
+<!--&lt;!&ndash;                    method: 'POST',&ndash;&gt;-->
+<!--&lt;!&ndash;                    headers: {&ndash;&gt;-->
+<!--&lt;!&ndash;                        'Content-Type': 'application/json',&ndash;&gt;-->
+<!--&lt;!&ndash;                    },&ndash;&gt;-->
+<!--&lt;!&ndash;                    body: JSON.stringify({ username, email, password }),&ndash;&gt;-->
+<!--&lt;!&ndash;                });&ndash;&gt;-->
+
+<!--&lt;!&ndash;                // Check if the response is OK (status 200-299) before trying to parse JSON&ndash;&gt;-->
+<!--&lt;!&ndash;                if (!response.ok) {&ndash;&gt;-->
+<!--&lt;!&ndash;                    // If response is not OK, try to read text to see what the server sent&ndash;&gt;-->
+<!--&lt;!&ndash;                    const errorText = await response.text();&ndash;&gt;-->
+<!--&lt;!&ndash;                    console.error('Server responded with non-OK status:', response.status, errorText);&ndash;&gt;-->
+<!--&lt;!&ndash;                    formMessage.textContent = `Signup failed: ${errorText.substring(0, 100)}... (See console for full error)`;&ndash;&gt;-->
+<!--&lt;!&ndash;                    formMessage.className = 'error-message';&ndash;&gt;-->
+<!--&lt;!&ndash;                    return;&ndash;&gt;-->
+<!--&lt;!&ndash;                }&ndash;&gt;-->
+
+<!--&lt;!&ndash;                const data = await response.json();&ndash;&gt;-->
+
+<!--&lt;!&ndash;                if (response.ok) { // This check is technically redundant here because we already checked response.ok above&ndash;&gt;-->
+<!--&lt;!&ndash;                    formMessage.textContent = data.message;&ndash;&gt;-->
+<!--&lt;!&ndash;                    formMessage.className = 'success-message';&ndash;&gt;-->
+<!--&lt;!&ndash;                    signupForm.reset(); // Clear the form&ndash;&gt;-->
+<!--&lt;!&ndash;                } else {&ndash;&gt;-->
+<!--&lt;!&ndash;                    // This block might not be reached if !response.ok is handled above&ndash;&gt;-->
+<!--&lt;!&ndash;                    formMessage.textContent = data.error || 'Signup failed.';&ndash;&gt;-->
+<!--&lt;!&ndash;                    formMessage.className = 'error-message';&ndash;&gt;-->
+<!--&lt;!&ndash;                }&ndash;&gt;-->
+<!--&lt;!&ndash;            } catch (error) {&ndash;&gt;-->
+<!--&lt;!&ndash;                console.error('Error during signup:', error);&ndash;&gt;-->
+<!--&lt;!&ndash;                // More user-friendly message for network or parsing errors&ndash;&gt;-->
+<!--&lt;!&ndash;                if (error instanceof SyntaxError) {&ndash;&gt;-->
+<!--&lt;!&ndash;                    formMessage.textContent = 'An unexpected response was received from the server. Please try again or contact support.';&ndash;&gt;-->
+<!--&lt;!&ndash;                } else {&ndash;&gt;-->
+<!--&lt;!&ndash;                    formMessage.textContent = 'A network error occurred. Please check your connection and try again.';&ndash;&gt;-->
+<!--&lt;!&ndash;                }&ndash;&gt;-->
+<!--&lt;!&ndash;                formMessage.className = 'error-message';&ndash;&gt;-->
+<!--&lt;!&ndash;            }&ndash;&gt;-->
+<!--&lt;!&ndash;        };&ndash;&gt;-->
+
+<!--&lt;!&ndash;        // -&#45;&#45; Login Modal Logic -&#45;&#45;&ndash;&gt;-->
+<!--&lt;!&ndash;        loginLink.onclick = function(event) {&ndash;&gt;-->
+<!--&lt;!&ndash;            event.preventDefault();&ndash;&gt;-->
+<!--&lt;!&ndash;            closeAllModals();&ndash;&gt;-->
+<!--&lt;!&ndash;            loginModal.style.display = "flex";&ndash;&gt;-->
+<!--&lt;!&ndash;            loginFormMessage.textContent = ''; // Clear previous messages&ndash;&gt;-->
+<!--&lt;!&ndash;            loginFormMessage.className = ''; // Clear previous styles&ndash;&gt;-->
+<!--&lt;!&ndash;        };&ndash;&gt;-->
+
+<!--&lt;!&ndash;        closeLoginModalButton.onclick = closeAllModals;&ndash;&gt;-->
+
+<!--&lt;!&ndash;        loginForm.onsubmit = async function(event) {&ndash;&gt;-->
+<!--&lt;!&ndash;            event.preventDefault();&ndash;&gt;-->
+
+<!--&lt;!&ndash;            const username_or_email = document.getElementById("login-username").value;&ndash;&gt;-->
+<!--&lt;!&ndash;            const password = document.getElementById("login-password").value;&ndash;&gt;-->
+
+<!--&lt;!&ndash;            try {&ndash;&gt;-->
+<!--&lt;!&ndash;                const response = await fetch('/login', {&ndash;&gt;-->
+<!--&lt;!&ndash;                    method: 'POST',&ndash;&gt;-->
+<!--&lt;!&ndash;                    headers: {&ndash;&gt;-->
+<!--&lt;!&ndash;                        'Content-Type': 'application/json',&ndash;&gt;-->
+<!--&lt;!&ndash;                    },&ndash;&gt;-->
+<!--&lt;!&ndash;                    body: JSON.stringify({ username_or_email, password }),&ndash;&gt;-->
+<!--&lt;!&ndash;                });&ndash;&gt;-->
+
+<!--&lt;!&ndash;                // Check if the response is OK (status 200-299) before trying to parse JSON&ndash;&gt;-->
+<!--&lt;!&ndash;                if (!response.ok) {&ndash;&gt;-->
+<!--&lt;!&ndash;                    const errorText = await response.text();&ndash;&gt;-->
+<!--&lt;!&ndash;                    console.error('Server responded with non-OK status for login:', response.status, errorText);&ndash;&gt;-->
+<!--&lt;!&ndash;                    loginFormMessage.textContent = `Login failed: ${errorText.substring(0, 100)}... (See console for full error)`;&ndash;&gt;-->
+<!--&lt;!&ndash;                    loginFormMessage.className = 'error-message';&ndash;&gt;-->
+<!--&lt;!&ndash;                    return;&ndash;&gt;-->
+<!--&lt;!&ndash;                }&ndash;&gt;-->
+
+<!--&lt;!&ndash;                const data = await response.json();&ndash;&gt;-->
+
+<!--&lt;!&ndash;                if (response.ok) { // Again, this is redundant but kept for consistency&ndash;&gt;-->
+<!--&lt;!&ndash;                    loginFormMessage.textContent = data.message;&ndash;&gt;-->
+<!--&lt;!&ndash;                    loginFormMessage.className = 'success-message';&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    // Enable the Platform link after successful login&ndash;&gt;-->
+<!--&lt;!&ndash;                    platformLink.classList.remove('disabled-link');&ndash;&gt;-->
+<!--&lt;!&ndash;                    platformLink.onclick = function(event) {&ndash;&gt;-->
+<!--&lt;!&ndash;                        event.preventDefault();&ndash;&gt;-->
+<!--&lt;!&ndash;                        window.location.href = '/platform';&ndash;&gt;-->
+<!--&lt;!&ndash;                    };&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    // Optional: Redirect or update UI for logged-in state&ndash;&gt;-->
+<!--&lt;!&ndash;                    // window.location.href = '/platform'; // Example: Redirect to /platform&ndash;&gt;-->
+<!--&lt;!&ndash;                } else {&ndash;&gt;-->
+<!--&lt;!&ndash;                    // This block might not be reached&ndash;&gt;-->
+<!--&lt;!&ndash;                    loginFormMessage.textContent = data.error || 'Login failed.';&ndash;&gt;-->
+<!--&lt;!&ndash;                    loginFormMessage.className = 'error-message';&ndash;&gt;-->
+<!--&lt;!&ndash;                }&ndash;&gt;-->
+<!--&lt;!&ndash;            } catch (error) {&ndash;&gt;-->
+<!--&lt;!&ndash;                console.error('Error during login:', error);&ndash;&gt;-->
+<!--&lt;!&ndash;                if (error instanceof SyntaxError) {&ndash;&gt;-->
+<!--&lt;!&ndash;                    loginFormMessage.textContent = 'An unexpected response was received from the server. Please try again or contact support.';&ndash;&gt;-->
+<!--&lt;!&ndash;                } else {&ndash;&gt;-->
+<!--&lt;!&ndash;                    loginFormMessage.textContent = 'A network error occurred. Please check your connection and try again.';&ndash;&gt;-->
+<!--&lt;!&ndash;                }&ndash;&gt;-->
+<!--&lt;!&ndash;                loginFormMessage.className = 'error-message';&ndash;&gt;-->
+<!--&lt;!&ndash;            }&ndash;&gt;-->
+<!--&lt;!&ndash;        };&ndash;&gt;-->
+
+<!--&lt;!&ndash;        platformLink.onclick = function(event) {&ndash;&gt;-->
+<!--&lt;!&ndash;    event.preventDefault();&ndash;&gt;-->
+<!--&lt;!&ndash;    // Redirect to the platform route which will redirect to Streamlit app&ndash;&gt;-->
+<!--&lt;!&ndash;    window.location.href = '/platform';&ndash;&gt;-->
+<!--&lt;!&ndash;};&ndash;&gt;-->
+
+<!--&lt;!&ndash;        // -&#45;&#45; Schedule Demo Modal Logic -&#45;&#45;&ndash;&gt;-->
+<!--&lt;!&ndash;        scheduleDemoLink.onclick = function(event) {&ndash;&gt;-->
+<!--&lt;!&ndash;            event.preventDefault();&ndash;&gt;-->
+<!--&lt;!&ndash;            closeAllModals();&ndash;&gt;-->
+<!--&lt;!&ndash;            scheduleDemoModal.style.display = "flex";&ndash;&gt;-->
+<!--&lt;!&ndash;        };&ndash;&gt;-->
+
+<!--&lt;!&ndash;        closeScheduleDemoModalButton.onclick = closeAllModals;&ndash;&gt;-->
+
+<!--&lt;!&ndash;        // -&#45;&#45; Pricing Modal Logic -&#45;&#45;&ndash;&gt;-->
+<!--&lt;!&ndash;        pricingLink.onclick = function(event) {&ndash;&gt;-->
+<!--&lt;!&ndash;            event.preventDefault();&ndash;&gt;-->
+<!--&lt;!&ndash;            closeAllModals();&ndash;&gt;-->
+<!--&lt;!&ndash;            pricingModal.style.display = "flex";&ndash;&gt;-->
+<!--&lt;!&ndash;        };&ndash;&gt;-->
+
+<!--&lt;!&ndash;        closePricingModalButton.onclick = closeAllModals;&ndash;&gt;-->
+
+<!--&lt;!&ndash;        // -&#45;&#45; Use Cases Modal Logic -&#45;&#45;&ndash;&gt;-->
+<!--&lt;!&ndash;        var useCasesContentHTML = `&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="use-case-item">&ndash;&gt;-->
+<!--&lt;!&ndash;                <h3>AI Model Pre-Deployment Bias Assessment & Mitigation</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;                <p><strong>Client Need:</strong> A financial institution is developing an AI models for loan approvals and needs to ensure it doesn't inadvertently discriminate based on race before it goes live, risking legal penalties and reputational damage.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                <p><strong>EquiSet AI Use Case:</strong> The client feeds a diverse set of synthetic and anonymized real-world prompt responses (e.g., credit scores, demographic data, loan application text generated by AI) through EquiSet AI. The tool's Set Theory engine will mathematically identify and visualize disparities in approval rates or risk assessments across different racial groups, even for subtle biases. The client then uses these insights to fine-tune their AI models or adjust their prompt engineering to achieve fairer outcomes before deployment.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="use-case-item">&ndash;&gt;-->
+<!--&lt;!&ndash;                <h3>Continuous Bias Monitoring for Live AI Systems (Audit Framework Adherence)</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;                <p><strong>Client Need:</strong> A large tech company uses AI-powered chatbots for customer service and is concerned about ongoing bias in generated responses, needing to comply with evolving AI ethics regulations (e.g., EU AI Act, upcoming US frameworks).</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                <p><strong>EquiSet AI Use Case:</strong> EquiSet AI is integrated into the company's MLOps pipeline or run periodically against samples of their chatbot's real-time interactions. The tool continuously audits the AI's responses for racial bias, providing alerts and detailed "explanations" (via its visualization features) when discriminatory patterns emerge. This allows for proactive intervention, prompt adjustments, or models retraining, demonstrating adherence to internal audit frameworks and external regulatory requirements.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="use-case-item">&ndash;&gt;-->
+<!--&lt;!&ndash;                <h3>Third-Party AI Vendor Evaluation & Procurement</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;                <p><strong>Client Need:</strong> A healthcare provider is considering purchasing an AI diagnostic tool from a vendor and needs to rigorously vet the tool's fairness to avoid inheriting biases that could lead to unequal patient care.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                <p><strong>EquiSet AI Use Case:</strong> Before procurement, the healthcare provider uses EquiSet AI to evaluate the vendor's AI models by running simulated patient scenarios and analyzing the generated diagnostic outputs. EquiSet AI's Set Theory analysis can quantify and compare diagnostic accuracy or treatment recommendations across different racial demographics, providing an objective "bias score" for the vendor's models. This data empowers the client to make informed procurement decisions and negotiate for bias remediation from vendors.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="use-case-item">&ndash;&gt;-->
+<!--&lt;!&ndash;                <h3>AI Training Data and Prompt Engineering Optimization</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;                <p><strong>Client Need:</strong> A marketing firm is struggling with their generative AI producing culturally insensitive or racially stereotyped ad copy despite attempts at diverse data input. They need to understand where the bias is originating.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                <p><strong>EquiSet AI Use Case:</strong> The firm uses EquiSet AI in an iterative process. They feed generated ad copy based on different training datasets and prompt variations into the tool. EquiSet AI's Set Theory analysis helps pinpoint which specific inputs (data features or prompt structures) are leading to racially biased outputs. This allows the firm to optimize their training data curation and refine their prompt engineering strategies to cultivate more equitable and inclusive AI-generated content.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="use-case-item">&ndash;&gt;-->
+<!--&lt;!&ndash;                <h3>ESG Reporting and AI Governance Demonstration</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;                <p><strong>Client Need:</strong> A publicly traded corporation is facing increasing pressure from investors and regulators to demonstrate strong Environmental, Social, and Governance (ESG) practices, including responsible AI development.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                <p><strong>EquiSet AI Use Case:</strong> The corporation leverages EquiSet AI's audit reports and bias visualizations as concrete evidence for their ESG reporting. They can show quantifiable progress in reducing racial bias across their internal and external AI applications. This demonstrates robust AI governance, commitment to ethical AI, and proactive risk management, strengthening their ESG profile and investor confidence.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        `;&ndash;&gt;-->
+
+<!--&lt;!&ndash;        footerUseCasesLabel.onclick = function(event) {&ndash;&gt;-->
+<!--&lt;!&ndash;            event.preventDefault();&ndash;&gt;-->
+<!--&lt;!&ndash;            closeAllModals();&ndash;&gt;-->
+<!--&lt;!&ndash;            useCasesModal.style.display = "flex";&ndash;&gt;-->
+<!--&lt;!&ndash;            document.getElementById("use-cases-content").innerHTML = useCasesContentHTML;&ndash;&gt;-->
+<!--&lt;!&ndash;        };&ndash;&gt;-->
+
+<!--&lt;!&ndash;        closeUseCasesModalButton.onclick = closeAllModals;&ndash;&gt;-->
+
+<!--&lt;!&ndash;        // -&#45;&#45; Audit Framework Adherence Modal Logic -&#45;&#45;&ndash;&gt;-->
+<!--&lt;!&ndash;        var auditFrameworkAssertionHTML = `&ndash;&gt;-->
+<!--&lt;!&ndash;            <p>The **NIST AI Risk Management Framework (AI RMF)** serves as an indispensable guide for conducting comprehensive **AI bias audits**, particularly for tools like EquiSet AI that leverage advanced mathematical and machine learning techniques.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p>The **NIST AI RMF** emphasizes a continuous lifecycle approach encompassing **Govern, Map, Measure, and Manage** steps. For AI bias auditing, this means:</p>&ndash;&gt;-->
+<!--&lt;!&ndash;            <ul>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li>**Govern:** Establishing clear organizational policies, roles, and responsibilities for addressing AI bias.</li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li>**Map:** Identifying potential sources and types of bias within AI systems and their contexts, including training data, models architecture, and deployment environments.</li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li>**Measure:** Employing quantitative and qualitative methods to assess and quantify bias. This is where EquiSet AI's **Set Theory-based engine excels**, providing a robust and explainable framework for identifying disparities in AI prompt responses across different demographic groups.</li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li>**Manage:** Developing and implementing strategies to mitigate identified biases, monitor their effectiveness over time, and communicate findings transparently.</li>&ndash;&gt;-->
+<!--&lt;!&ndash;            </ul>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p>By aligning our bias audit practices with the **NIST AI RMF**, we ensure a systematic, rigorous, and transparent process that promotes **trustworthy and responsible AI development and deployment**.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;        `;&ndash;&gt;-->
+
+<!--&lt;!&ndash;        footerAuditFrameworkLabel.onclick = function(event) {&ndash;&gt;-->
+<!--&lt;!&ndash;            event.preventDefault();&ndash;&gt;-->
+<!--&lt;!&ndash;            closeAllModals();&ndash;&gt;-->
+<!--&lt;!&ndash;            auditFrameworkModal.style.display = "flex";&ndash;&gt;-->
+<!--&lt;!&ndash;            document.getElementById("audit-framework-content").innerHTML = auditFrameworkAssertionHTML;&ndash;&gt;-->
+<!--&lt;!&ndash;        };&ndash;&gt;-->
+
+<!--&lt;!&ndash;        closeAuditFrameworkModalButton.onclick = closeAllModals;&ndash;&gt;-->
+
+<!--&lt;!&ndash;        // -&#45;&#45; General Modal Closing -&#45;&#45;&ndash;&gt;-->
+<!--&lt;!&ndash;        window.onclick = function(event) {&ndash;&gt;-->
+<!--&lt;!&ndash;            if (event.target == aboutModal) { closeAllModals(); }&ndash;&gt;-->
+<!--&lt;!&ndash;            if (event.target == accountModal) { closeAllModals(); }&ndash;&gt;-->
+<!--&lt;!&ndash;            if (event.target == loginModal) { closeAllModals(); }&ndash;&gt;-->
+<!--&lt;!&ndash;            if (event.target == scheduleDemoModal) { closeAllModals(); }&ndash;&gt;-->
+<!--&lt;!&ndash;            if (event.target == pricingModal) { closeAllModals(); }&ndash;&gt;-->
+<!--&lt;!&ndash;            if (event.target == useCasesModal) { closeAllModals(); }&ndash;&gt;-->
+<!--&lt;!&ndash;            if (event.target == auditFrameworkModal) { closeAllModals(); }&ndash;&gt;-->
+<!--&lt;!&ndash;        };&ndash;&gt;-->
+
+<!--&lt;!&ndash;        // Close buttons for each modal (redundant but safe to keep for clarity)&ndash;&gt;-->
+<!--&lt;!&ndash;        closeAboutModalButton.onclick = closeAllModals;&ndash;&gt;-->
+<!--&lt;!&ndash;        closeAccountModalButton.onclick = closeAllModals;&ndash;&gt;-->
+<!--&lt;!&ndash;        closeLoginModalButton.onclick = closeAllModals;&ndash;&gt;-->
+<!--&lt;!&ndash;        closeScheduleDemoModalButton.onclick = closeAllModals;&ndash;&gt;-->
+<!--&lt;!&ndash;        closePricingModalButton.onclick = closeAllModals;&ndash;&gt;-->
+<!--&lt;!&ndash;        closeUseCasesModalButton.onclick = closeAllModals;&ndash;&gt;-->
+<!--&lt;!&ndash;        closeAuditFrameworkModalButton.onclick = closeAllModals;&ndash;&gt;-->
+
+<!--&lt;!&ndash;    </script>&ndash;&gt;-->
+<!--&lt;!&ndash;</body>&ndash;&gt;-->
+<!--&lt;!&ndash;</html>&ndash;&gt;-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--<style>-->
+<!--        body {-->
+<!--            margin: 0;-->
+<!--            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;-->
+<!--            background-color: #f4f4f4;-->
+<!--            color: #333;-->
+<!--        }-->
+<!--        header {-->
+<!--            background-color: #1f2937;-->
+<!--            color: #fff;-->
+<!--            padding: 1.5rem;-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            align-items: center;-->
+<!--        }-->
+<!--        .logo {-->
+<!--            font-size: 1.5rem;-->
+<!--            font-weight: bold;-->
+<!--            color: white;-->
+<!--        }-->
+<!--        .nav-links {-->
+<!--            display: flex;-->
+<!--            gap: 1.5rem;-->
+<!--            font-size: 0.95rem;-->
+<!--        }-->
+<!--        .nav-links a {-->
+<!--            color: #fff;-->
+<!--            text-decoration: none;-->
+<!--            transition: color 0.3s ease;-->
+<!--        }-->
+<!--        .nav-links a:hover {-->
+<!--            color: #9ca3af;-->
+<!--        }-->
+<!--        .hero {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));-->
+<!--            gap: 1rem;-->
+<!--            padding: 2rem;-->
+<!--        }-->
+<!--        .hero img {-->
+<!--            width: 100%;-->
+<!--            border-radius: 10px;-->
+<!--            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);-->
+<!--        }-->
+<!--        .content {-->
+<!--            padding: 2rem;-->
+<!--            max-width: 900px;-->
+<!--            margin: auto;-->
+<!--            background: #ffffff;-->
+<!--            border-radius: 12px;-->
+<!--            box-shadow: 0 0 12px rgba(0,0,0,0.05);-->
+<!--        }-->
+<!--        h1, h2 {-->
+<!--            color: #111827;-->
+<!--        }-->
+<!--        p {-->
+<!--            line-height: 1.6;-->
+<!--        }-->
+<!--        footer {-->
+<!--            text-align: center;-->
+<!--            padding: 1rem;-->
+<!--            background-color: #1f2937;-->
+<!--            color: white;-->
+<!--            position: relative;-->
+<!--        }-->
+<!--        .footer-content-wrapper {-->
+<!--            display: flex;-->
+<!--            justify-content: space-between; /* Pushes content to the edges */-->
+<!--            align-items: center;-->
+<!--            width: 100%;-->
+<!--            padding: 0 20px; /* Add some horizontal padding for spacing */-->
+<!--            box-sizing: border-box; /* Include padding in width calculation */-->
+<!--        }-->
+<!--        .footer-left-labels {-->
+<!--            display: flex;-->
+<!--            gap: 15px; /* Space between labels */-->
+<!--            font-size: 0.8rem;-->
+<!--            color: white;-->
+<!--        }-->
+<!--        .footer-left-labels span {-->
+<!--            cursor: pointer; /* Indicate clickable labels */-->
+<!--            transition: color 0.3s ease;-->
+<!--        }-->
+<!--        .footer-left-labels span:hover {-->
+<!--            color: #9ca3af; /* Hover effect for labels */-->
+<!--        }-->
+<!--        .footer-center-copyright {-->
+<!--            font-size: 0.8rem;-->
+<!--            color: white;-->
+<!--        }-->
+<!--        .footer-made-with-love {-->
+<!--            font-size: 0.8rem;-->
+<!--            color: white;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            gap: 5px;-->
+<!--        }-->
+<!--        .footer-made-with-love .heart {-->
+<!--            color: red;-->
+<!--        }-->
+
+<!--        /* Styles for the Popup Modals */-->
+<!--        .modal {-->
+<!--            display: none; /* Hidden by default */-->
+<!--            position: fixed; /* Stay in place */-->
+<!--            z-index: 1000; /* Sit on top, higher than other content */-->
+<!--            left: 0;-->
+<!--            top: 0;-->
+<!--            width: 100%; /* Full width */-->
+<!--            height: 100%; /* Full height */-->
+<!--            overflow: auto; /* Enable scroll if content is too large */-->
+<!--            background-color: rgba(0,0,0,0.6); /* Darker overlay */-->
+<!--            display: flex; /* Use flexbox for centering */-->
+<!--            align-items: center; /* Center vertically */-->
+<!--            justify-content: center; /* Center horizontally */-->
+<!--        }-->
+
+<!--        .modal-content {-->
+<!--            background-color: #fefefe;-->
+<!--            margin: auto;-->
+<!--            padding: 20px;-->
+<!--            border: 1px solid #888;-->
+<!--            width: 90%; /* Responsive width */-->
+<!--            max-width: 800px; /* Increased max-width for embedded widgets */-->
+<!--            border-radius: 10px;-->
+<!--            box-shadow: 0 5px 15px rgba(0,0,0,0.5); /* Stronger shadow */-->
+<!--            position: relative;-->
+<!--            color: #333;-->
+<!--            max-height: 90vh; /* Increased max-height for embedded widgets */-->
+<!--            overflow-y: auto; /* Scroll if content exceeds max-height */-->
+<!--            text-align: left; /* Align text left within the modal content */-->
+<!--            display: flex; /* Ensure flex for centering embedded widget if it's smaller */-->
+<!--            flex-direction: column;-->
+<!--            align-items: center; /* Center embedded widget horizontally */-->
+<!--            justify-content: center; /* Center embedded widget vertically */-->
+<!--        }-->
+
+<!--        .modal-content h2 {-->
+<!--            text-align: center; /* Center headings within the modal */-->
+<!--            margin-top: 0; /* Remove top margin */-->
+<!--            color: #1f2937; /* Darker heading for modals */-->
+<!--        }-->
+
+<!--        .close-button {-->
+<!--            color: #aaa;-->
+<!--            position: absolute;-->
+<!--            top: 10px;-->
+<!--            right: 20px;-->
+<!--            font-size: 28px;-->
+<!--            font-weight: bold;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+
+<!--        .close-button:hover,-->
+<!--        .close-button:focus {-->
+<!--            color: black;-->
+<!--            text-decoration: none;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+
+<!--        /* Styles for Forms (kept for other modals, but not for demo form) */-->
+<!--        .account-form label {-->
+<!--            display: block;-->
+<!--            margin-bottom: 5px;-->
+<!--            font-weight: bold;-->
+<!--            color: #333;-->
+<!--        }-->
+
+<!--        .account-form input[type="text"],-->
+<!--        .account-form input[type="email"],-->
+<!--        .account-form input[type="password"] {-->
+<!--            width: calc(100% - 22px); /* Account for padding and border */-->
+<!--            padding: 10px;-->
+<!--            margin-bottom: 15px;-->
+<!--            border: 1px solid #ccc;-->
+<!--            border-radius: 5px;-->
+<!--            box-sizing: border-box; /* Include padding and border in the element's total width and height */-->
+<!--        }-->
+
+<!--        .account-form button {-->
+<!--            background-color: #1f2937;-->
+<!--            color: white;-->
+<!--            padding: 10px 20px;-->
+<!--            border: none;-->
+<!--            border-radius: 5px;-->
+<!--            cursor: pointer;-->
+<!--            font-size: 1rem;-->
+<!--            transition: background-color 0.3s ease;-->
+<!--        }-->
+
+<!--        .account-form button:hover {-->
+<!--            background-color: #374151;-->
+<!--        }-->
+
+<!--        #form-message, #login-form-message { /* Apply to message areas for other modals */-->
+<!--            margin-top: 15px;-->
+<!--            padding: 10px;-->
+<!--            border-radius: 5px;-->
+<!--            font-weight: bold;-->
+<!--        }-->
+<!--        .success-message {-->
+<!--            background-color: #d4edda;-->
+<!--            color: #155724;-->
+<!--            border-color: #c3e6cb;-->
+<!--        }-->
+<!--        .error-message {-->
+<!--            background-color: #f8d7da;-->
+<!--            color: #721c24;-->
+<!--            border-color: #f5c6cb;-->
+<!--        }-->
+<!--        .disabled-link {-->
+<!--            color: #6b7280 !important; /* Grey out the link */-->
+<!--            cursor: not-allowed; /* Show 'not-allowed' cursor */-->
+<!--        }-->
+
+<!--        .disabled-link:not(.tooltip) {-->
+<!--            pointer-events: none; /* Disable click events only for non-tooltip disabled links */-->
+<!--        }-->
+
+<!--        /* New styles for the subtext */-->
+<!--        .logo-subtext {-->
+<!--            font-size: 0.9rem; /* Smaller font size for subtext */-->
+<!--            font-weight: normal; /* Normal weight for subtext */-->
+<!--            color: #ccc; /* Slightly lighter color for subtext */-->
+<!--            margin-top: 5px; /* Add some space above the subtext */-->
+<!--        }-->
+
+<!--        /* Styles for Use Cases Modal */-->
+<!--        .use-case-item {-->
+<!--            margin-bottom: 15px;-->
+<!--            padding: 10px;-->
+<!--            border: 1px solid #eee;-->
+<!--            border-radius: 8px;-->
+<!--            background-color: #f9f9f9;-->
+<!--        }-->
+<!--        .use-case-item h3 {-->
+<!--            color: #1f2937;-->
+<!--            margin-top: 0;-->
+<!--            margin-bottom: 5px;-->
+<!--        }-->
+<!--        .use-case-item ul {-->
+<!--            margin-top: 5px;-->
+<!--            padding-left: 20px;-->
+<!--        }-->
+<!--        .use-case-item li {-->
+<!--            margin-bottom: 3px;-->
+<!--        }-->
+
+<!--        /* Styles for Audit Framework Adherence Modal */-->
+<!--        .assertion-content {-->
+<!--            padding: 15px;-->
+<!--            /* Removed background-color and border-left */-->
+<!--            border-radius: 5px;-->
+<!--            margin-top: 10px;-->
+<!--            text-align: left;-->
+<!--            color: #333;-->
+<!--        }-->
+<!--        .assertion-content p {-->
+<!--            margin-bottom: 10px;-->
+<!--        }-->
+<!--        .assertion-content p:last-child {-->
+<!--            margin-bottom: 0;-->
+<!--        }-->
+
+<!--        /* Tooltip Styles */-->
+<!--        .tooltip {-->
+<!--            position: relative;-->
+<!--        }-->
+
+<!--        .tooltip::after {-->
+<!--            content: attr(data-tooltip);-->
+<!--            position: absolute;-->
+<!--            top: 125%;-->
+<!--            left: 20%;-->
+<!--            transform: translateX(-20%);-->
+<!--            background-color: #1f2937;-->
+<!--            color: white;-->
+<!--            padding: 8px 12px;-->
+<!--            border-radius: 6px;-->
+<!--            font-size: 0.85rem;-->
+<!--            white-space: normal; /* Changed from nowrap to normal */-->
+<!--            opacity: 0;-->
+<!--            visibility: hidden;-->
+<!--            transition: opacity 0.3s, visibility 0.3s;-->
+<!--            z-index: 1000;-->
+<!--            box-shadow: 0 2px 8px rgba(0,0,0,0.3);-->
+<!--            text-align: center;-->
+<!--            min-width: 100px; /* Adjusted min-width for "Upon Request" */-->
+<!--        }-->
+
+<!--        .tooltip::before {-->
+<!--            content: '';-->
+<!--            position: absolute;-->
+<!--            top: 115%;-->
+<!--            left: 20%;-->
+<!--            transform: translateX(-20%);-->
+<!--            border: 5px solid transparent;-->
+<!--            border-bottom-color: #1f2937;-->
+<!--            opacity: 0;-->
+<!--            visibility: hidden;-->
+<!--            transition: opacity 0.3s, visibility 0.3s;-->
+<!--            z-index: 1000;-->
+<!--        }-->
+
+<!--        .tooltip:hover::after,-->
+<!--        .tooltip:hover::before {-->
+<!--            opacity: 1;-->
+<!--            visibility: visible;-->
+<!--        }-->
+
+<!--        /* Special styling for disabled tooltips */-->
+<!--        .disabled-link.tooltip {-->
+<!--            pointer-events: auto; /* Allow hover events for tooltips */-->
+<!--        }-->
+
+<!--        .disabled-link.tooltip:hover::after,-->
+<!--        .disabled-link.tooltip:hover::before {-->
+<!--            opacity: 1;-->
+<!--            visibility: visible;-->
+<!--        }-->
+
+<!--        /* Prevent clicking on disabled tooltip links */-->
+<!--        .disabled-link.tooltip:active {-->
+<!--            pointer-events: none;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <header>-->
+<!--        <div class="logo">-->
+<!--            <div>Encounter Engineering</div>-->
+<!--            <div class="logo-subtext">Expert AEDT Audit Validation</div>-->
+<!--        </div>-->
+<!--        <nav class="nav-links">-->
+<!--            <a href="#" id="about-us-link">About Us</a>-->
+<!--            <a href="#" id="account-link">Account</a>-->
+<!--            <a href="#" id="login-link">Login</a>-->
+<!--            <a href="#" id="platform-link" class="disabled-link tooltip" data-tooltip="Platform and Pricing Upon Request">Platform</a>-->
+<!--            <a href="#" id="schedule-demo-link">Schedule a Demo</a>-->
+<!--            <a href="#" id="pricing-link" class="disabled-link">Pricing</a>-->
+<!--        </nav>-->
+<!--    </header>-->
+
+<!--    <section class="hero">-->
+<!--        <img src="https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YWl8ZW58MHx8MHx8fDA%3D" alt="AI Image">-->
+<!--        <img src="https://media.istockphoto.com/id/2175463114/photo/compliance-related-words-written-wood-blocks-on-blue-background-compliance-concept.webp?a=1&b=1&s=612x612&w=0&k=20&c=yRa6z_iEcArFsCuHZXqbccdN3U_vXyfGbF2cZVM9_9Q=" alt="Compliance Words">-->
+<!--        <img src="https://media.istockphoto.com/id/2131920683/photo/businessman-filling-out-employee-evaluation-form-online-human-resource-management-human.webp?a=1&b=1&s=612x612&w=0&k=20&c=qQ5Sbiartf6aEVDde0SVOgW7aQ9ZgIkWwnRSTsp7ZaQ=" alt="HR Evaluation">-->
+<!--    </section>-->
+
+<!--    <section class="content">-->
+<!--        </section>-->
+
+<!--    <footer id="main-footer">-->
+<!--        <div class="footer-content-wrapper">-->
+<!--            <div class="footer-left-labels">-->
+<!--                <span id="footer-use-cases-label">Use Cases</span>-->
+<!--                <span id="footer-audit-framework-label">Audit Framework Adherence</span>-->
+<!--            </div>-->
+<!--            <div class="footer-center-copyright">-->
+<!--                &copy; 2025 Encounter Engineering. All rights reserved.-->
+<!--            </div>-->
+<!--            <div class="footer-made-with-love">-->
+<!--                Made with love in Atlanta, Georgia <span class="heart">♥</span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </footer>-->
+
+<!--    <div id="aboutModal" class="modal" style="display: none;">-->
+<!--        <div class="modal-content">-->
+<!--            <span class="close-button" id="close-about-modal">&times;</span>-->
+<!--            <div id="modal-about-content"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div id="accountModal" class="modal" style="display: none;">-->
+<!--        <div class="modal-content">-->
+<!--            <span class="close-button" id="close-account-modal">&times;</span>-->
+<!--            <h2>Create Account</h2>-->
+<!--            <form class="account-form" id="signup-form">-->
+<!--                <label for="username">Username:</label>-->
+<!--                <input type="text" id="username" name="username" required>-->
+
+<!--                <label for="email">Email:</label>-->
+<!--                <input type="email" id="email" name="email" required>-->
+
+<!--                <label for="password">Password:</label>-->
+<!--                <input type="password" id="password" name="password" required>-->
+
+<!--                <label for="confirm-password">Confirm Password:</label>-->
+<!--                <input type="password" id="confirm-password" name="confirm-password" required>-->
+
+<!--                <button type="submit">Create Account</button>-->
+<!--                <div id="form-message"></div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div id="loginModal" class="modal" style="display: none;">-->
+<!--        <div class="modal-content">-->
+<!--            <span class="close-button" id="close-login-modal">&times;</span>-->
+<!--            <h2>Login to Your Account</h2>-->
+<!--            <form class="account-form" id="login-form">-->
+<!--                <label for="login-username">Username or Email:</label>-->
+<!--                <input type="text" id="login-username" name="username_or_email" required>-->
+<!--                <label for="login-password">Password:</label>-->
+<!--                <input type="password" id="login-password" name="password" required>-->
+<!--                <button type="submit">Login</button>-->
+<!--                <div id="login-form-message"></div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div id="scheduleDemoModal" class="modal" style="display: none;">-->
+<!--        <div class="modal-content">-->
+<!--            <span class="close-button" id="close-schedule-demo-modal">&times;</span>-->
+<!--            <h2>Schedule Your Demo</h2>-->
+<!--            <div class="calendly-inline-widget" data-url="https://calendly.com/kwclarke72" style="min-width:320px;height:700px;"></div>-->
+<!--            <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>-->
+<!--            </div>-->
+<!--    </div>-->
+
+<!--    <div id="pricingModal" class="modal" style="display: none;">-->
+<!--        <div class="modal-content">-->
+<!--            <span class="close-button" id="close-pricing-modal">&times;</span>-->
+<!--            <h2>Our Pricing Plans</h2>-->
+<!--            <stripe-pricing-table-->
+<!--              pricing-table-id="prctbl_1RTYxmINyTq5ytGdU76P5Tr0"-->
+<!--              publishable-key="pk_test_51RTW8AINyTq5ytGd7d3irYxGb3TvwE0XxPePKPBadxcKN2zRasMp2Yu1Aha4KC0NaFrYkSHfX8B4dpFkigawUO5B001D1vpq9N"-->
+<!--            >-->
+<!--            </stripe-pricing-table>-->
+<!--            <script src="https://js.stripe.com/v3/pricing-table.js" async></script>-->
+<!--            </div>-->
+<!--    </div>-->
+
+<!--    <div id="useCasesModal" class="modal" style="display: none;">-->
+<!--        <div class="modal-content">-->
+<!--            <span class="close-button" id="close-use-cases-modal">&times;</span>-->
+<!--            <h2>EquiSet AI Use Cases for Clients</h2>-->
+<!--            <div id="use-cases-content" style="width: 100%;">-->
+<!--                </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div id="auditFrameworkModal" class="modal" style="display: none;">-->
+<!--        <div class="modal-content">-->
+<!--            <span class="close-button" id="close-audit-framework-modal">&times;</span>-->
+<!--            <h2>Assertion on NIST AI RMF for AI Bias Audits</h2>-->
+<!--            <div id="audit-framework-content" class="assertion-content">-->
+<!--                </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+<!--    <script>-->
+<!--        // -&#45;&#45; Global Variables and Initial Setup -&#45;&#45;-->
+<!--        // Get references to modal elements-->
+<!--        var aboutModal = document.getElementById("aboutModal");-->
+<!--        var accountModal = document.getElementById("accountModal");-->
+<!--        var loginModal = document.getElementById("loginModal");-->
+<!--        var scheduleDemoModal = document.getElementById("scheduleDemoModal");-->
+<!--        var pricingModal = document.getElementById("pricingModal");-->
+<!--        var useCasesModal = document.getElementById("useCasesModal");-->
+<!--        var auditFrameworkModal = document.getElementById("auditFrameworkModal");-->
+
+<!--        // Get references to close buttons-->
+<!--        var closeAboutModalButton = document.getElementById("close-about-modal");-->
+<!--        var closeAccountModalButton = document.getElementById("close-account-modal");-->
+<!--        var closeLoginModalButton = document.getElementById("close-login-modal");-->
+<!--        var closeScheduleDemoModalButton = document.getElementById("close-schedule-demo-modal");-->
+<!--        var closePricingModalButton = document.getElementById("close-pricing-modal");-->
+<!--        var closeUseCasesModalButton = document.getElementById("close-use-cases-modal");-->
+<!--        var closeAuditFrameworkModalButton = document.getElementById("close-audit-framework-modal");-->
+
+<!--        // Get references to navigation links-->
+<!--        var aboutUsLink = document.getElementById("about-us-link");-->
+<!--        var accountLink = document.getElementById("account-link");-->
+<!--        var loginLink = document.getElementById("login-link");-->
+<!--        var platformLink = document.getElementById("platform-link");-->
+<!--        var scheduleDemoLink = document.getElementById("schedule-demo-link");-->
+<!--        var pricingLink = document.getElementById("pricing-link");-->
+
+<!--        // Get references to footer labels-->
+<!--        var footerUseCasesLabel = document.getElementById("footer-use-cases-label");-->
+<!--        var footerAuditFrameworkLabel = document.getElementById("footer-audit-framework-label");-->
+
+<!--        // Get references to forms and message divs-->
+<!--        var signupForm = document.getElementById("signup-form");-->
+<!--        var formMessage = document.getElementById("form-message");-->
+<!--        var loginForm = document.getElementById("login-form");-->
+<!--        var loginFormMessage = document.getElementById("login-form-message");-->
+
+<!--        // -&#45;&#45; Helper Function to Close All Modals -&#45;&#45;-->
+<!--        function closeAllModals() {-->
+<!--            aboutModal.style.display = "none";-->
+<!--            accountModal.style.display = "none";-->
+<!--            loginModal.style.display = "none";-->
+<!--            scheduleDemoModal.style.display = "none";-->
+<!--            pricingModal.style.display = "none";-->
+<!--            useCasesModal.style.display = "none";-->
+<!--            auditFrameworkModal.style.display = "none";-->
+<!--        }-->
+
+<!--        // -&#45;&#45; About Us Modal Logic -&#45;&#45;-->
+<!--        var aboutContentHTML = `-->
+<!--            <h2>Our Mission</h2>-->
+<!--            <p>To build a world where AI systems are as fair and unbiased as they are intelligent. EquiSet AI uses a novel Set Theory–based engine to detect, visualize, and explain racial bias in AI prompt responses.</p>-->
+
+<!--            <h2>Why It Matters</h2>-->
+<!--            <p>As AI influences decisions in hiring, finance, and healthcare, hidden biases can lead to unfair outcomes. Our solution transforms these outputs into mathematical sets, compares across groups, and highlights disparities.</p>-->
+
+<!--            <h2>Use Cases</h2>-->
+<!--            <ul>-->
+<!--                <li>Bias auditing for internal AI systems</li>-->
+<!--                <li>Vendor AI models evaluation and procurement checks</li>-->
+<!--                <li>Compliance with EEOC, GDPR, EU AI Act, and more</li>-->
+<!--                <li>Proof for ESG and AI governance reporting</li>-->
+<!--            </ul>-->
+
+<!--            <h2>Who Benefits?</h2>-->
+<!--            <p>Our platform serves enterprise AI teams, compliance officers, ethics consultants, and educational institutions aiming to ensure AI is transparent and fair.</p>-->
+<!--        `;-->
+
+<!--        aboutUsLink.onclick = function(event) {-->
+<!--            event.preventDefault(); // Prevent default link behavior (e.g., navigating to '#')-->
+<!--            closeAllModals(); // Close any other open modals-->
+<!--            aboutModal.style.display = "flex"; // Show the about modal-->
+<!--            document.getElementById("modal-about-content").innerHTML = aboutContentHTML;-->
+<!--        };-->
+
+<!--        closeAboutModalButton.onclick = closeAllModals;-->
+
+
+<!--        // -&#45;&#45; Account Modal Logic -&#45;&#45;-->
+<!--        accountLink.onclick = function(event) {-->
+<!--            event.preventDefault();-->
+<!--            closeAllModals();-->
+<!--            accountModal.style.display = "flex";-->
+<!--            formMessage.textContent = ''; // Clear previous messages-->
+<!--            formMessage.className = ''; // Clear previous styles-->
+<!--        };-->
+
+<!--        closeAccountModalButton.onclick = closeAllModals;-->
+
+<!--        signupForm.onsubmit = async function(event) {-->
+<!--            event.preventDefault(); // Prevent default form submission-->
+
+<!--            const username = document.getElementById("username").value;-->
+<!--            const email = document.getElementById("email").value;-->
+<!--            const password = document.getElementById("password").value;-->
+<!--            const confirmPassword = document.getElementById("confirm-password").value;-->
+
+<!--            if (password !== confirmPassword) {-->
+<!--                formMessage.textContent = 'Passwords do not match.';-->
+<!--                formMessage.className = 'error-message';-->
+<!--                return;-->
+<!--            }-->
+
+<!--            try {-->
+<!--                const response = await fetch('/signup', {-->
+<!--                    method: 'POST',-->
+<!--                    headers: {-->
+<!--                        'Content-Type': 'application/json',-->
+<!--                    },-->
+<!--                    body: JSON.stringify({ username, email, password }),-->
+<!--                });-->
+
+<!--                // Check if the response is OK (status 200-299) before trying to parse JSON-->
+<!--                if (!response.ok) {-->
+<!--                    // If response is not OK, try to read text to see what the server sent-->
+<!--                    const errorText = await response.text();-->
+<!--                    console.error('Server responded with non-OK status:', response.status, errorText);-->
+<!--                    formMessage.textContent = `Signup failed: ${errorText.substring(0, 100)}... (See console for full error)`;-->
+<!--                    formMessage.className = 'error-message';-->
+<!--                    return;-->
+<!--                }-->
+
+<!--                const data = await response.json();-->
+
+<!--                if (response.ok) { // This check is technically redundant here because we already checked response.ok above-->
+<!--                    formMessage.textContent = data.message;-->
+<!--                    formMessage.className = 'success-message';-->
+<!--                    signupForm.reset(); // Clear the form-->
+<!--                } else {-->
+<!--                    // This block might not be reached if !response.ok is handled above-->
+<!--                    formMessage.textContent = data.error || 'Signup failed.';-->
+<!--                    formMessage.className = 'error-message';-->
+<!--                }-->
+<!--            } catch (error) {-->
+<!--                console.error('Error during signup:', error);-->
+<!--                // More user-friendly message for network or parsing errors-->
+<!--                if (error instanceof SyntaxError) {-->
+<!--                    formMessage.textContent = 'An unexpected response was received from the server. Please try again or contact support.';-->
+<!--                } else {-->
+<!--                    formMessage.textContent = 'A network error occurred. Please check your connection and try again.';-->
+<!--                }-->
+<!--                formMessage.className = 'error-message';-->
+<!--            }-->
+<!--        };-->
+
+<!--        // -&#45;&#45; Login Modal Logic -&#45;&#45;-->
+<!--        loginLink.onclick = function(event) {-->
+<!--            event.preventDefault();-->
+<!--            closeAllModals();-->
+<!--            loginModal.style.display = "flex";-->
+<!--            loginFormMessage.textContent = ''; // Clear previous messages-->
+<!--            loginFormMessage.className = ''; // Clear previous styles-->
+<!--        };-->
+
+<!--        closeLoginModalButton.onclick = closeAllModals;-->
+
+<!--        loginForm.onsubmit = async function(event) {-->
+<!--            event.preventDefault();-->
+
+<!--            const username_or_email = document.getElementById("login-username").value;-->
+<!--            const password = document.getElementById("login-password").value;-->
+
+<!--            try {-->
+<!--                const response = await fetch('/login', {-->
+<!--                    method: 'POST',-->
+<!--                    headers: {-->
+<!--                        'Content-Type': 'application/json',-->
+<!--                    },-->
+<!--                    body: JSON.stringify({ username_or_email, password }),-->
+<!--                });-->
+
+<!--                // Check if the response is OK (status 200-299) before trying to parse JSON-->
+<!--                if (!response.ok) {-->
+<!--                    const errorText = await response.text();-->
+<!--                    console.error('Server responded with non-OK status for login:', response.status, errorText);-->
+<!--                    loginFormMessage.textContent = `Login failed: ${errorText.substring(0, 100)}... (See console for full error)`;-->
+<!--                    loginFormMessage.className = 'error-message';-->
+<!--                    return;-->
+<!--                }-->
+
+<!--                const data = await response.json();-->
+
+<!--                if (response.ok) { // Again, this is redundant but kept for consistency-->
+<!--                    loginFormMessage.textContent = data.message;-->
+<!--                    loginFormMessage.className = 'success-message';-->
+
+<!--                    // Enable the Platform link after successful login-->
+<!--                    platformLink.classList.remove('disabled-link');-->
+<!--                    platformLink.onclick = function(event) {-->
+<!--                        event.preventDefault();-->
+<!--                        window.location.href = '/platform';-->
+<!--                    };-->
+
+<!--                    // Optional: Redirect or update UI for logged-in state-->
+<!--                    // window.location.href = '/platform'; // Example: Redirect to /platform-->
+<!--                } else {-->
+<!--                    // This block might not be reached-->
+<!--                    loginFormMessage.textContent = data.error || 'Login failed.';-->
+<!--                    loginFormMessage.className = 'error-message';-->
+<!--                }-->
+<!--            } catch (error) {-->
+<!--                console.error('Error during login:', error);-->
+<!--                if (error instanceof SyntaxError) {-->
+<!--                    loginFormMessage.textContent = 'An unexpected response was received from the server. Please try again or contact support.';-->
+<!--                } else {-->
+<!--                    loginFormMessage.textContent = 'A network error occurred. Please check your connection and try again.';-->
+<!--                }-->
+<!--                loginFormMessage.className = 'error-message';-->
+<!--            }-->
+<!--        };-->
+
+<!--        platformLink.onclick = function(event) {-->
+<!--            // Check if the link is disabled-->
+<!--            if (platformLink.classList.contains('disabled-link')) {-->
+<!--                event.preventDefault();-->
+<!--                return false;-->
+<!--            }-->
+
+<!--            event.preventDefault();-->
+<!--            // Redirect to the platform route which will redirect to Streamlit app-->
+<!--            window.location.href = '/platform';-->
+<!--        };-->
+
+<!--        // -&#45;&#45; Schedule Demo Modal Logic -&#45;&#45;-->
+<!--        scheduleDemoLink.onclick = function(event) {-->
+<!--            event.preventDefault();-->
+<!--            closeAllModals();-->
+<!--            scheduleDemoModal.style.display = "flex";-->
+<!--        };-->
+
+<!--        closeScheduleDemoModalButton.onclick = closeAllModals;-->
+
+<!--        // -&#45;&#45; Pricing Modal Logic -&#45;&#45;-->
+<!--        pricingLink.onclick = function(event) {-->
+<!--            // Check if the link is disabled-->
+<!--            if (pricingLink.classList.contains('disabled-link')) {-->
+<!--                event.preventDefault();-->
+<!--                return false;-->
+<!--            }-->
+
+<!--            event.preventDefault();-->
+<!--            closeAllModals();-->
+<!--            pricingModal.style.display = "flex";-->
+<!--        };-->
+
+<!--        closePricingModalButton.onclick = closeAllModals;-->
+
+<!--        // -&#45;&#45; Use Cases Modal Logic -&#45;&#45;-->
+<!--        var useCasesContentHTML = `-->
+<!--            <div class="use-case-item">-->
+<!--                <h3>AI Model Pre-Deployment Bias Assessment & Mitigation</h3>-->
+<!--                <p><strong>Client Need:</strong> A financial institution is developing an AI models for loan approvals and needs to ensure it doesn't inadvertently discriminate based on race before it goes live, risking legal penalties and reputational damage.</p>-->
+<!--                <p><strong>EquiSet AI Use Case:</strong> The client feeds a diverse set of synthetic and anonymized real-world prompt responses (e.g., credit scores, demographic data, loan application text generated by AI) through EquiSet AI. The tool's Set Theory engine will mathematically identify and visualize disparities in approval rates or risk assessments across different racial groups, even for subtle biases. The client then uses these insights to fine-tune their AI models or adjust their prompt engineering to achieve fairer outcomes before deployment.</p>-->
+<!--            </div>-->
+<!--            <div class="use-case-item">-->
+<!--                <h3>Continuous Bias Monitoring for Live AI Systems (Audit Framework Adherence)</h3>-->
+<!--                <p><strong>Client Need:</strong> A large tech company uses AI-powered chatbots for customer service and is concerned about ongoing bias in generated responses, needing to comply with evolving AI ethics regulations (e.g., EU AI Act, upcoming US frameworks).</p>-->
+<!--                <p><strong>EquiSet AI Use Case:</strong> EquiSet AI is integrated into the company's MLOps pipeline or run periodically against samples of their chatbot's real-time interactions. The tool continuously audits the AI's responses for racial bias, providing alerts and detailed "explanations" (via its visualization features) when discriminatory patterns emerge. This allows for proactive intervention, prompt adjustments, or models retraining, demonstrating adherence to internal audit frameworks and external regulatory requirements.</p>-->
+<!--            </div>-->
+<!--            <div class="use-case-item">-->
+<!--                <h3>Third-Party AI Vendor Evaluation & Procurement</h3>-->
+<!--                <p><strong>Client Need:</strong> A healthcare provider is considering purchasing an AI diagnostic tool from a vendor and needs to rigorously vet the tool's fairness to avoid inheriting biases that could lead to unequal patient care.</p>-->
+<!--                <p><strong>EquiSet AI Use Case:</strong> Before procurement, the healthcare provider uses EquiSet AI to evaluate the vendor's AI models by running simulated patient scenarios and analyzing the generated diagnostic outputs. EquiSet AI's Set Theory analysis can quantify and compare diagnostic accuracy or treatment recommendations across different racial demographics, providing an objective "bias score" for the vendor's models. This data empowers the client to make informed procurement decisions and negotiate for bias remediation from vendors.</p>-->
+<!--            </div>-->
+<!--            <div class="use-case-item">-->
+<!--                <h3>AI Training Data and Prompt Engineering Optimization</h3>-->
+<!--                <p><strong>Client Need:</strong> A marketing firm is struggling with their generative AI producing culturally insensitive or racially stereotyped ad copy despite attempts at diverse data input. They need to understand where the bias is originating.</p>-->
+<!--                <p><strong>EquiSet AI Use Case:</strong> The firm uses EquiSet AI in an iterative process. They feed generated ad copy based on different training datasets and prompt variations into the tool. EquiSet AI's Set Theory analysis helps pinpoint which specific inputs (data features or prompt structures) are leading to racially biased outputs. This allows the firm to optimize their training data curation and refine their prompt engineering strategies to cultivate more equitable responses.</p>-->
+<!--            </div>-->
+<!--        `;-->
+
+<!--        footerUseCasesLabel.onclick = function() {-->
+<!--            closeAllModals();-->
+<!--            useCasesModal.style.display = "flex";-->
+<!--            document.getElementById("use-cases-content").innerHTML = useCasesContentHTML;-->
+<!--        };-->
+
+<!--        closeUseCasesModalButton.onclick = closeAllModals;-->
+
+<!--        // -&#45;&#45; Audit Framework Adherence Modal Logic -&#45;&#45;-->
+<!--        var auditFrameworkContentHTML = `-->
+<!--            <p>Our platform's approach to AI bias auditing aligns with the principles outlined in the NIST AI Risk Management Framework (AI RMF 1.0). Specifically, EquiSet AI supports organizations in addressing the following core functions:</p>-->
+<!--            <ul>-->
+<!--                <li><strong>GOVERN:</strong> EquiSet AI provides quantifiable insights into AI bias, enabling organizations to establish robust governance structures and accountability for responsible AI development and deployment. Our detailed bias reports contribute to comprehensive risk assessments and policy development.</li>-->
+<!--                <li><strong>MAP:</strong> By detecting and visualizing racial bias in AI outputs, EquiSet AI helps organizations map their AI risks. It allows for the identification of potential harms related to fairness and validates whether AI systems are operating within defined ethical and legal boundaries.</li>-->
+<!--                <li><strong>MEASURE:</strong> EquiSet AI's core functionality is to measure bias. Our Set Theory-based engine quantifies disparities across different demographic groups, providing concrete metrics that allow organizations to track fairness performance over time and against established benchmarks.</li>-->
+<!--                <li><strong>MANAGE:</strong> With clear, actionable insights into identified biases, EquiSet AI empowers organizations to manage these risks effectively. The tool helps pinpoint the source of bias, informing targeted mitigation strategies, prompt engineering adjustments, and models retraining efforts to achieve and maintain fair AI systems.</li>-->
+<!--            </ul>-->
+<!--            <p>By providing a transparent and rigorous method for identifying and understanding AI bias, EquiSet AI helps organizations operationalize the NIST AI RMF's guidance, fostering trustworthy and responsible AI systems.</p>-->
+<!--        `;-->
+
+<!--        footerAuditFrameworkLabel.onclick = function() {-->
+<!--            closeAllModals();-->
+<!--            auditFrameworkModal.style.display = "flex";-->
+<!--            document.getElementById("audit-framework-content").innerHTML = auditFrameworkContentHTML;-->
+<!--        };-->
+
+<!--        closeAuditFrameworkModalButton.onclick = closeAllModals;-->
+
+
+<!--        // Close modals when clicking outside the modal content-->
+<!--        window.onclick = function(event) {-->
+<!--            if (event.target == aboutModal) {-->
+<!--                aboutModal.style.display = "none";-->
+<!--            }-->
+<!--            if (event.target == accountModal) {-->
+<!--                accountModal.style.display = "none";-->
+<!--            }-->
+<!--            if (event.target == loginModal) {-->
+<!--                loginModal.style.display = "none";-->
+<!--            }-->
+<!--            if (event.target == scheduleDemoModal) {-->
+<!--                scheduleDemoModal.style.display = "none";-->
+<!--            }-->
+<!--            if (event.target == pricingModal) {-->
+<!--                pricingModal.style.display = "none";-->
+<!--            }-->
+<!--            if (event.target == useCasesModal) {-->
+<!--                useCasesModal.style.display = "none";-->
+<!--            }-->
+<!--            if (event.target == auditFrameworkModal) {-->
+<!--                auditFrameworkModal.style.display = "none";-->
+<!--            }-->
+<!--        };-->
+
+<!--        // Close modals with Escape key-->
+<!--        document.addEventListener('keydown', function(event) {-->
+<!--            if (event.key === "Escape") {-->
+<!--                closeAllModals();-->
+<!--            }-->
+<!--        });-->
+
+<!--    </script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K8DG8ZTR3D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K8DG8ZTR3D');
+    </script>
+<style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #1f2937;
+            color: #fff;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.95rem;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #9ca3af;
+        }
+        .hero {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            padding: 2rem;
+        }
+        .hero img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .content {
+            padding: 2rem;
+            max-width: 900px;
+            margin: auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.05);
+        }
+        h1, h2 {
+            color: #111827;
+        }
+        p {
+            line-height: 1.6;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #1f2937;
+            color: white;
+            position: relative;
+        }
+        .footer-content-wrapper {
+            display: flex;
+            justify-content: space-between; /* Pushes content to the edges */
+            align-items: center;
+            width: 100%;
+            padding: 0 20px; /* Add some horizontal padding for spacing */
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+        .footer-left-labels {
+            display: flex;
+            gap: 15px; /* Space between labels */
+            font-size: 0.8rem;
+            color: white;
+        }
+        .footer-left-labels span {
+            cursor: pointer; /* Indicate clickable labels */
+            transition: color 0.3s ease;
+        }
+        .footer-left-labels span:hover {
+            color: #9ca3af; /* Hover effect for labels */
+        }
+        .footer-center-copyright {
+            font-size: 0.8rem;
+            color: white;
+        }
+        .footer-made-with-love {
+            font-size: 0.8rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .footer-made-with-love .heart {
+            color: red;
+        }
+
+        /* Styles for the Popup Modals */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top, higher than other content */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if content is too large */
+            background-color: rgba(0,0,0,0.6); /* Darker overlay */
+            display: flex; /* Use flexbox for centering */
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%; /* Responsive width */
+            max-width: 800px; /* Increased max-width for embedded widgets */
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); /* Stronger shadow */
+            position: relative;
+            color: #333;
+            max-height: 90vh; /* Increased max-height for embedded widgets */
+            overflow-y: auto; /* Scroll if content exceeds max-height */
+            text-align: left; /* Align text left within the modal content */
+            display: flex; /* Ensure flex for centering embedded widget if it's smaller */
+            flex-direction: column;
+            align-items: center; /* Center embedded widget horizontally */
+            justify-content: center; /* Center embedded widget vertically */
+        }
+
+        .modal-content h2 {
+            text-align: center; /* Center headings within the modal */
+            margin-top: 0; /* Remove top margin */
+            color: #1f2937; /* Darker heading for modals */
+        }
+
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Styles for Forms (kept for other modals, but not for demo form) */
+        .account-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .account-form input[type="text"],
+        .account-form input[type="email"],
+        .account-form input[type="password"] {
+            width: calc(100% - 22px); /* Account for padding and border */
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        }
+
+        .account-form button {
+            background-color: #1f2937;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .account-form button:hover {
+            background-color: #374151;
+        }
+
+        #form-message, #login-form-message { /* Apply to message areas for other modals */
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        .disabled-link {
+            color: #6b7280 !important; /* Grey out the link */
+            cursor: not-allowed; /* Show 'not-allowed' cursor */
+            pointer-events: none; /* Disable click events */
+        }
+
+        /* New styles for the subtext */
+        .logo-subtext {
+            font-size: 0.9rem; /* Smaller font size for subtext */
+            font-weight: normal; /* Normal weight for subtext */
+            color: #ccc; /* Slightly lighter color for subtext */
+            margin-top: 5px; /* Add some space above the subtext */
+        }
+
+        /* Styles for Use Cases Modal */
+        .use-case-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .use-case-item h3 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+        .use-case-item ul {
+            margin-top: 5px;
+            padding-left: 20px;
+        }
+        .use-case-item li {
+            margin-bottom: 3px;
+        }
+
+        /* Styles for Audit Framework Adherence Modal */
+        .assertion-content {
+            padding: 15px;
+            /* Removed background-color and border-left */
+            border-radius: 5px;
+            margin-top: 10px;
+            text-align: left;
+            color: #333;
+        }
+        .assertion-content p {
+            margin-bottom: 10px;
+        }
+        .assertion-content p:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div>Encounter Engineering</div>
+            <div class="logo-subtext">Expert AEDT Audit Validation</div>
+        </div>
+        <nav class="nav-links">
+            <a href="#" id="about-us-link">About Us</a>
+            <a href="#" id="account-link">Account</a>
+            <a href="#" id="login-link">Login</a>
+            <a href="#" id="platform-link" class="disabled-link">Platform</a>
+            <a href="#" id="schedule-demo-link">Schedule a Demo</a>
+            <a href="#" id="pricing-link">Pricing</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <img src="https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YWl8ZW58MHx8MHx8fDA%3D" alt="AI Image">
+        <img src="https://media.istockphoto.com/id/2175463114/photo/compliance-related-words-written-wood-blocks-on-blue-background-compliance-concept.webp?a=1&b=1&s=612x612&w=0&k=20&c=yRa6z_iEcArFsCuHZXqbccdN3U_vXyfGbF2cZVM9_9Q=" alt="Compliance Words">
+        <img src="https://media.istockphoto.com/id/2131920683/photo/businessman-filling-out-employee-evaluation-form-online-human-resource-management-human.webp?a=1&b=1&s=612x612&w=0&k=20&c=qQ5Sbiartf6aEVDde0SVOgW7aQ9ZgIkWwnRSTsp7ZaQ=" alt="HR Evaluation">
+    </section>
+
+    <section class="content">
+        </section>
+
+    <footer id="main-footer">
+        <div class="footer-content-wrapper">
+            <div class="footer-left-labels">
+                <span id="footer-use-cases-label">Use Cases</span>
+                <span id="footer-audit-framework-label">Audit Framework Adherence</span>
+            </div>
+            <div class="footer-center-copyright">
+                &copy; 2025 Encounter Engineering. All rights reserved.
+            </div>
+            <div class="footer-made-with-love">
+                Made with love in Atlanta, Georgia <span class="heart">♥</span>
+            </div>
+        </div>
+    </footer>
+
+    <div id="aboutModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" id="close-about-modal">&times;</span>
+            <div id="modal-about-content"></div>
+        </div>
+    </div>
+
+    <div id="accountModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" id="close-account-modal">&times;</span>
+            <h2>Create Account</h2>
+            <form class="account-form" id="signup-form">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+
+                <button type="submit">Create Account</button>
+                <div id="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="loginModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" id="close-login-modal">&times;</span>
+            <h2>Login to Your Account</h2>
+            <form class="account-form" id="login-form">
+                <label for="login-username">Username or Email:</label>
+                <input type="text" id="login-username" name="username_or_email" required>
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" name="password" required>
+                <button type="submit">Login</button>
+                <div id="login-form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="scheduleDemoModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" id="close-schedule-demo-modal">&times;</span>
+            <h2>Schedule Your Demo</h2>
+            <div class="calendly-inline-widget" data-url="https://calendly.com/kwclarke72" style="min-width:320px;height:700px;"></div>
+            <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+            </div>
+    </div>
+
+    <div id="pricingModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" id="close-pricing-modal">&times;</span>
+            <h2>Our Pricing Plans</h2>
+            <stripe-pricing-table
+              pricing-table-id="prctbl_1RTYxmINyTq5ytGdU76P5Tr0"
+              publishable-key="pk_test_51RTW8AINyTq5ytGd7d3irYxGb3TvwE0XxPePKPBadxcKN2zRasMp2Yu1Aha4KC0NaFrYkSHfX8B4dpFkigawUO5B001D1vpq9N"
+            >
+            </stripe-pricing-table>
+            <script src="https://js.stripe.com/v3/pricing-table.js" async></script>
+            </div>
+    </div>
+
+    <div id="useCasesModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" id="close-use-cases-modal">&times;</span>
+            <h2>EquiSet AI Use Cases for Clients</h2>
+            <div id="use-cases-content" style="width: 100%;">
+                </div>
+        </div>
+    </div>
+
+    <div id="auditFrameworkModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" id="close-audit-framework-modal">&times;</span>
+            <h2>Assertion on NIST AI RMF for AI Bias Audits</h2>
+            <div id="audit-framework-content" class="assertion-content">
+                </div>
+        </div>
+    </div>
+
+
+    <script>
+        // --- Global Variables and Initial Setup ---
+        // Get references to modal elements
+        var aboutModal = document.getElementById("aboutModal");
+        var accountModal = document.getElementById("accountModal");
+        var loginModal = document.getElementById("loginModal");
+        var scheduleDemoModal = document.getElementById("scheduleDemoModal");
+        var pricingModal = document.getElementById("pricingModal");
+        var useCasesModal = document.getElementById("useCasesModal");
+        var auditFrameworkModal = document.getElementById("auditFrameworkModal");
+
+        // Get references to close buttons
+        var closeAboutModalButton = document.getElementById("close-about-modal");
+        var closeAccountModalButton = document.getElementById("close-account-modal");
+        var closeLoginModalButton = document.getElementById("close-login-modal");
+        var closeScheduleDemoModalButton = document.getElementById("close-schedule-demo-modal");
+        var closePricingModalButton = document.getElementById("close-pricing-modal");
+        var closeUseCasesModalButton = document.getElementById("close-use-cases-modal");
+        var closeAuditFrameworkModalButton = document.getElementById("close-audit-framework-modal");
+
+        // Get references to navigation links
+        var aboutUsLink = document.getElementById("about-us-link");
+        var accountLink = document.getElementById("account-link");
+        var loginLink = document.getElementById("login-link");
+        var platformLink = document.getElementById("platform-link");
+        var scheduleDemoLink = document.getElementById("schedule-demo-link");
+        var pricingLink = document.getElementById("pricing-link");
+
+        // Get references to footer labels
+        var footerUseCasesLabel = document.getElementById("footer-use-cases-label");
+        var footerAuditFrameworkLabel = document.getElementById("footer-audit-framework-label");
+
+        // Get references to forms and message divs
+        var signupForm = document.getElementById("signup-form");
+        var formMessage = document.getElementById("form-message");
+        var loginForm = document.getElementById("login-form");
+        var loginFormMessage = document.getElementById("login-form-message");
+
+        // --- Helper Function to Close All Modals ---
+        function closeAllModals() {
+            aboutModal.style.display = "none";
+            accountModal.style.display = "none";
+            loginModal.style.display = "none";
+            scheduleDemoModal.style.display = "none";
+            pricingModal.style.display = "none";
+            useCasesModal.style.display = "none";
+            auditFrameworkModal.style.display = "none";
+        }
+
+        // Assign close button event handlers here, once all elements are guaranteed to exist
+        closeAboutModalButton.onclick = closeAllModals; // FIX APPLIED HERE
+        closeAccountModalButton.onclick = closeAllModals;
+        closeLoginModalButton.onclick = closeAllModals;
+        closeScheduleDemoModalButton.onclick = closeAllModals;
+        closePricingModalButton.onclick = closeAllModals;
+        closeUseCasesModalButton.onclick = closeAllModals;
+        closeAuditFrameworkModalButton.onclick = closeAllModals;
+
+
+        // --- About Us Modal Logic ---
+        var aboutContentHTML = `
+            <h2>Our Mission</h2>
+            <p>To build a world where AI systems are as fair and unbiased as they are intelligent. EquiSet AI uses a novel Set Theory–based engine to detect, visualize, and explain racial bias in AI prompt responses.</p>
+
+            <h2>Why It Matters</h2>
+            <p>As AI influences decisions in hiring, finance, and healthcare, hidden biases can lead to unfair outcomes. Our solution transforms these outputs into mathematical sets, compares across groups, and highlights disparities.</p>
+
+            <h2>Use Cases</h2>
+            <ul>
+                <li>Bias auditing for internal AI systems</li>
+                <li>Vendor AI model evaluation and procurement checks</li>
+                <li>Compliance with EEOC, GDPR, EU AI Act, and more</li>
+                <li>Proof for ESG and AI governance reporting</li>
+            </ul>
+
+            <h2>Who Benefits?</h2>
+            <p>Our platform serves enterprise AI teams, compliance officers, ethics consultants, and educational institutions aiming to ensure AI is transparent and fair.</p>
+        `;
+
+        aboutUsLink.onclick = function(event) {
+            event.preventDefault(); // Prevent default link behavior (e.g., navigating to '#')
+            closeAllModals(); // Close any other open modals
+            aboutModal.style.display = "flex"; // Show the about modal
+            document.getElementById("modal-about-content").innerHTML = aboutContentHTML;
+        };
+
+
+        // --- Account Modal Logic ---
+        accountLink.onclick = function(event) {
+            event.preventDefault();
+            closeAllModals();
+            accountModal.style.display = "flex";
+            formMessage.textContent = ''; // Clear previous messages
+            formMessage.className = ''; // Clear previous styles
+        };
+
+
+        signupForm.onsubmit = async function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+
+            if (password !== confirmPassword) {
+                formMessage.textContent = 'Passwords do not match.';
+                formMessage.className = 'error-message';
+                return;
+            }
+
+            try {
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, email, password }),
+                });
+
+                // Check if the response is OK (status 200-299) before trying to parse JSON
+                if (!response.ok) {
+                    // If response is not OK, try to read text to see what the server sent
+                    const errorText = await response.text();
+                    console.error('Server responded with non-OK status:', response.status, errorText);
+                    formMessage.textContent = `Signup failed: ${errorText.substring(0, 100)}... (See console for full error)`;
+                    formMessage.className = 'error-message';
+                    return;
+                }
+
+                const data = await response.json();
+
+                if (response.ok) { // This check is technically redundant here because we already checked response.ok above
+                    formMessage.textContent = data.message;
+                    formMessage.className = 'success-message';
+                    signupForm.reset(); // Clear the form
+                } else {
+                    // This block might not be reached if !response.ok is handled above
+                    formMessage.textContent = data.error || 'Signup failed.';
+                    formMessage.className = 'error-message';
+                }
+            } catch (error) {
+                console.error('Error during signup:', error);
+                // More user-friendly message for network or parsing errors
+                if (error instanceof SyntaxError) {
+                    formMessage.textContent = 'An unexpected response was received from the server. Please try again or contact support.';
+                } else {
+                    formMessage.textContent = 'A network error occurred. Please check your connection and try again.';
+                }
+                formMessage.className = 'error-message';
+            }
+        };
+
+        // --- Login Modal Logic ---
+        loginLink.onclick = function(event) {
+            event.preventDefault();
+            closeAllModals();
+            loginModal.style.display = "flex";
+            loginFormMessage.textContent = ''; // Clear previous messages
+            loginFormMessage.className = ''; // Clear previous styles
+        };
+
+
+        loginForm.onsubmit = async function(event) {
+            event.preventDefault();
+
+            const username_or_email = document.getElementById("login-username").value;
+            const password = document.getElementById("login-password").value;
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username_or_email, password }),
+                });
+
+                // Check if the response is OK (status 200-299) before trying to parse JSON
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Server responded with non-OK status for login:', response.status, errorText);
+                    loginFormMessage.textContent = `Login failed: ${errorText.substring(0, 100)}... (See console for full error)`;
+                    loginFormMessage.className = 'error-message';
+                    return;
+                }
+
+                const data = await response.json();
+
+                if (response.ok) { // Again, this is redundant but kept for consistency
+                    loginFormMessage.textContent = data.message;
+                    loginFormMessage.className = 'success-message';
+
+                    // Enable the Platform link after successful login
+                    platformLink.classList.remove('disabled-link');
+                    platformLink.onclick = function(event) {
+                        event.preventDefault();
+                        window.location.href = '/platform';
+                    };
+
+                    // Optional: Redirect or update UI for logged-in state
+                    // window.location.href = '/platform'; // Example: Redirect to /platform
+                } else {
+                    // This block might not be reached
+                    loginFormMessage.textContent = data.error || 'Login failed.';
+                    loginFormMessage.className = 'error-message';
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+                if (error instanceof SyntaxError) {
+                    loginFormMessage.textContent = 'An unexpected response was received from the server. Please try again or contact support.';
+                } else {
+                    loginFormMessage.textContent = 'A network error occurred. Please check your connection and try again.';
+                }
+                loginFormMessage.className = 'error-message';
+            }
+        };
+
+        platformLink.onclick = function(event) {
+            event.preventDefault();
+            // Redirect to the platform route which will redirect to Streamlit app
+            window.location.href = '/platform';
+        };
+
+        // --- Schedule Demo Modal Logic ---
+        scheduleDemoLink.onclick = function(event) {
+            event.preventDefault();
+            closeAllModals();
+            scheduleDemoModal.style.display = "flex";
+        };
+
+
+        // --- Pricing Modal Logic ---
+        pricingLink.onclick = function(event) {
+            event.preventDefault();
+            closeAllModals();
+            pricingModal.style.display = "flex";
+        };
+
+
+        // --- Use Cases Modal Logic ---
+        var useCasesContentHTML = `
+            <div class="use-case-item">
+                <h3>AI Model Pre-Deployment Bias Assessment & Mitigation</h3>
+                <p><strong>Client Need:</strong> A financial institution is developing an AI model for loan approvals and needs to ensure it doesn't inadvertently discriminate based on race before it goes live, risking legal penalties and reputational damage.</p>
+                <p><strong>EquiSet AI Use Case:</strong> The client feeds a diverse set of synthetic and anonymized real-world prompt responses (e.g., credit scores, demographic data, loan application text generated by AI) through EquiSet AI. The tool's Set Theory engine will mathematically identify and visualize disparities in approval rates or risk assessments across different racial groups, even for subtle biases. The client then uses these insights to fine-tune their AI model or adjust their prompt engineering to achieve fairer outcomes before deployment.</p>
+            </div>
+            <div class="use-case-item">
+                <h3>Continuous Bias Monitoring for Live AI Systems (Audit Framework Adherence)</h3>
+                <p><strong>Client Need:</strong> A large tech company uses AI-powered chatbots for customer service and is concerned about ongoing bias in generated responses, needing to comply with evolving AI ethics regulations (e.g., EU AI Act, upcoming US frameworks).</p>
+                <p><strong>EquiSet AI Use Case:</strong> EquiSet AI is integrated into the company's MLOps pipeline or run periodically against samples of their chatbot's real-time interactions. The tool continuously audits the AI's responses for racial bias, providing alerts and detailed "explanations" (via its visualization features) when discriminatory patterns emerge. This allows for proactive intervention before minor issues escalate into major compliance violations or public relations crises.</p>
+            </div>
+            <div class="use-case-item">
+                <h3>Third-Party AI Vendor Due Diligence</h3>
+                <p><strong>Client Need:</strong> A healthcare provider plans to license an AI diagnostic tool from a third-party vendor and needs to ensure the tool provides equitable diagnostic recommendations across diverse patient populations without introducing racial bias.</p>
+                <p><strong>EquiSet AI Use Case:</strong> The healthcare provider uses EquiSet AI to perform an independent audit of the vendor’s AI tool. They feed test data with varied racial demographics through the tool and analyze the diagnostic outputs using EquiSet AI. This helps them identify any potential biases in the vendor's model and use this information to negotiate terms, request model adjustments, or choose a different vendor, ensuring responsible AI procurement.</p>
+            </div>
+            <div class="use-case-item">
+                <h3>Internal AI Governance and Reporting</h3>
+                <p><strong>Client Need:</strong> A multinational corporation is establishing an internal AI governance framework and needs robust, quantifiable data to demonstrate their commitment to fair and ethical AI development for ESG reporting and stakeholder confidence.</p>
+                <p><strong>EquiSet AI Use Case:</strong> The corporation leverages EquiSet AI's audit reports and visualizations to create compelling internal and external documentation. The mathematical basis of EquiSet AI's findings provides clear, defensible evidence of their efforts to measure and mitigate AI bias. This data supports their ESG initiatives, demonstrates adherence to ethical AI principles, and builds trust with investors, regulators, and the public.</p>
+            </div>
+        `;
+
+        footerUseCasesLabel.onclick = function() {
+            closeAllModals();
+            useCasesModal.style.display = "flex";
+            document.getElementById("use-cases-content").innerHTML = useCasesContentHTML;
+        };
+
+
+        // --- Audit Framework Adherence Modal Logic ---
+        var auditFrameworkContentHTML = `
+            <p>The EquiSet AI platform, designed for auditing AI bias, aligns with the principles and practices outlined in the National Institute of Standards and Technology (NIST) AI Risk Management Framework (AI RMF 1.0). Our methodologies directly support organizations in adhering to key sections of the NIST AI RMF, particularly in managing risks related to fairness and bias.</p>
+
+            <h3>Core Alignment with NIST AI RMF Functions:</h3>
+            <h4>1. GOVERN (Map, Measure, Manage, Mitigate, Monitor, Maintain)</h4>
+            <ul>
+                <li><strong>Risk Strategy & Culture:</strong> EquiSet AI provides quantifiable evidence of AI bias, enabling organizations to establish a risk-aware culture around fairness. By making bias detectable and explainable, it supports the development and implementation of an enterprise-wide AI risk strategy that prioritizes equitable outcomes.</li>
+                <li><strong>Roles & Responsibilities:</strong> Our platform generates clear reports and visualizations that can be used by AI development teams, ethics committees, and compliance officers to understand and address their specific responsibilities in bias mitigation.</li>
+                <li><strong>Fairness & Accountability:</strong> EquiSet AI directly addresses the "Fairness" characteristic outlined in NIST's AI RMF. By providing tools to measure and monitor racial bias in AI outputs, it supports accountability mechanisms for ensuring equitable AI systems.</li>
+            </ul>
+
+            <h4>2. MAP (Contextualize Risk)</h4>
+            <ul>
+                <li><strong>Threat and Hazard Identification:</strong> EquiSet AI helps identify specific instances and patterns of racial bias in AI models, which represent a significant "threat" or "hazard" to fair outcomes and regulatory compliance. It allows users to pinpoint where and how bias manifests.</li>
+                <li><strong>Risk Assessment:</strong> By quantifying disparities and explaining their root causes (e.g., through detailed analysis of prompt responses across groups), EquiSet AI provides critical data for performing thorough risk assessments related to unfairness.</li>
+                <li><strong>Impact Analysis:</strong> Our tool assists in understanding the potential impact of bias on different racial groups, providing the necessary insights to assess the severity of fairness-related risks.</li>
+            </ul>
+
+            <h4>3. MEASURE (Quantify Risk)</h4>
+            <ul>
+                <li><strong>Measuring Performance & Effectiveness:</strong> EquiSet AI's core functionality is to measure AI bias using a novel Set Theory-based engine. It provides quantitative metrics and visualizations that precisely indicate disparities in AI responses across racial groups. This directly supports the measurement of an AI system's performance against fairness objectives.</li>
+                <li><strong>Data & Model Evaluation:</strong> The platform enables rigorous evaluation of AI model outputs and the data influencing them, specifically focusing on how different racial inputs lead to varied and potentially biased outcomes.</li>
+            </ul>
+
+            <h4>4. MANAGE (Prioritize & Respond to Risk)</h4>
+            <ul>
+                <li><strong>Risk Response Strategy:</strong> With detailed insights into bias, organizations can develop targeted risk response strategies. EquiSet AI's explainability features help in identifying the root causes of bias, guiding model retraining, prompt engineering adjustments, or data remediation efforts.</li>
+                <li><strong>Decision-Making:</strong> The clear, data-driven evidence of bias provided by EquiSet AI empowers informed decision-making regarding AI system deployment, refinement, or even withdrawal if unacceptable levels of bias persist.</li>
+            </ul>
+
+            <h4>5. GOVERN (Monitor & Maintain) - Ongoing Monitoring</h4>
+            <ul>
+                <li><strong>Continuous Monitoring:</strong> As mentioned in the Use Cases, EquiSet AI can be integrated into MLOps pipelines for continuous monitoring of live AI systems, ensuring that fairness is maintained over time and detecting any new biases that may emerge with evolving data or model behavior.</li>
+                <li><strong>Auditability:</strong> The robust reporting and transparent methodology of EquiSet AI contribute to the auditability of AI systems, providing the necessary documentation for compliance checks and internal/external audits related to fairness and ethical AI.</li>
+            </ul>
+
+            <p>In essence, EquiSet AI provides the essential tools and data for organizations to implement and demonstrate adherence to the fairness and accountability components of the NIST AI RMF, fostering responsible AI development and deployment.</p>
+        `;
+
+        footerAuditFrameworkLabel.onclick = function() {
+            closeAllModals();
+            auditFrameworkModal.style.display = "flex";
+            document.getElementById("audit-framework-content").innerHTML = auditFrameworkContentHTML;
+        };
+
+
+        // Close modals when clicking outside of them
+        window.onclick = function(event) {
+            if (event.target == aboutModal) {
+                closeAllModals();
+            } else if (event.target == accountModal) {
+                closeAllModals();
+            } else if (event.target == loginModal) {
+                closeAllModals();
+            } else if (event.target == scheduleDemoModal) {
+                closeAllModals();
+            } else if (event.target == pricingModal) {
+                closeAllModals();
+            } else if (event.target == useCasesModal) {
+                closeAllModals();
+            } else if (event.target == auditFrameworkModal) {
+                closeAllModals();
+            }
+        };
+
+    </script>
+</body>
+</html>

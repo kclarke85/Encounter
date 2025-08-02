@@ -1,0 +1,12 @@
+# Ignore virtual environments and IDE metadata
+.venv/
+.idea/
+
+# Ignore cache or other temporary files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore fly config if needed (optional)
+# fly.toml

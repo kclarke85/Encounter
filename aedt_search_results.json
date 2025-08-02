@@ -1,0 +1,21 @@
+{
+    "query": "make.io tutorial for json files",
+    "timestamp": 1753990473,
+    "results": [
+        {
+            "source_title": "Make.io - JSON Integration",
+            "snippet": "Learn how to use Make.io's JSON modules to parse, create, and aggregate JSON data in your scenarios.",
+            "url": "https://www.make.com/en/integrations/json"
+        },
+        {
+            "source_title": "Parsing JSON in Make.com - YouTube",
+            "snippet": "A video tutorial on how to parse JSON data and use it in your Make.io automations.",
+            "url": "https://www.youtube.com/watch?v=example123"
+        },
+        {
+            "source_title": "How to create a document from parsed JSON in Make.io",
+            "snippet": "Step-by-step guide on how to create a Google Docs document using data from a parsed JSON file in Make.io.",
+            "url": "https://help.make.com/document-from-json"
+        }
+    ]
+}
