@@ -132,7 +132,7 @@ def create_slideshow_video(photo_folder, music_file, output_file, slide_duration
     print("Video created successfully!")
 
 if __name__ == "__main__":
-    PHOTO_FOLDER = r"C:\Users\kwcte\PycharmProjects\Encounter\bird_photos"
+    PHOTO_FOLDER = r"C:\Users\kwcte\PycharmProjects\Encounter\birdbabies"
     MUSIC_FILE = r"C:\Users\kwcte\PycharmProjects\Encounter\bird_photos\Maple - Dyalla.mp3"
     OUTPUT_FILE = "slideshow_video.mp4"
     SLIDE_DURATION = 5  # seconds per image

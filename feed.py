@@ -1,112 +1,87 @@
 import streamlit as st
+import requests
 import pandas as pd
-import matplotlib.pyplot as plt
-import time
+import plotly.express as px
 
-# Streamlit setup
-st.set_page_config(page_title="NYC Employment Top 10 Categories", layout="centered")
+# --------------------
+# 🔑 BLS API Settings
+# --------------------
+API_KEY = "3a6a384cf3b30494e7cc6657d3b2ed8d5305e39c"
+BASE_URL = "https://api.bls.gov/publicAPI/v2/timeseries/data/"
 
-# Centered caption
-st.markdown(
-    "<div style='text-align: center; font-size: 16px; color: gray;'>"
-    "Source: BLS NYC Nonagricultural Employment (000's) | Jun 2024 - Jun 2025"
-    "</div>",
-    unsafe_allow_html=True
-)
-
-data = {
-    "Category": [
-        "Total Nonfarm",
-        "Total Private",
-        "Goods Producing",
-        "Service Providing",
-        "Government",
-        "Professional and Business Services",
-        "Health Care and Social Assistance",
-        "Accommodation and Food Services",
-        "Trade, Transportation, and Utilities",
-        "Financial Activities",
-    ],
-    "Jun 2024": [4790.7, 4201.8, 200.5, 4590.2, 588.9, 808.3, 995.6, 365.2, 580.8, 513.3],
-    "May 2025": [4854.6, 4255.6, 194.2, 4660.4, 599.0, 795.1, 1059.7, 364.0, 576.0, 501.5],
-    "Jun 2025": [4871.6, 4275.5, 196.3, 4675.3, 596.1, 808.1, 1064.0, 368.8, 580.0, 514.2],
+# --------------------
+# 📘 Sample Series IDs
+# --------------------
+# Replace these with actual demographic-industry codes from CPS (if available)
+SERIES_IDS = {
+    'Total - All Workers': 'LNS12000000',  # total employed (CPS)
+    'Men, 20 years and over': 'LNS12000031',
+    'Women, 20 years and over': 'LNS12000032',
+    'Black or African American': 'LNS12000006',
+    'White': 'LNS12000003',
+    'Asian': 'LNU02032183',
+    '16 to 19 years': 'LNS12000012',
+    '20 to 24 years': 'LNS12000016'
 }
 
-df = pd.DataFrame(data)
+# --------------------
+# 📥 Get BLS API Data
+# --------------------
+def get_bls_data(series_id, start_year, end_year):
+    headers = {'Content-type': 'application/json'}
+    payload = {
+        "seriesid": [series_id],
+        "startyear": str(start_year),
+        "endyear": str(end_year),
+        "registrationKey": API_KEY
+    }
+    response = requests.post(BASE_URL, json=payload, headers=headers)
+    json_data = response.json()
+    try:
+        data = json_data['Results']['series'][0]['data']
+        df = pd.DataFrame(data)
+        df['value'] = pd.to_numeric(df['value'])
+        df['year'] = df['year'].astype(int)
+        df['periodName'] = pd.Categorical(df['periodName'], categories=[
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'],
+            ordered=True)
+        df['date'] = pd.to_datetime(df['year'].astype(str) + ' ' + df['periodName'].astype(str))
+        return df[['date', 'value']]
+    except KeyError:
+        return pd.DataFrame()
 
-# Descriptions for each category
-category_descriptions = {
-    "Total Nonfarm": "All jobs except farm workers, private household employees, and nonprofit employees.",
-    "Total Private": "Jobs in private-sector businesses and organizations.",
-    "Goods Producing": "Jobs producing goods including manufacturing, construction, and mining.",
-    "Service Providing": "Jobs providing services rather than goods such as healthcare, education, finance, etc.",
-    "Government": "Jobs in federal, state, and local government agencies.",
-    "Professional and Business Services": "Jobs in professional, scientific, technical services, management, and administrative support.",
-    "Health Care and Social Assistance": "Jobs in hospitals, clinics, social services, and related fields.",
-    "Accommodation and Food Services": "Jobs in hotels, restaurants, bars, and hospitality services.",
-    "Trade, Transportation, and Utilities": "Jobs in wholesale/retail trade, transportation, warehousing, and utilities.",
-    "Financial Activities": "Jobs in finance, insurance, real estate, and related sectors.",
-}
+# --------------------
+# 🎛️ Streamlit UI
+# --------------------
+st.title("📊 NYC Employment by Race, Gender, and Age (CPS / BLS API)")
+st.write("Data Source: U.S. Bureau of Labor Statistics (CPS)")
 
-# Separate 'Goods Producing' category
-goods_producing = df[df["Category"] == "Goods Producing"]
-others = df[df["Category"] != "Goods Producing"]
+start_year = st.sidebar.selectbox("Start Year", list(range(2010, 2026)), index=10)
+end_year = st.sidebar.selectbox("End Year", list(range(2010, 2026)), index=15)
 
-# Sort others descending by Jun 2025 and take top 9
-others_sorted = others.sort_values(by="Jun 2025", ascending=False).head(9)
+selected_series = st.multiselect("Select Demographic Groups", options=list(SERIES_IDS.keys()),
+                                 default=['Total - All Workers', 'Men, 20 years and over', 'Women, 20 years and over'])
 
-# Combine others + Goods Producing at bottom
-df_sorted = pd.concat([others_sorted, goods_producing], ignore_index=True)
+# --------------------
+# 📊 Display Results
+# --------------------
+chart_data = pd.DataFrame()
 
-# Prepare DataFrame for animation
-df_anim = df_sorted.set_index("Category").T.reset_index().rename(columns={"index": "Month"})
-months = df_anim["Month"].tolist()
-categories = df_sorted["Category"].tolist()
+for name in selected_series:
+    sid = SERIES_IDS[name]
+    df = get_bls_data(sid, start_year, end_year)
+    df['Group'] = name
+    chart_data = pd.concat([chart_data, df], ignore_index=True)
 
-positions = list(range(len(months)))
+if not chart_data.empty:
+    fig = px.line(chart_data, x='date', y='value', color='Group',
+                  title='Employment by Demographic Group',
+                  labels={'value': 'Employment (000s)', 'date': 'Date'})
+    st.plotly_chart(fig, use_container_width=True)
 
-colors = [
-    "#1f77b4", "#2ca02c", "#ff7f0e", "#d62728", "#9467bd",
-    "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
-]
+    # Add Table
+    st.dataframe(chart_data.pivot_table(index='date', columns='Group', values='value'))
+else:
+    st.warning("No data returned from BLS API. Check your API key or series IDs.")
 
-placeholder = st.empty()
-
-for frame in range(1, len(months) + 1):
-    fig, ax = plt.subplots(figsize=(14, 7))
-
-    for i, category in enumerate(categories):
-        y = [len(categories) - 1 - i] * frame
-        x = positions[:frame]
-        vals = df_anim[category].values[:frame]
-
-        ax.plot(x, y, marker='o', color=colors[i], linewidth=2)
-        for j, val in enumerate(vals):
-            ax.text(x[j], y[j] + 0.15, f"{val:.1f}k", ha='center', fontsize=10, color=colors[i])
-
-    ax.set_yticks(range(len(categories)))
-    ax.set_yticklabels(list(reversed(categories)))
-    ax.set_xticks(positions[:frame])
-    ax.set_xticklabels(months[:frame])
-    ax.set_xlim(-0.5, len(months) - 0.5)
-    ax.set_ylim(-1, len(categories))
-    ax.set_title("Top 10 NYC Employment Categories by Jun 2025 (Goods Producing at Bottom)", fontsize=18)
-    ax.grid(axis='x', linestyle='--', alpha=0.3)
-    plt.tight_layout()
-
-    placeholder.pyplot(fig)
-    time.sleep(3)
-
-# Description Table (Centered Header)
-st.markdown("---")
-st.markdown(
-    "<h2 style='text-align: center;'>Industry Categories and Descriptions</h2>",
-    unsafe_allow_html=True
-)
-
-desc_df = pd.DataFrame({
-    "Category": list(category_descriptions.keys()),
-    "Description": list(category_descriptions.values())
-})
-
-st.table(desc_df)
