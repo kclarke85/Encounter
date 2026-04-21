@@ -16,8 +16,28 @@ collection = db["test"]
 # ── Sentinel collections ─────────────────────
 devices_col    = db["devices"]
 alerts_col     = db["alerts"]
-network_col    = db["network"]
+network_col    = db["network"]@app.get("/stakeholders")
+def get_stakeholders():
+    return list(stakeholders_col.find({}, {"_id": 0}))
+
+
+# ── Combined endpoint for Sentinel portal ──
+@app.get("/api/sentinel-data")
+def get_sentinel_data():
+    return {
+        "devices": list(devices_col.find({}, {"_id": 0})),
+        "alerts": list(alerts_col.find({}, {"_id": 0})),
+        "network": network_col.find_one({}, {"_id": 0}),
+        "stakeholders": list(stakeholders_col.find({}, {"_id": 0}))
+    }
+
+
+# ── Seed route ──
+@app.post("/seed")
+def seed_data():
+    ...
 stakeholders_col = db["stakeholders"]
+
 
 
 # ── Existing routes ──────────────────────────
