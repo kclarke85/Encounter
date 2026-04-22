@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from datetime import datetime
 import os
 import json
+import ssl
 
 load_dotenv()
 
@@ -84,6 +85,9 @@ def get_sentinel_data():
 @app.post("/ingest")
 def ingest_reading(data: dict):
     try:
+        ssl_context = ssl.create_default_context()
+        ssl_context.check_hostname = False
+        ssl_context.verify_mode = ssl.CERT_NONE
         fresh_client = MongoClient(
             MONGO_URI,
             tls=True,
