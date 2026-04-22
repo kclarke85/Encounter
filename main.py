@@ -11,7 +11,7 @@ app = FastAPI()
 
 MONGO_URI = os.getenv("MONGO_URI")
 client = MongoClient(MONGO_URI)
-db = client["Sentinal"]
+db = client["encounter_db"]
 
 collection       = db["test"]
 devices_col      = db["devices"]
