@@ -98,3 +98,11 @@ def seed_data():
     network_col.insert_one(data["network"])
 
     return {"message": f"Seeded {len(data['devices'])} devices, {len(data['alerts'])} alerts"}
+# ── Ingest route (ESP32 device POSTs here) ───
+from datetime import datetime
+
+@app.post("/ingest")
+def ingest_reading(data: dict):
+    data["timestamp"] = datetime.utcnow().isoformat()
+    db["readings"].insert_one(data)
+    return {"message": "Reading stored", "device": data.get("device_id")}
