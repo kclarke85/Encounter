@@ -10,12 +10,14 @@ load_dotenv()
 app = FastAPI()
 
 MONGO_URI = os.getenv("MONGO_URI")
+
 client = MongoClient(
     MONGO_URI,
     tls=True,
     tlsAllowInvalidCertificates=True,
     serverSelectionTimeoutMS=5000
 )
+
 db = client["encounter_db"]
 
 collection       = db["test"]
@@ -24,22 +26,27 @@ alerts_col       = db["alerts"]
 network_col      = db["network"]
 stakeholders_col = db["stakeholders"]
 
+
 @app.get("/")
 def read_root():
     return {"status": "Encounter API running"}
+
 
 @app.post("/add")
 def add_item(data: dict):
     collection.insert_one(data)
     return {"message": "Data inserted"}
 
+
 @app.get("/all")
 def get_all():
     return list(collection.find({}, {"_id": 0}))
 
+
 @app.get("/devices")
 def get_devices():
     return list(devices_col.find({}, {"_id": 0}))
+
 
 @app.get("/devices/{device_id}")
 def get_device(device_id: str):
@@ -48,17 +55,21 @@ def get_device(device_id: str):
         raise HTTPException(status_code=404, detail="Device not found")
     return device
 
+
 @app.get("/alerts")
 def get_alerts():
     return list(alerts_col.find({"status": "active"}, {"_id": 0}))
+
 
 @app.get("/network")
 def get_network():
     return network_col.find_one({}, {"_id": 0})
 
+
 @app.get("/stakeholders")
 def get_stakeholders():
     return list(stakeholders_col.find({}, {"_id": 0}))
+
 
 @app.get("/api/sentinel-data")
 def get_sentinel_data():
@@ -69,11 +80,24 @@ def get_sentinel_data():
         "stakeholders": list(stakeholders_col.find({}, {"_id": 0}))
     }
 
+
 @app.post("/ingest")
 def ingest_reading(data: dict):
-    data["timestamp"] = datetime.utcnow().isoformat()
-    db["readings"].insert_one(data)
-    return {"message": "Reading stored", "device": data.get("device_id")}
+    try:
+        fresh_client = MongoClient(
+            MONGO_URI,
+            tls=True,
+            tlsAllowInvalidCertificates=True,
+            serverSelectionTimeoutMS=5000
+        )
+        fresh_db = fresh_client["encounter_db"]
+        data["timestamp"] = datetime.utcnow().isoformat()
+        fresh_db["readings"].insert_one(data)
+        fresh_client.close()
+        return {"message": "Reading stored", "device": data.get("device_id")}
+    except Exception as e:
+        return {"error": str(e)}
+
 
 @app.post("/seed")
 def seed_data():
