@@ -10,7 +10,7 @@ load_dotenv()
 app = FastAPI()
 
 MONGO_URI = os.getenv("MONGO_URI")
-client = MongoClient(MONGO_URI)
+client = MongoClient(MONGO_URI, tlsAllowInvalidCertificates=True)
 db = client["encounter_db"]
 
 collection       = db["test"]
