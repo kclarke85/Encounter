@@ -2,30 +2,32 @@ from fastapi import FastAPI, HTTPException
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from datetime import datetime
+from azure.cosmos import CosmosClient
 import os
 import json
-import ssl
 
 load_dotenv()
 
 app = FastAPI()
 
+# ── MongoDB (existing) ───────────────────────────
 MONGO_URI = os.getenv("MONGO_URI")
-
 client = MongoClient(
     MONGO_URI,
     tls=True,
     tlsAllowInvalidCertificates=True,
     serverSelectionTimeoutMS=5000
 )
-
 db = client["encounter_db"]
-
 collection       = db["test"]
 devices_col      = db["devices"]
 alerts_col       = db["alerts"]
 network_col      = db["network"]
 stakeholders_col = db["stakeholders"]
+
+# ── Cosmos DB (IoT readings) ─────────────────────
+COSMOS_URI = os.getenv("COSMOS_URI")
+COSMOS_KEY = os.getenv("COSMOS_KEY")
 
 
 @app.get("/")
@@ -85,19 +87,12 @@ def get_sentinel_data():
 @app.post("/ingest")
 def ingest_reading(data: dict):
     try:
-        ssl_context = ssl.create_default_context()
-        ssl_context.check_hostname = False
-        ssl_context.verify_mode = ssl.CERT_NONE
-        fresh_client = MongoClient(
-            MONGO_URI,
-            tls=True,
-            tlsAllowInvalidCertificates=True,
-            serverSelectionTimeoutMS=5000
-        )
-        fresh_db = fresh_client["encounter_db"]
+        cosmos_client = CosmosClient(COSMOS_URI, credential=COSMOS_KEY)
+        cosmos_db = cosmos_client.get_database_client("sentinel")
+        container = cosmos_db.get_container_client("reading")
         data["timestamp"] = datetime.utcnow().isoformat()
-        fresh_db["readings"].insert_one(data)
-        fresh_client.close()
+        data["id"] = f"{data.get('device_id', 'unknown')}-{datetime.utcnow().timestamp()}"
+        container.create_item(body=data)
         return {"message": "Reading stored", "device": data.get("device_id")}
     except Exception as e:
         return {"error": str(e)}
