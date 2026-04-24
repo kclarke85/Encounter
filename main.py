@@ -88,7 +88,7 @@ def get_sentinel_data():
 def ingest_readings(data: dict):
     try:
         cosmos_client = CosmosClient(COSMOS_URI, credential=COSMOS_KEY)
-        cosmos_db = cosmos_client.get_database_client("sentinel")
+        cosmos_db = cosmos_client.get_database_client("sentinal")
         container = cosmos_db.get_container_client("reading")
         data["timestamp"] = datetime.utcnow().isoformat()
         data["id"] = f"{data.get('device_id', 'unknown')}-{datetime.utcnow().timestamp()}"
