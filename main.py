@@ -85,7 +85,7 @@ def get_sentinel_data():
 
 
 @app.post("/ingest")
-def ingest_reading(data: dict):
+def ingest_readings(data: dict):
     try:
         cosmos_client = CosmosClient(COSMOS_URI, credential=COSMOS_KEY)
         cosmos_db = cosmos_client.get_database_client("sentinel")
