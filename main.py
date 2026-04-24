@@ -25,7 +25,7 @@ alerts_col       = db["alerts"]
 network_col      = db["network"]
 stakeholders_col = db["stakeholders"]
 
-# ── Cosmos DB (IoT readings) ─────────────────────
+# ── Cosmos DB (IoT reading) ─────────────────────
 COSMOS_URI = os.getenv("COSMOS_URI")
 COSMOS_KEY = os.getenv("COSMOS_KEY")
 
