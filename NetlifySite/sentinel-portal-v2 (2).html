@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentinel · Encounter Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#08100E; --bg2:#0D1714; --bg3:#121F1C; --bg4:#172420;
+  --teal:#00C9B1; --teal-dim:#00A090; --teal-faint:#00C9B113; --teal-soft:#00C9B130;
+  --txt:#D8EDEA; --txt2:#7FA49E; --txt3:#4A706B;
+  --border:rgba(0,201,177,0.12); --border2:rgba(0,201,177,0.22);
+  --danger:#E55252; --danger-bg:#E5525215;
+  --warn:#E8A030; --warn-bg:#E8A03015;
+  --success:#3DC98A; --success-bg:#3DC98A15;
+  --info:#4A9EE8; --info-bg:#4A9EE815;
+  --purple:#A78BFA; --purple-bg:#A78BFA15;
+  --font:'DM Sans',sans-serif; --mono:'DM Mono',monospace;
+  --r:10px; --r-sm:6px;
+}
+html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--font);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+
+/* AUTH */
+.auth-wrap{min-height:100vh;display:flex;}
+.auth-brand{width:400px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:space-between;padding:48px;}
+.auth-brand-logo{font-size:17px;font-weight:600;color:var(--txt);letter-spacing:-0.02em;}
+.auth-brand-logo span{color:var(--teal);}
+.auth-brand-tagline{margin-top:48px;}
+.auth-brand-tagline h2{font-size:26px;font-weight:300;line-height:1.35;letter-spacing:-0.02em;}
+.auth-brand-tagline h2 em{color:var(--teal);font-style:italic;}
+.auth-brand-tagline p{margin-top:14px;font-size:13px;color:var(--txt2);line-height:1.7;}
+.auth-stats{display:flex;gap:28px;}
+.auth-stat-val{font-size:20px;font-weight:600;color:var(--teal);}
+.auth-stat-lbl{font-size:10px;color:var(--txt3);margin-top:2px;text-transform:uppercase;letter-spacing:0.07em;}
+.auth-main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px;}
+.auth-box{width:100%;max-width:420px;}
+.auth-box h1{font-size:22px;font-weight:500;letter-spacing:-0.02em;margin-bottom:6px;}
+.auth-box .sub{font-size:13px;color:var(--txt2);margin-bottom:28px;}
+.auth-box .sub a{color:var(--teal);text-decoration:none;}
+
+/* FORMS */
+.form-group{margin-bottom:14px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+label{display:block;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--txt2);margin-bottom:5px;}
+input,select,textarea{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:10px 12px;color:var(--txt);font-family:var(--font);font-size:14px;outline:none;transition:border-color 0.15s;}
+input:focus,select:focus,textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-faint);}
+input::placeholder,textarea::placeholder{color:var(--txt3);}
+select option{background:var(--bg3);}
+textarea{resize:vertical;min-height:80px;}
+.forgot{text-align:right;font-size:12px;margin-top:-8px;margin-bottom:14px;}
+.forgot a{color:var(--txt2);text-decoration:none;}
+.forgot a:hover{color:var(--teal);}
+.form-divider{display:flex;align-items:center;gap:12px;margin:18px 0;}
+.form-divider::before,.form-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.form-divider span{font-size:11px;color:var(--txt3);}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 18px;border-radius:var(--r-sm);font-family:var(--font);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all 0.15s;text-decoration:none;white-space:nowrap;}
+.btn-primary{background:var(--teal);color:#04342C;}
+.btn-primary:hover{background:#00DCC8;}
+.btn-ghost{background:transparent;color:var(--txt2);border:1px solid var(--border2);}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-faint);}
+.btn-danger{background:var(--danger-bg);color:var(--danger);border:1px solid rgba(229,82,82,0.25);}
+.btn-warn{background:var(--warn-bg);color:var(--warn);border:1px solid rgba(232,160,48,0.25);}
+.btn-full{width:100%;}
+.btn-sm{padding:5px 12px;font-size:12px;}
+.btn-row{display:flex;gap:10px;margin-top:16px;}
+
+/* APP SHELL */
+.app-wrap{display:none;height:100vh;flex-direction:column;}
+.app-wrap.active{display:flex;}
+.topnav{height:52px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:20px;flex-shrink:0;}
+.nav-logo{font-size:15px;font-weight:600;letter-spacing:-0.02em;color:var(--txt);margin-right:4px;}
+.nav-logo span{color:var(--teal);}
+.nav-sep{width:1px;height:20px;background:var(--border);}
+.nav-links{display:flex;gap:3px;flex:1;}
+.nav-link{padding:5px 12px;border-radius:var(--r-sm);font-size:13px;color:var(--txt2);cursor:pointer;transition:all 0.15s;border:none;background:none;font-family:var(--font);}
+.nav-link:hover{color:var(--txt);background:var(--teal-faint);}
+.nav-link.active{color:var(--teal);background:var(--teal-faint);font-weight:500;}
+.nav-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
+.nav-badge{background:var(--danger-bg);color:var(--danger);border:1px solid rgba(229,82,82,0.3);border-radius:20px;font-size:11px;font-weight:600;padding:2px 8px;cursor:pointer;}
+.nav-badge:hover{background:var(--danger);color:#fff;}
+.nav-avatar{width:30px;height:30px;border-radius:50%;background:var(--teal-soft);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--teal);cursor:pointer;}
+.app-body{flex:1;overflow-y:auto;padding:28px 32px;}
+.page{display:none;}
+.page.active{display:block;}
+
+/* CARDS & LAYOUT */
+.page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;}
+.page-title{font-size:20px;font-weight:500;letter-spacing:-0.02em;}
+.page-subtitle{font-size:13px;color:var(--txt2);margin-top:3px;}
+.section-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--txt3);margin:18px 0 8px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;}
+.card-teal{border-left:3px solid var(--teal);}
+.card-blue{border-left:3px solid var(--info);}
+.card-warn{border-left:3px solid var(--warn);}
+.card-danger{border-left:3px solid var(--danger);}
+.card-success{border-left:3px solid var(--success);}
+.card-purple{border-left:3px solid var(--purple);}
+.m-label{font-size:11px;color:var(--txt2);margin-bottom:4px;}
+.m-val{font-size:22px;font-weight:500;color:var(--txt);line-height:1.1;}
+.m-unit{font-size:12px;color:var(--txt2);margin-left:2px;}
+.m-sub{font-size:11px;color:var(--txt3);margin-top:4px;}
+.m-sub-warn{font-size:11px;color:var(--warn);margin-top:4px;}
+.bar-bg{height:4px;background:var(--bg4);border-radius:2px;margin-top:8px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:2px;background:var(--teal);}
+.row-bet{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.mini-tag{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:500;background:var(--success-bg);color:var(--success);border:1px solid rgba(61,201,138,0.25);}
+.cluster-tag{font-family:var(--mono);font-size:11px;background:var(--bg3);border:1px solid var(--border);color:var(--txt2);padding:4px 10px;border-radius:var(--r-sm);}
+.divider{border:none;border-top:1px solid var(--border);margin:18px 0;}
+
+/* TRIAGE BANNER */
+.triage-banner{border-radius:var(--r);padding:13px 18px;display:flex;align-items:center;gap:14px;margin-bottom:20px;border:1px solid;}
+.triage-ok{background:var(--success-bg);border-color:rgba(61,201,138,0.25);}
+.triage-alert{background:var(--danger-bg);border-color:rgba(229,82,82,0.3);}
+.triage-warn{background:var(--warn-bg);border-color:rgba(232,160,48,0.3);}
+.triage-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.dot-ok{background:var(--success);box-shadow:0 0 8px var(--success);}
+.dot-alert{background:var(--danger);box-shadow:0 0 8px var(--danger);animation:pulse 1.5s infinite;}
+.dot-warn{background:var(--warn);box-shadow:0 0 8px var(--warn);}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.triage-text .t1{font-size:13px;font-weight:500;}
+.triage-text .t2{font-size:12px;color:var(--txt2);margin-top:2px;}
+.triage-pills{margin-left:auto;display:flex;gap:8px;}
+.tpill{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;border:1px solid;}
+.tpill-ok{background:var(--success-bg);color:var(--success);border-color:rgba(61,201,138,0.3);}
+.tpill-warn{background:var(--warn-bg);color:var(--warn);border-color:rgba(232,160,48,0.3);}
+.tpill-danger{background:var(--danger-bg);color:var(--danger);border-color:rgba(229,82,82,0.3);}
+
+/* ═══════════════════════════════════════════════
+   HIVE NETWORK MAP
+═══════════════════════════════════════════════ */
+.hive-layout{display:grid;grid-template-columns:1fr 320px;gap:16px;}
+.hive-map-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:0;overflow:hidden;position:relative;}
+.hive-map-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);}
+.hive-map-header span{font-size:12px;color:var(--txt2);}
+.hive-svg-wrap{position:relative;width:100%;aspect-ratio:16/10;background:radial-gradient(ellipse at 40% 50%, #0D2620 0%, #08100E 70%);}
+.hive-legend{display:flex;gap:16px;padding:10px 16px;border-top:1px solid var(--border);}
+.hive-legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--txt2);}
+.hive-legend-dot{width:8px;height:8px;border-radius:50%;}
+
+.hive-sidebar{display:flex;flex-direction:column;gap:10px;}
+.hive-activity{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px;flex:1;max-height:420px;overflow-y:auto;}
+.activity-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);}
+.activity-item:last-child{border-bottom:none;}
+.activity-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0;}
+.activity-body{flex:1;}
+.activity-msg{font-size:12px;color:var(--txt);line-height:1.4;}
+.activity-meta{font-size:10px;color:var(--txt3);margin-top:2px;font-family:var(--mono);}
+
+/* NETWORK NODES SVG */
+svg.hive-svg{position:absolute;inset:0;width:100%;height:100%;}
+
+/* ═══════════════════════════════════════════════
+   STAKEHOLDERS
+═══════════════════════════════════════════════ */
+.stakeholder-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
+.sh-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
+.sh-card:hover{border-color:var(--border2);}
+.sh-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
+.sh-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.sh-name{font-size:14px;font-weight:500;color:var(--txt);}
+.sh-type{font-size:11px;color:var(--txt2);margin-top:2px;}
+.sh-subscriptions{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
+.sub-tag{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:500;border:1px solid;}
+.sub-critical{background:var(--danger-bg);color:var(--danger);border-color:rgba(229,82,82,0.25);}
+.sub-warning{background:var(--warn-bg);color:var(--warn);border-color:rgba(232,160,48,0.25);}
+.sub-info{background:var(--info-bg);color:var(--info);border-color:rgba(74,158,232,0.25);}
+.sub-report{background:var(--purple-bg);color:var(--purple);border-color:rgba(167,139,250,0.25);}
+.sub-all{background:var(--success-bg);color:var(--success);border-color:rgba(61,201,138,0.25);}
+.sh-meta{font-size:11px;color:var(--txt3);}
+.sh-meta strong{color:var(--txt2);}
+.sh-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);}
+.sh-status{display:flex;align-items:center;gap:5px;font-size:11px;}
+.status-active{color:var(--success);}
+.status-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+
+/* ADD STAKEHOLDER MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:28px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.modal-header h3{font-size:17px;font-weight:500;letter-spacing:-0.01em;}
+.modal-close{background:none;border:none;color:var(--txt2);font-size:20px;cursor:pointer;line-height:1;}
+.modal-close:hover{color:var(--txt);}
+.alert-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);}
+.alert-toggle-row:last-child{border-bottom:none;}
+.toggle-label{font-size:13px;color:var(--txt);}
+.toggle-desc{font-size:11px;color:var(--txt3);}
+.toggle{width:36px;height:20px;background:var(--bg4);border-radius:10px;border:1px solid var(--border2);cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0;}
+.toggle.on{background:var(--teal);border-color:var(--teal);}
+.toggle::after{content:'';position:absolute;width:14px;height:14px;background:#fff;border-radius:50%;top:2px;left:2px;transition:left 0.2s;}
+.toggle.on::after{left:18px;}
+
+/* ALERTS */
+.alerts-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px;}
+.alerts-toolbar{display:flex;gap:10px;margin-bottom:16px;align-items:center;}
+.alerts-toolbar input{flex:1;max-width:260px;}
+.alerts-table{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.alerts-table table{width:100%;border-collapse:collapse;}
+.alerts-table th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--txt3);padding:10px 16px;text-align:left;border-bottom:1px solid var(--border);background:var(--bg3);}
+.alerts-table td{padding:11px 16px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle;}
+.alerts-table tr:last-child td{border-bottom:none;}
+.alerts-table tr:hover td{background:var(--teal-faint);}
+.sev-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:3px 8px;border-radius:4px;border:1px solid;}
+.sev-critical{background:var(--danger-bg);color:var(--danger);border-color:rgba(229,82,82,0.3);}
+.sev-warning{background:var(--warn-bg);color:var(--warn);border-color:rgba(232,160,48,0.3);}
+.sev-info{background:var(--info-bg);color:var(--info);border-color:rgba(74,158,232,0.3);}
+.sev-ok{background:var(--success-bg);color:var(--success);border-color:rgba(61,201,138,0.3);}
+.sev-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+.device-mono{font-family:var(--mono);font-size:12px;color:var(--txt2);}
+.alert-msg{color:var(--txt);max-width:260px;}
+.td-time{font-family:var(--mono);font-size:11px;color:var(--txt3);white-space:nowrap;}
+.notified-chips{display:flex;gap:4px;flex-wrap:wrap;}
+.notif-chip{font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid var(--border2);color:var(--txt2);}
+
+/* DEVICES / CREATE */
+.create-wrap{max-width:680px;}
+.steps{display:flex;align-items:center;gap:0;margin-bottom:24px;}
+.step{display:flex;align-items:center;gap:8px;}
+.step-num{width:24px;height:24px;border-radius:50%;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--txt3);flex-shrink:0;}
+.step-num.done{background:var(--teal);border-color:var(--teal);color:#04342C;}
+.step-num.active{border-color:var(--teal);color:var(--teal);}
+.step-label{font-size:12px;color:var(--txt3);}
+.step-label.active{color:var(--txt);font-weight:500;}
+.step-arrow{color:var(--txt3);margin:0 10px;font-size:12px;}
+.device-preview{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-top:14px;}
+.dp-label{font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--txt3);margin-bottom:10px;}
+.dp-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.dp-row:last-child{border-bottom:none;}
+.dp-key{color:var(--txt2);}
+.dp-val{color:var(--txt);font-weight:500;font-family:var(--mono);}
+
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--txt3);}
+.auth-page{display:block;}
+.auth-page.hidden{display:none;}
+
+/* ── LIGHT MODE ── */
+body.light-mode{--bg:#F4F7F6;--bg2:#E8EFED;--bg3:#FFFFFF;--bg4:#F0F5F3;--txt:#1A2E2B;--txt2:#4A6B65;--txt3:#7A9E98;--border:rgba(0,100,80,0.12);--border2:rgba(0,100,80,0.22);}
+body.light-mode input,body.light-mode select,body.light-mode textarea{background:#fff;color:#1A2E2B;}
+
+/* ── THEME TOGGLE BUTTON ── */
+#sentinel-theme-btn{background:none;border:1px solid var(--border2);color:var(--txt2);border-radius:var(--r-sm);padding:5px 10px;cursor:pointer;font-size:12px;font-family:var(--font);transition:border-color 0.15s,color 0.15s;}
+#sentinel-theme-btn:hover{border-color:var(--teal);color:var(--teal);}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ LOGIN ═══════════════════ -->
+<div class="auth-page" id="page-login">
+  <div class="auth-wrap">
+    <div class="auth-brand">
+      <div>
+        <div class="auth-brand-logo">Encounter<span>.</span>Engineering</div>
+        <div class="auth-brand-tagline">
+          <h2>Public Health.<br>Public Safety.<br><em>Global Scale.</em></h2>
+          <p>The Sentinel portal gives your team and your stakeholders real-time visibility — ice formation, triage status, network alerts — from anywhere in the world.</p>
+        </div>
+      </div>
+      <div class="auth-stats">
+        <div><div class="auth-stat-val">40+</div><div class="auth-stat-lbl">Countries</div></div>
+        <div><div class="auth-stat-val">120+</div><div class="auth-stat-lbl">NGO Partners</div></div>
+        <div><div class="auth-stat-val">2M+</div><div class="auth-stat-lbl">Lives Impacted</div></div>
+      </div>
+    </div>
+    <div class="auth-main">
+      <div class="auth-box">
+        <h1>Welcome back</h1>
+        <p class="sub">Sign in to the Sentinel portal · <a href="#" onclick="show('page-signup')">Create account</a></p>
+        <div class="form-group">
+          <label>Email address</label>
+          <input type="email" value="kevin@encounterengineering.org">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" value="password">
+        </div>
+        <div class="forgot"><a href="#">Forgot password?</a></div>
+        <button class="btn btn-primary btn-full" onclick="enterApp()">Sign in →</button>
+        <div class="form-divider"><span>or</span></div>
+        <button class="btn btn-ghost btn-full">Sign in with SSO</button>
+        <p style="font-size:12px;color:var(--txt3);margin-top:18px;text-align:center">No account? <a href="#" style="color:var(--teal);text-decoration:none" onclick="show('page-signup')">Create one free →</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ SIGN UP ═══════════════════ -->
+<div class="auth-page hidden" id="page-signup">
+  <div class="auth-wrap">
+    <div class="auth-brand">
+      <div>
+        <div class="auth-brand-logo">Encounter<span>.</span>Engineering</div>
+        <div class="auth-brand-tagline">
+          <h2>Join the<br>Sentinel<br><em>network.</em></h2>
+          <p>One portal. Every device. Every stakeholder. Every alert — routed to the right person at the right time.</p>
+        </div>
+      </div>
+      <div class="auth-stats">
+        <div><div class="auth-stat-val">18yr</div><div class="auth-stat-lbl">Experience</div></div>
+        <div><div class="auth-stat-val">200+</div><div class="auth-stat-lbl">Units deployed</div></div>
+        <div><div class="auth-stat-val">4°C</div><div class="auth-stat-lbl">Avg ΔT achieved</div></div>
+      </div>
+    </div>
+    <div class="auth-main">
+      <div class="auth-box">
+        <h1>Create your account</h1>
+        <p class="sub">Already have an account? <a href="#" onclick="show('page-login')">Sign in</a></p>
+        <div class="form-row">
+          <div class="form-group"><label>First name</label><input type="text" id="signup-firstname" placeholder="Kevin"></div>
+          <div class="form-group"><label>Last name</label><input type="text" id="signup-lastname" placeholder="Osei"></div>
+        </div>
+        <div class="form-group"><label>Organization</label><input type="text" id="signup-org" placeholder="Encounter Engineering / NGO name"></div>
+        <div class="form-group"><label>Work email</label><input type="email" id="signup-email" placeholder="you@organization.org"></div>
+        <div class="form-group">
+          <label>Role</label>
+          <select id="signup-role">
+            <option>Field Engineer</option>
+            <option>Program Manager</option>
+            <option>Technical Director</option>
+            <option>NGO Partner</option>
+            <option>Hospital / Clinic</option>
+            <option>City / Government</option>
+            <option>Donor / Funder</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Password</label><input type="password" id="signup-password" placeholder="••••••••"></div>
+          <div class="form-group"><label>Confirm</label><input type="password" id="signup-confirm" placeholder="••••••••"></div>
+        </div>
+        <div id="signup-error" style="display:none;margin-bottom:10px;padding:10px;background:var(--danger-bg);color:var(--danger);border-radius:var(--r-sm);font-size:13px;"></div>
+        <div id="signup-success" style="display:none;margin-bottom:10px;padding:10px;background:var(--success-bg);color:var(--success);border-radius:var(--r-sm);font-size:13px;"></div>
+        <button class="btn btn-primary btn-full" onclick="handleSignup()">Create account →</button>
+        <p style="font-size:11px;color:var(--txt3);margin-top:12px;text-align:center">By creating an account you agree to Encounter Engineering's Terms of Service.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ APP SHELL ═══════════════════ -->
+<div class="app-wrap" id="app">
+  <nav class="topnav">
+    <div class="nav-logo">Encounter<span>.</span>Engineering</div>
+    <div class="nav-sep"></div>
+    <div class="nav-links">
+      <button class="nav-link active" onclick="navTo('dash',this)">Dashboard</button>
+      <button class="nav-link" onclick="navTo('network',this)">Hive Network</button>
+      <button class="nav-link" onclick="navTo('stakeholders',this)">Stakeholders</button>
+      <button class="nav-link" onclick="navTo('devices',this)">Devices</button>
+      <button class="nav-link" onclick="navTo('alerts',this)">Alerts</button>
+    </div>
+    <div class="nav-right">
+      <span class="nav-badge" id="nav-alert-badge" onclick="navTo('alerts',document.querySelectorAll('.nav-link')[4])">3 active alerts</span>
+      <button id="sentinel-theme-btn" onclick="toggleSentinelTheme()" title="Toggle light/dark mode">🌙</button>
+      <div class="nav-avatar" title="Kevin · sign out" onclick="signOut()">KO</div>
+    </div>
+  </nav>
+
+  <div class="app-body">
+
+    <!-- ═══ DASHBOARD ═══ -->
+    <div class="page active" id="page-dash">
+      <div class="page-header">
+        <div>
+          <div class="page-title" id="dash-title">Cooling Ready</div>
+          <div class="page-subtitle" id="dash-subtitle">Mumbai Cluster 04 · Last sync 21:47 local</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <select id="device-selector" class="cluster-tag" style="cursor:pointer;font-family:var(--mono);font-size:11px;background:var(--bg3);border:1px solid var(--border);color:var(--txt2);padding:4px 10px;border-radius:var(--r-sm);outline:none;"></select>
+          <button class="btn btn-ghost btn-sm" onclick="navTo('devices',document.querySelectorAll('.nav-link')[3])">+ Add Device</button>
+        </div>
+      </div>
+
+      <div class="triage-banner triage-ok" id="triage-banner">
+        <div class="triage-dot dot-ok" id="triage-dot"></div>
+        <div class="triage-text">
+          <div class="t1" id="triage-title" style="color:var(--success)">Triage: Cooling Ready</div>
+          <div class="t2" id="triage-desc">Heatwave detected + ice successfully formed — unit will deliver cooling tonight. Stakeholders notified.</div>
+        </div>
+        <div class="triage-pills" id="triage-pills">
+          <span class="tpill tpill-warn">Heatwave Active</span>
+          <span class="tpill tpill-ok">Ice Formed</span>
+        </div>
+      </div>
+
+      <div class="section-label">Thermal Comfort Conditions</div>
+      <div class="grid-4">
+        <div class="card card-teal"><div class="m-label">Outdoor Temp</div><div class="m-val"><span id="d-outdoor-temp">34.2</span><span class="m-unit">°C</span></div><div class="m-sub" id="d-outdoor-sub">↑ 6.2° above 28°C comfort line</div></div>
+        <div class="card card-teal"><div class="m-label">Night Temp (22:00)</div><div class="m-val"><span id="d-night-temp">31.8</span><span class="m-unit">°C</span></div><div class="m-sub">No natural cool-down window</div></div>
+        <div class="card card-teal"><div class="m-label">Relative Humidity</div><div class="m-val"><span id="d-humidity">72</span><span class="m-unit">%</span></div><div class="m-sub" id="d-humidity-sub">High — reduces evaporative relief</div></div>
+        <div class="card card-warn"><div class="m-label">Feels-like Index</div><div class="m-val"><span id="d-feels-like">41</span><span class="m-unit">°C</span></div><div class="m-sub">Humidity × temp combined</div></div>
+      </div>
+
+      <div class="section-label">Passive Cooling Performance</div>
+      <div class="grid-3">
+        <div class="card card-teal">
+          <div class="row-bet"><div class="m-label">Ice Formation</div><span class="mini-tag" id="d-ice-status">Complete</span></div>
+          <div class="m-val"><span id="d-ice-kg">18.4</span><span class="m-unit">kg</span></div>
+          <div class="bar-bg"><div class="bar-fill" id="d-ice-bar" style="width:92%"></div></div>
+          <div class="m-sub" id="d-ice-pct">92% of daily target</div>
+        </div>
+        <div class="card card-teal"><div class="m-label">Cooled Space ΔT</div><div class="m-val"><span id="d-delta-t">−4.7</span><span class="m-unit">°C</span></div><div class="m-sub">Interior vs. outdoor at 23:00</div></div>
+        <div class="card card-teal"><div class="m-label">Cooling Window</div><div class="m-val">~<span id="d-cooling-hrs">22</span><span class="m-unit">hrs</span></div><div class="m-sub" id="d-melt-rate">At 0.8 kg/hr melt rate</div></div>
+      </div>
+
+      <div class="section-label">Urban Expansion &amp; Climate Context</div>
+      <div class="grid-4">
+        <div class="card card-blue"><div class="m-label">Heatwave Duration</div><div class="m-val"><span id="d-hw-duration">7</span><span class="m-unit">days</span></div><div class="m-sub" id="d-hw-day">Day 4 of current event</div></div>
+        <div class="card card-blue"><div class="m-label">Urban Heat Island</div><div class="m-val">+<span id="d-uhi">3.2</span><span class="m-unit">°C</span></div><div class="m-sub">vs. rural reference station</div></div>
+        <div class="card card-blue"><div class="m-label">30-Day Night Avg</div><div class="m-val"><span id="d-night-avg">29.6</span><span class="m-unit">°C</span></div><div class="m-sub" id="d-night-delta">↑ 1.8° vs. same period 2023</div></div>
+        <div class="card card-blue"><div class="m-label">Events This Season</div><div class="m-val"><span id="d-hw-events">3</span></div><div class="m-sub">Heatwaves since Apr 2026</div></div>
+      </div>
+
+      <div class="section-label">Operational &amp; Human Factors</div>
+      <div class="grid-4">
+        <div class="card card-teal">
+          <div class="m-label">Solar Yield Today</div><div class="m-val"><span id="d-solar-kwh">6.8</span><span class="m-unit">kWh</span></div>
+          <div class="bar-bg"><div class="bar-fill" id="d-solar-bar" style="width:85%"></div></div>
+          <div class="m-sub" id="d-solar-pct">85% of peak capacity</div>
+        </div>
+        <div class="card card-success"><div class="m-label">Device Uptime</div><div class="m-val"><span id="d-uptime">98.2</span><span class="m-unit">%</span></div><div class="m-sub">Last 30 days · 1 reset</div></div>
+        <div class="card" id="d-field-card"><div class="m-label">Last Field Check</div><div class="m-val" style="font-size:16px" id="d-field-check">6 days ago</div><div class="m-sub-warn" id="d-field-warn">⚠ Inspection recommended</div></div>
+        <div class="card card-purple"><div class="m-label">Stakeholders Notified</div><div class="m-val" id="d-sh-notified">6</div><div class="m-sub">This heatwave event</div></div>
+      </div>
+    </div>
+
+    <!-- ═══ HIVE NETWORK ═══ -->
+    <div class="page" id="page-network">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Hive Network</div>
+          <div class="page-subtitle">All Sentinel units and connected stakeholders — live status</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <span class="cluster-tag">4 devices online</span>
+          <button class="btn btn-ghost btn-sm">Export network map</button>
+        </div>
+      </div>
+
+      <!-- Network summary strip -->
+      <div class="grid-4" style="margin-bottom:16px">
+        <div class="card card-success"><div class="m-label">Online devices</div><div class="m-val" style="color:var(--success)"><span id="net-online">4</span><span class="m-unit">/ <span id="net-total">4</span></span></div><div class="m-sub">All units reporting</div></div>
+        <div class="card card-danger"><div class="m-label">Critical alerts</div><div class="m-val" style="color:var(--danger)" id="net-critical">1</div><div class="m-sub" id="net-critical-sub">Phoenix · heatwave + no ice</div></div>
+        <div class="card card-purple"><div class="m-label">Active stakeholders</div><div class="m-val" style="color:var(--purple)" id="net-stakeholders">11</div><div class="m-sub">Receiving alerts now</div></div>
+        <div class="card card-teal"><div class="m-label">Network uptime</div><div class="m-val"><span id="net-uptime">99.1</span><span class="m-unit">%</span></div><div class="m-sub">Last 30 days across all units</div></div>
+      </div>
+
+      <div class="hive-layout">
+        <!-- SVG NETWORK MAP -->
+        <div class="hive-map-wrap">
+          <div class="hive-map-header">
+            <span style="font-size:13px;font-weight:500;color:var(--txt)">Live network topology</span>
+            <span>Devices → Stakeholders</span>
+          </div>
+          <div class="hive-svg-wrap">
+            <svg class="hive-svg" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="glowTeal" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#00C9B1" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#00C9B1" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="glowRed" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#E55252" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="#E55252" stop-opacity="0"/>
+                </radialGradient>
+                <filter id="blur4"><feGaussianBlur stdDeviation="4"/></filter>
+              </defs>
+
+              <!-- Background grid dots -->
+              <pattern id="dots" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+                <circle cx="1" cy="1" r="0.8" fill="#00C9B1" opacity="0.08"/>
+              </pattern>
+              <rect width="700" height="400" fill="url(#dots)"/>
+
+              <!-- ── DEVICE NODES (center cluster) ── -->
+              <!-- Central hub label -->
+              <text x="350" y="22" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#4A706B" letter-spacing="0.08em">SENTINEL HIVE</text>
+
+              <!-- S-MUM-04 Mumbai — teal (ok) -->
+              <circle cx="290" cy="180" r="36" fill="#00C9B115" stroke="#00C9B1" stroke-width="1.5"/>
+              <circle cx="290" cy="180" r="22" fill="#00C9B125" stroke="#00C9B1" stroke-width="1"/>
+              <circle cx="290" cy="180" r="8" fill="#00C9B1"/>
+              <text x="290" y="225" text-anchor="middle" font-family="'DM Mono',monospace" font-size="10" fill="#00C9B1">S-MUM-04</text>
+              <text x="290" y="237" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="9" fill="#7FA49E">Mumbai</text>
+
+              <!-- S-PHX-01 Phoenix — red (critical) -->
+              <circle cx="420" cy="160" r="38" fill="#E5525220" filter="url(#blur4)"/>
+              <circle cx="420" cy="160" r="36" fill="#E5525212" stroke="#E55252" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <circle cx="420" cy="160" r="22" fill="#E5525220" stroke="#E55252" stroke-width="1"/>
+              <circle cx="420" cy="160" r="8" fill="#E55252"/>
+              <text x="420" y="205" text-anchor="middle" font-family="'DM Mono',monospace" font-size="10" fill="#E55252">S-PHX-01</text>
+              <text x="420" y="217" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="9" fill="#7FA49E">Phoenix</text>
+
+              <!-- S-NAI-02 Nairobi — warn -->
+              <circle cx="310" cy="290" r="36" fill="#E8A03012" stroke="#E8A030" stroke-width="1.5"/>
+              <circle cx="310" cy="290" r="22" fill="#E8A03018" stroke="#E8A030" stroke-width="1"/>
+              <circle cx="310" cy="290" r="8" fill="#E8A030"/>
+              <text x="310" y="335" text-anchor="middle" font-family="'DM Mono',monospace" font-size="10" fill="#E8A030">S-NAI-02</text>
+              <text x="310" y="347" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="9" fill="#7FA49E">Nairobi</text>
+
+              <!-- S-DAK-03 Dakar — green (ok) -->
+              <circle cx="430" cy="280" r="36" fill="#3DC98A12" stroke="#3DC98A" stroke-width="1.5"/>
+              <circle cx="430" cy="280" r="22" fill="#3DC98A18" stroke="#3DC98A" stroke-width="1"/>
+              <circle cx="430" cy="280" r="8" fill="#3DC98A"/>
+              <text x="430" y="325" text-anchor="middle" font-family="'DM Mono',monospace" font-size="10" fill="#3DC98A">S-DAK-03</text>
+              <text x="430" y="337" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="9" fill="#7FA49E">Dakar</text>
+
+              <!-- ── CONNECTION LINES: devices to stakeholders ── -->
+              <!-- Mumbai → Hospital -->
+              <line x1="256" y1="170" x2="130" y2="115" stroke="#00C9B1" stroke-width="0.8" stroke-opacity="0.35" stroke-dasharray="5 3"/>
+              <!-- Mumbai → NGO -->
+              <line x1="260" y1="190" x2="95" y2="195" stroke="#00C9B1" stroke-width="0.8" stroke-opacity="0.35" stroke-dasharray="5 3"/>
+              <!-- Mumbai → City Gov -->
+              <line x1="264" y1="205" x2="118" y2="265" stroke="#00C9B1" stroke-width="0.8" stroke-opacity="0.35" stroke-dasharray="5 3"/>
+              <!-- Phoenix → Hospital (red — active alert) -->
+              <line x1="456" y1="148" x2="590" y2="100" stroke="#E55252" stroke-width="1.2" stroke-opacity="0.6"/>
+              <!-- Phoenix → City Gov -->
+              <line x1="458" y1="165" x2="600" y2="185" stroke="#E55252" stroke-width="1.2" stroke-opacity="0.6"/>
+              <!-- Phoenix → Emergency Mgmt -->
+              <line x1="452" y1="178" x2="588" y2="255" stroke="#E55252" stroke-width="1.2" stroke-opacity="0.5"/>
+              <!-- Nairobi → NGO -->
+              <line x1="276" y1="285" x2="95" y2="195" stroke="#E8A030" stroke-width="0.8" stroke-opacity="0.3" stroke-dasharray="5 3"/>
+              <!-- Nairobi → WHO -->
+              <line x1="278" y1="300" x2="110" y2="345" stroke="#E8A030" stroke-width="0.8" stroke-opacity="0.3" stroke-dasharray="5 3"/>
+              <!-- Dakar → WHO -->
+              <line x1="462" y1="290" x2="600" y2="340" stroke="#3DC98A" stroke-width="0.8" stroke-opacity="0.3" stroke-dasharray="5 3"/>
+              <!-- Dakar → UNHCR -->
+              <line x1="464" y1="272" x2="602" y2="255" stroke="#3DC98A" stroke-width="0.8" stroke-opacity="0.3" stroke-dasharray="5 3"/>
+
+              <!-- ── STAKEHOLDER NODES (left side) ── -->
+              <!-- Hospital Mumbai -->
+              <rect x="58" y="96" width="86" height="30" rx="5" fill="#A78BFA15" stroke="#A78BFA" stroke-width="0.8"/>
+              <text x="101" y="115" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#A78BFA">🏥 KEM Hospital</text>
+
+              <!-- NGO -->
+              <rect x="26" y="178" width="86" height="30" rx="5" fill="#4A9EE815" stroke="#4A9EE8" stroke-width="0.8"/>
+              <text x="69" y="197" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#4A9EE8">🤝 CARE India</text>
+
+              <!-- City Gov -->
+              <rect x="42" y="250" width="92" height="30" rx="5" fill="#4A9EE815" stroke="#4A9EE8" stroke-width="0.8"/>
+              <text x="88" y="269" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#4A9EE8">🏛 BMC Mumbai</text>
+
+              <!-- WHO -->
+              <rect x="35" y="327" width="86" height="30" rx="5" fill="#4A9EE815" stroke="#4A9EE8" stroke-width="0.8"/>
+              <text x="78" y="346" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#4A9EE8">🌍 WHO Africa</text>
+
+              <!-- ── STAKEHOLDER NODES (right side) ── -->
+              <!-- Phoenix Hospital -->
+              <rect x="554" y="82" width="110" height="30" rx="5" fill="#E5525215" stroke="#E55252" stroke-width="0.8"/>
+              <text x="609" y="101" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#E55252">🏥 Banner Health ⚠</text>
+
+              <!-- City Gov Phoenix -->
+              <rect x="560" y="168" width="108" height="30" rx="5" fill="#E5525215" stroke="#E55252" stroke-width="0.8"/>
+              <text x="614" y="187" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#E55252">🏛 Maricopa Cty ⚠</text>
+
+              <!-- Emergency Mgmt -->
+              <rect x="548" y="237" width="110" height="30" rx="5" fill="#E8A03015" stroke="#E8A030" stroke-width="0.8"/>
+              <text x="603" y="256" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#E8A030">🚨 AZ Emerg. Mgmt</text>
+
+              <!-- UNHCR -->
+              <rect x="558" y="237" width="86" height="30" rx="5" fill="#4A9EE815" stroke="#4A9EE8" stroke-width="0.8"/>
+              <!-- shift it down to avoid overlap -->
+              <rect x="558" y="305" width="86" height="30" rx="5" fill="#4A9EE815" stroke="#4A9EE8" stroke-width="0.8"/>
+              <text x="601" y="324" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#4A9EE8">🏕 UNHCR Dakar</text>
+
+              <!-- WHO right -->
+              <rect x="554" y="323" width="100" height="30" rx="5" fill="#3DC98A15" stroke="#3DC98A" stroke-width="0.8"/>
+              <text x="604" y="342" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#3DC98A">🌍 WHO West Africa</text>
+
+              <!-- Critical alert pulse rings around PHX -->
+              <circle cx="420" cy="160" r="50" fill="none" stroke="#E55252" stroke-width="0.6" stroke-opacity="0.4">
+                <animate attributeName="r" from="38" to="70" dur="2s" repeatCount="indefinite"/>
+                <animate attributeName="stroke-opacity" from="0.5" to="0" dur="2s" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+          </div>
+          <div class="hive-legend">
+            <div class="hive-legend-item"><div class="hive-legend-dot" style="background:var(--success)"></div>Cooling ready</div>
+            <div class="hive-legend-item"><div class="hive-legend-dot" style="background:var(--warn)"></div>Warning</div>
+            <div class="hive-legend-item"><div class="hive-legend-dot" style="background:var(--danger)"></div>Critical — emergency</div>
+            <div class="hive-legend-item"><div class="hive-legend-dot" style="background:var(--purple)"></div>Hospital</div>
+            <div class="hive-legend-item"><div class="hive-legend-dot" style="background:var(--info)"></div>NGO / Gov</div>
+          </div>
+        </div>
+
+        <!-- SIDEBAR: live activity feed -->
+        <div class="hive-sidebar">
+          <div class="card" style="padding:12px 14px">
+            <div style="font-size:12px;font-weight:500;color:var(--txt);margin-bottom:2px">Network activity</div>
+            <div style="font-size:11px;color:var(--txt3)">Live alert propagation log</div>
+          </div>
+          <div class="hive-activity" id="activity-feed">
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--danger)"></div>
+              <div class="activity-body">
+                <div class="activity-msg">🚨 <strong style="color:var(--danger)">Critical</strong> — S-PHX-01: heatwave active, ice not formed. Banner Health + Maricopa County notified.</div>
+                <div class="activity-meta">S-PHX-01 · Today 18:42</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--danger)"></div>
+              <div class="activity-body">
+                <div class="activity-msg">AZ Emergency Management alerted via SMS + portal. Response team dispatched.</div>
+                <div class="activity-meta">System · Today 18:43</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--success)"></div>
+              <div class="activity-body">
+                <div class="activity-msg">S-MUM-04 ice formation complete. KEM Hospital and CARE India notified: cooling ready tonight.</div>
+                <div class="activity-meta">S-MUM-04 · Today 14:55</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--warn)"></div>
+              <div class="activity-body">
+                <div class="activity-msg">S-NAI-02 solar yield low 3 days. WHO Africa flagged. Field check scheduled.</div>
+                <div class="activity-meta">S-NAI-02 · Yesterday 15:10</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--success)"></div>
+              <div class="activity-body">
+                <div class="activity-msg">S-DAK-03 heatwave event ended. UNHCR Dakar and WHO West Africa notified: cooling suspended.</div>
+                <div class="activity-meta">S-DAK-03 · Yesterday 22:15</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--info)"></div>
+              <div class="activity-body">
+                <div class="activity-msg">BMC Mumbai subscribed to S-MUM-04 heatwave alerts. Access granted.</div>
+                <div class="activity-meta">System · Apr 8 · 09:30</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ STAKEHOLDERS ═══ -->
+    <div class="page" id="page-stakeholders">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Stakeholders</div>
+          <div class="page-subtitle">Hospitals, NGOs, city agencies, and funders connected to your network</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="document.getElementById('modal-add-sh').classList.add('open')">+ Add stakeholder</button>
+      </div>
+
+      <div class="grid-4" style="margin-bottom:20px">
+        <div class="card card-purple"><div class="m-label">Total stakeholders</div><div class="m-val" id="sh-total">11</div><div class="m-sub">Across all device clusters</div></div>
+        <div class="card card-danger"><div class="m-label">Active emergency alerts</div><div class="m-val" id="sh-emergencies">1</div><div class="m-sub" id="sh-emergency-sub">3 stakeholders notified</div></div>
+        <div class="card card-teal"><div class="m-label">Alerts sent (30 days)</div><div class="m-val">47</div><div class="m-sub">Across all stakeholders</div></div>
+        <div class="card card-success"><div class="m-label">Avg response time</div><div class="m-val">8<span class="m-unit">min</span></div><div class="m-sub">For critical-tier alerts</div></div>
+      </div>
+
+      <div class="section-label">Hospitals &amp; Clinics</div>
+      <div class="stakeholder-grid" style="margin-bottom:18px">
+        <div class="sh-card">
+          <div class="sh-header">
+            <div class="sh-icon" style="background:#A78BFA15">🏥</div>
+            <div><div class="sh-name">KEM Hospital, Mumbai</div><div class="sh-type">Hospital · South Asia</div></div>
+          </div>
+          <div class="sh-subscriptions">
+            <span class="sub-tag sub-critical">Critical alerts</span>
+            <span class="sub-tag sub-warning">Heatwave warnings</span>
+            <span class="sub-tag sub-report">Weekly reports</span>
+          </div>
+          <div class="sh-meta">Devices: <strong>S-MUM-04</strong> · Contact: Dr. Patel · <strong>portal + SMS</strong></div>
+          <div class="sh-footer">
+            <div class="sh-status status-active"><div class="status-dot"></div>Active · 0 unread</div>
+            <button class="btn btn-ghost btn-sm">Manage</button>
+          </div>
+        </div>
+        <div class="sh-card" style="border-color:rgba(229,82,82,0.4)">
+          <div class="sh-header">
+            <div class="sh-icon" style="background:#E5525215">🏥</div>
+            <div><div class="sh-name">Banner Health, Phoenix</div><div class="sh-type">Hospital network · US Southwest</div></div>
+          </div>
+          <div class="sh-subscriptions">
+            <span class="sub-tag sub-critical">Critical alerts</span>
+            <span class="sub-tag sub-warning">Heatwave warnings</span>
+          </div>
+          <div class="sh-meta">Devices: <strong>S-PHX-01</strong> · Contact: EMR Coordinator · <strong>SMS + email</strong></div>
+          <div class="sh-footer">
+            <div class="sh-status" style="color:var(--danger)"><div class="status-dot"></div>1 active emergency</div>
+            <button class="btn btn-danger btn-sm">View alert</button>
+          </div>
+        </div>
+        <div class="sh-card">
+          <div class="sh-header">
+            <div class="sh-icon" style="background:#A78BFA15">🏥</div>
+            <div><div class="sh-name">Kenyatta National Hospital</div><div class="sh-type">Hospital · East Africa</div></div>
+          </div>
+          <div class="sh-subscriptions">
+            <span class="sub-tag sub-critical">Critical alerts</span>
+            <span class="sub-tag sub-report">Monthly reports</span>
+          </div>
+          <div class="sh-meta">Devices: <strong>S-NAI-02</strong> · Contact: Dr. Wanjiku · <strong>portal + email</strong></div>
+          <div class="sh-footer">
+            <div class="sh-status status-active"><div class="status-dot"></div>Active · 0 unread</div>
+            <button class="btn btn-ghost btn-sm">Manage</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label">City Government &amp; Emergency Management</div>
+      <div class="stakeholder-grid" style="margin-bottom:18px">
+        <div class="sh-card" style="border-color:rgba(229,82,82,0.4)">
+          <div class="sh-header">
+            <div class="sh-icon" style="background:#E5525215">🏛</div>
+            <div><div class="sh-name">Maricopa County, AZ</div><div class="sh-type">City/County Government · Phoenix metro</div></div>
+          </div>
+          <div class="sh-subscriptions">
+            <span class="sub-tag sub-all">All alerts</span>
+            <span class="sub-tag sub-report">Daily digest</span>
+          </div>
+          <div class="sh-meta">Devices: <strong>S-PHX-01</strong> · Contact: Emergency Ops · <strong>SMS + portal + email</strong></div>
+          <div class="sh-footer">
+            <div class="sh-status" style="color:var(--danger)"><div class="status-dot"></div>1 active emergency</div>
+            <button class="btn btn-danger btn-sm">View alert</button>
+          </div>
+        </div>
+        <div class="sh-card">
+          <div class="sh-header">
+            <div class="sh-icon" style="background:#4A9EE815">🏛</div>
+            <div><div class="sh-name">Brihanmumbai Municipal Corp.</div><div class="sh-type">City Government · Mumbai</div></div>
+          </div>
+          <div class="sh-subscriptions">
+            <span class="sub-tag sub-warning">Heatwave warnings</span>
+            <span class="sub-tag sub-report">Weekly reports</span>
+          </div>
+          <div class="sh-meta">Devices: <strong>S-MUM-04</strong> · Contact: Heat Action Plan desk · <strong>portal</strong></div>
+          <div class="sh-footer">
+            <div class="sh-status status-active"><div class="status-dot"></div>Active · 2 unread</div>
+            <button class="btn btn-ghost btn-sm">Manage</button>
+          </div>
+        </div>
+        <div class="sh-card">
+          <div class="sh-header">
+            <div class="sh-icon" style="background:#E8A03015">🚨</div>
+            <div><div class="sh-name">Arizona Emergency Management</div><div class="sh-type">State Agency · US Southwest</div></div>
+          </div>
+          <div class="sh-subscriptions">
+            <span class="sub-tag sub-critical">Critical alerts</span>
+          </div>
+          <div class="sh-meta">Devices: <strong>S-PHX-01</strong> · Contact: Operations center · <strong>SMS + API webhook</strong></div>
+          <div class="sh-footer">
+            <div class="sh-status" style="color:var(--warn)"><div class="status-dot"></div>Responding</div>
+            <button class="btn btn-warn btn-sm">Track response</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label">NGOs, UN Agencies &amp; Funders</div>
+      <div class="stakeholder-grid">
+        <div class="sh-card">
+          <div class="sh-header">
+            <div class="sh-icon" style="background:#4A9EE815">🤝</div>
+            <div><div class="sh-name">CARE India</div><div class="sh-type">NGO · South Asia</div></div>
+          </div>
+          <div class="sh-subscriptions">
+            <span class="sub-tag sub-warning">Heatwave warnings</span>
+            <span class="sub-tag sub-report">Impact reports</span>
+          </div>
+          <div class="sh-meta">Devices: <strong>S-MUM-04</strong> · Contact: Program lead · <strong>email</strong></div>
+          <div class="sh-footer">
+            <div class="sh-status status-active"><div class="status-dot"></div>Active</div>
+            <button class="btn btn-ghost btn-sm">Manage</button>
+          </div>
+        </div>
+        <div class="sh-card">
+          <div class="sh-header">
+            <div class="sh-icon" style="background:#4A9EE815">🌍</div>
+            <div><div class="sh-name">WHO Africa Regional Office</div><div class="sh-type">UN Agency · East &amp; West Africa</div></div>
+          </div>
+          <div class="sh-subscriptions">
+            <span class="sub-tag sub-warning">Warnings</span>
+            <span class="sub-tag sub-report">Monthly reports</span>
+          </div>
+          <div class="sh-meta">Devices: <strong>S-NAI-02, S-DAK-03</strong> · <strong>portal</strong></div>
+          <div class="sh-footer">
+            <div class="sh-status status-active"><div class="status-dot"></div>Active</div>
+            <button class="btn btn-ghost btn-sm">Manage</button>
+          </div>
+        </div>
+        <div class="sh-card">
+          <div class="sh-header">
+            <div class="sh-icon" style="background:#3DC98A15">🏕</div>
+            <div><div class="sh-name">UNHCR Dakar</div><div class="sh-type">UN Agency · West Africa</div></div>
+          </div>
+          <div class="sh-subscriptions">
+            <span class="sub-tag sub-all">All alerts</span>
+          </div>
+          <div class="sh-meta">Devices: <strong>S-DAK-03</strong> · Contact: Field coordinator · <strong>SMS + portal</strong></div>
+          <div class="sh-footer">
+            <div class="sh-status status-active"><div class="status-dot"></div>Active</div>
+            <button class="btn btn-ghost btn-sm">Manage</button>
+          </div>
+        </div>
+        <div class="sh-card" style="border-style:dashed;border-color:var(--border2);background:transparent;display:flex;align-items:center;justify-content:center;min-height:150px;cursor:pointer" onclick="document.getElementById('modal-add-sh').classList.add('open')">
+          <div style="text-align:center;color:var(--txt2)">
+            <div style="font-size:24px;margin-bottom:8px">+</div>
+            <div style="font-size:13px;font-weight:500">Add stakeholder</div>
+            <div style="font-size:11px;color:var(--txt3);margin-top:3px">Hospital, NGO, city agency, funder</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ ALERTS ═══ -->
+    <div class="page" id="page-alerts">
+      <div class="page-header">
+        <div><div class="page-title">Alerts</div><div class="page-subtitle">Network-wide triage events — devices and stakeholder notifications</div></div>
+        <button class="btn btn-ghost btn-sm">Export CSV</button>
+      </div>
+      <div class="alerts-summary">
+        <div class="card card-danger"><div class="m-label">Critical</div><div class="m-val" style="color:var(--danger)" id="alt-critical">1</div><div class="m-sub" id="alt-critical-sub">3 stakeholders alerted</div></div>
+        <div class="card card-warn"><div class="m-label">Warnings</div><div class="m-val" style="color:var(--warn)" id="alt-warnings">2</div><div class="m-sub">Review within 24h</div></div>
+        <div class="card card-blue"><div class="m-label">Informational</div><div class="m-val" style="color:var(--info)" id="alt-info">4</div><div class="m-sub">No action required</div></div>
+        <div class="card card-success"><div class="m-label">Resolved today</div><div class="m-val" style="color:var(--success)" id="alt-resolved">7</div><div class="m-sub">Closed in last 24h</div></div>
+      </div>
+      <div class="alerts-toolbar">
+        <input type="text" placeholder="Search alerts…" style="background:var(--bg2)">
+        <select style="width:auto;background:var(--bg2)"><option>All severities</option><option>Critical</option><option>Warning</option><option>Info</option></select>
+        <select style="width:auto;background:var(--bg2)"><option>All devices</option><option>S-MUM-04</option><option>S-PHX-01</option><option>S-NAI-02</option><option>S-DAK-03</option></select>
+        <select style="width:auto;background:var(--bg2)"><option>All statuses</option><option>Active</option><option>Resolved</option></select>
+      </div>
+      <div class="alerts-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Severity</th><th>Device</th><th>Alert</th><th>Stakeholders notified</th><th>Time</th><th>Status</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="alerts-tbody">
+            <tr>
+              <td><span class="sev-badge sev-critical"><span class="sev-dot"></span>Critical</span></td>
+              <td><span class="device-mono">S-PHX-01</span></td>
+              <td class="alert-msg">Heatwave active — ice not formed. Triage: emergency condition tonight.</td>
+              <td><div class="notified-chips"><span class="notif-chip" style="color:var(--purple);border-color:rgba(167,139,250,0.3)">🏥 Banner Health</span><span class="notif-chip" style="color:var(--danger);border-color:rgba(229,82,82,0.3)">🏛 Maricopa</span><span class="notif-chip" style="color:var(--warn);border-color:rgba(232,160,48,0.3)">🚨 AZ Emerg.</span></div></td>
+              <td class="td-time">Today 18:42</td>
+              <td><span style="color:var(--danger);font-size:12px;font-weight:500">● Active</span></td>
+              <td><button class="btn btn-sm btn-danger">Respond</button></td>
+            </tr>
+            <tr>
+              <td><span class="sev-badge sev-warning"><span class="sev-dot"></span>Warning</span></td>
+              <td><span class="device-mono">S-MUM-04</span></td>
+              <td class="alert-msg">Field inspection overdue — last check 6 days ago.</td>
+              <td><div class="notified-chips"><span class="notif-chip">Internal only</span></div></td>
+              <td class="td-time">Today 09:00</td>
+              <td><span style="color:var(--warn);font-size:12px;font-weight:500">● Active</span></td>
+              <td><button class="btn btn-sm btn-ghost">Assign</button></td>
+            </tr>
+            <tr>
+              <td><span class="sev-badge sev-warning"><span class="sev-dot"></span>Warning</span></td>
+              <td><span class="device-mono">S-NAI-02</span></td>
+              <td class="alert-msg">Solar yield below 60% for 3 consecutive days.</td>
+              <td><div class="notified-chips"><span class="notif-chip" style="color:var(--info);border-color:rgba(74,158,232,0.3)">🌍 WHO Africa</span></div></td>
+              <td class="td-time">Yesterday 15:10</td>
+              <td><span style="color:var(--warn);font-size:12px;font-weight:500">● Active</span></td>
+              <td><button class="btn btn-sm btn-ghost">Assign</button></td>
+            </tr>
+            <tr>
+              <td><span class="sev-badge sev-ok"><span class="sev-dot"></span>OK</span></td>
+              <td><span class="device-mono">S-MUM-04</span></td>
+              <td class="alert-msg">Ice formation complete: 18.4kg (92%). Cooling ready.</td>
+              <td><div class="notified-chips"><span class="notif-chip" style="color:var(--purple);border-color:rgba(167,139,250,0.3)">🏥 KEM Hospital</span><span class="notif-chip" style="color:var(--info);border-color:rgba(74,158,232,0.3)">🤝 CARE India</span><span class="notif-chip" style="color:var(--info);border-color:rgba(74,158,232,0.3)">🏛 BMC Mumbai</span></div></td>
+              <td class="td-time">Today 14:55</td>
+              <td><span style="color:var(--success);font-size:12px">✓ Resolved</span></td>
+              <td><button class="btn btn-sm btn-ghost">View</button></td>
+            </tr>
+            <tr>
+              <td><span class="sev-badge sev-info"><span class="sev-dot"></span>Info</span></td>
+              <td><span class="device-mono">S-DAK-03</span></td>
+              <td class="alert-msg">Night temperature dropped below 28°C. Cooling suspended automatically.</td>
+              <td><div class="notified-chips"><span class="notif-chip" style="color:var(--success);border-color:rgba(61,201,138,0.3)">🏕 UNHCR Dakar</span><span class="notif-chip" style="color:var(--info);border-color:rgba(74,158,232,0.3)">🌍 WHO W.Africa</span></div></td>
+              <td class="td-time">Yesterday 22:15</td>
+              <td><span style="color:var(--success);font-size:12px">✓ Resolved</span></td>
+              <td><button class="btn btn-sm btn-ghost">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ DEVICES ═══ -->
+    <div class="page" id="page-devices">
+      <div class="page-header">
+        <div><div class="page-title">Register a device</div><div class="page-subtitle">Add a Sentinel unit to your network</div></div>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-num done">✓</div><div class="step-label">Account</div></div>
+        <div class="step-arrow">›</div>
+        <div class="step"><div class="step-num active">2</div><div class="step-label active">Register device</div></div>
+        <div class="step-arrow">›</div>
+        <div class="step"><div class="step-num">3</div><div class="step-label">Assign stakeholders</div></div>
+        <div class="step-arrow">›</div>
+        <div class="step"><div class="step-num">4</div><div class="step-label">Go live</div></div>
+      </div>
+      <div class="create-wrap">
+        <div class="card" style="margin-bottom:12px">
+          <div style="font-size:13px;font-weight:500;color:var(--txt);margin-bottom:14px">Device identity</div>
+          <div class="form-row">
+            <div class="form-group"><label>Device name</label><input type="text" value="Sentinel-Mumbai-04"></div>
+            <div class="form-group"><label>Serial / Unit ID</label><input type="text" value="S-MUM-04" style="font-family:var(--mono)"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Cluster / Zone</label><input type="text" placeholder="Mumbai Cluster 04"></div>
+            <div class="form-group"><label>Device type</label><select><option>Sentinel Mk I (Solar-Ice)</option><option>Sentinel Mk II</option><option>Sentinel Field (Portable)</option></select></div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:12px">
+          <div style="font-size:13px;font-weight:500;color:var(--txt);margin-bottom:14px">Location</div>
+          <div class="form-group"><label>Deployment site</label><input type="text" value="Dharavi Community Centre, Block 7"></div>
+          <div class="form-row">
+            <div class="form-group"><label>City / Region</label><input type="text" value="Mumbai"></div>
+            <div class="form-group"><label>Country</label><select><option selected>India</option><option>Kenya</option><option>Senegal</option><option>Bangladesh</option><option>United States</option><option>Other</option></select></div>
+          </div>
+          <div class="form-row-3">
+            <div class="form-group"><label>Latitude</label><input type="text" value="19.0372" style="font-family:var(--mono)"></div>
+            <div class="form-group"><label>Longitude</label><input type="text" value="72.8552" style="font-family:var(--mono)"></div>
+            <div class="form-group"><label>Elevation (m)</label><input type="text" value="11" style="font-family:var(--mono)"></div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:12px">
+          <div style="font-size:13px;font-weight:500;color:var(--txt);margin-bottom:14px">Solar &amp; cooling config</div>
+          <div class="form-row">
+            <div class="form-group"><label>Solar panel (W)</label><input type="number" value="400" style="font-family:var(--mono)"></div>
+            <div class="form-group"><label>Ice target (kg/day)</label><input type="number" value="20" style="font-family:var(--mono)"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>28°C threshold alert</label><select><option>Enabled — trigger at 28°C</option><option>Enabled — trigger at 30°C</option><option>Disabled</option></select></div>
+            <div class="form-group"><label>Triage intelligence</label><select><option>Enabled (recommended)</option><option>Disabled</option></select></div>
+          </div>
+          <div class="form-group"><label>Field technician notes</label><textarea>Entry via south gate. Contact Priya on +91-98XXX-XXXXX.</textarea></div>
+        </div>
+        <div class="device-preview">
+          <div class="dp-label">Device preview</div>
+          <div class="dp-row"><span class="dp-key">Name</span><span class="dp-val">Sentinel-Mumbai-04</span></div>
+          <div class="dp-row"><span class="dp-key">Unit ID</span><span class="dp-val">S-MUM-04</span></div>
+          <div class="dp-row"><span class="dp-key">Location</span><span class="dp-val">Dharavi, Mumbai · India</span></div>
+          <div class="dp-row"><span class="dp-key">Coordinates</span><span class="dp-val">19.0372, 72.8552</span></div>
+          <div class="dp-row"><span class="dp-key">Solar</span><span class="dp-val">400W · 20kg/day target</span></div>
+          <div class="dp-row"><span class="dp-key">Next step</span><span class="dp-val" style="color:var(--teal)">Assign stakeholders →</span></div>
+        </div>
+        <div id="device-error" style="display:none;margin-bottom:10px;padding:10px;background:var(--danger-bg);color:var(--danger);border-radius:var(--r-sm);font-size:13px;"></div>
+        <div id="device-success" style="display:none;margin-bottom:10px;padding:10px;background:var(--success-bg);color:var(--success);border-radius:var(--r-sm);font-size:13px;"></div>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="handleDeviceRegister()">Register &amp; assign stakeholders →</button>
+          <button class="btn btn-ghost">Save draft</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /app-body -->
+</div><!-- /app -->
+
+<!-- ═══ ADD STAKEHOLDER MODAL ═══ -->
+<div class="modal-overlay" id="modal-add-sh">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Add stakeholder</h3>
+      <button class="modal-close" onclick="document.getElementById('modal-add-sh').classList.remove('open')">×</button>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Organization name</label><input type="text" placeholder="e.g. Aga Khan Hospital"></div>
+      <div class="form-group"><label>Type</label><select><option>Hospital / Clinic</option><option>City Government</option><option>Emergency Management</option><option>NGO</option><option>UN Agency</option><option>Donor / Funder</option></select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Contact name</label><input type="text" placeholder="Dr. Amara Diallo"></div>
+      <div class="form-group"><label>Contact email</label><input type="email" placeholder="contact@org.org"></div>
+    </div>
+    <div class="form-group"><label>Contact phone (for SMS alerts)</label><input type="tel" placeholder="+1 555 000 0000"></div>
+    <div class="form-group"><label>Linked devices</label><select><option>All devices</option><option>S-MUM-04 · Mumbai</option><option>S-PHX-01 · Phoenix</option><option>S-NAI-02 · Nairobi</option><option>S-DAK-03 · Dakar</option></select></div>
+    <hr class="divider">
+    <div style="font-size:12px;font-weight:500;color:var(--txt);margin-bottom:10px">Alert subscriptions</div>
+    <div class="alert-toggle-row">
+      <div><div class="toggle-label">Critical alerts</div><div class="toggle-desc">Heatwave + no ice — emergency condition</div></div>
+      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="alert-toggle-row">
+      <div><div class="toggle-label">Heatwave warnings</div><div class="toggle-desc">Active heatwave event in device zone</div></div>
+      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="alert-toggle-row">
+      <div><div class="toggle-label">Cooling ready notifications</div><div class="toggle-desc">Ice formed — cooling confirmed for tonight</div></div>
+      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="alert-toggle-row">
+      <div><div class="toggle-label">Device maintenance alerts</div><div class="toggle-desc">Solar, inspection, or hardware issues</div></div>
+      <div class="toggle" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="alert-toggle-row">
+      <div><div class="toggle-label">Impact reports</div><div class="toggle-desc">Weekly and seasonal summaries</div></div>
+      <div class="toggle" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <hr class="divider">
+    <div class="form-group"><label>Delivery method</label><select><option>Portal + SMS + Email</option><option>Portal + Email</option><option>SMS only</option><option>Portal only</option><option>API webhook</option></select></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="document.getElementById('modal-add-sh').classList.remove('open')">Add stakeholder →</button>
+      <button class="btn btn-ghost" onclick="document.getElementById('modal-add-sh').classList.remove('open')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ═══ EXISTING NAV FUNCTIONS ═══ */
+  function show(id){document.querySelectorAll('.auth-page').forEach(p=>p.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');}
+  function enterApp(){document.querySelectorAll('.auth-page').forEach(p=>p.classList.add('hidden'));document.getElementById('app').classList.add('active');if(window._sentinelData)populateAll(window._sentinelData);}
+  function signOut(){document.getElementById('app').classList.remove('active');document.querySelectorAll('.auth-page').forEach(p=>p.classList.add('hidden'));document.getElementById('page-login').classList.remove('hidden');}
+  function navTo(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+id).classList.add('active');document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));if(btn)btn.classList.add('active');}
+  document.getElementById('modal-add-sh').addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+
+  /* ═══ DATA LOADING ═══ */
+  let _data = null;
+  let _currentDeviceId = null;
+
+  fetch('sentinel-mock-data.json')
+    .then(r => r.json())
+    .then(data => {
+      _data = data;
+      window._sentinelData = data;
+      populateAll(data);
+    })
+    .catch(err => console.warn('Could not load sentinel-mock-data.json:', err));
+
+  function populateAll(data) {
+    populateDeviceSelector(data);
+    populateDashboard(data, data.devices[0]);
+    populateNetwork(data);
+    populateAlerts(data);
+    populateActivityFeed(data);
+    updateNavBadge(data);
+  }
+
+  /* ═══ DEVICE SELECTOR ═══ */
+  function populateDeviceSelector(data) {
+    const sel = document.getElementById('device-selector');
+    sel.innerHTML = '';
+    data.devices.forEach(d => {
+      const opt = document.createElement('option');
+      opt.value = d.id;
+      opt.textContent = d.id + ' · ' + d.city;
+      sel.appendChild(opt);
+    });
+    sel.addEventListener('change', () => {
+      const dev = data.devices.find(d => d.id === sel.value);
+      if (dev) populateDashboard(data, dev);
+    });
+  }
+
+  /* ═══ DASHBOARD ═══ */
+  function populateDashboard(data, dev) {
+    _currentDeviceId = dev.id;
+    const r = dev.readings;
+    const c = dev.climate;
+
+    // Header
+    const statusLabel = r.heatwave_active
+      ? (r.ice_formed_kg > 0 ? 'Cooling Ready' : 'Critical — No Ice')
+      : 'Standby';
+    document.getElementById('dash-title').textContent = statusLabel;
+    document.getElementById('dash-subtitle').textContent =
+      dev.city + ' Cluster · ' + dev.site;
+
+    // Triage banner
+    const banner = document.getElementById('triage-banner');
+    const dot = document.getElementById('triage-dot');
+    const triTitle = document.getElementById('triage-title');
+    banner.className = 'triage-banner';
+    dot.className = 'triage-dot';
+    if (dev.status === 'critical') {
+      banner.classList.add('triage-alert');
+      dot.classList.add('dot-alert');
+      triTitle.style.color = 'var(--danger)';
+      triTitle.textContent = 'Triage: Emergency — No Cooling Tonight';
+      document.getElementById('triage-desc').textContent =
+        'Heatwave active but ice has NOT formed. Stakeholders alerted. Immediate action required.';
+      document.getElementById('triage-pills').innerHTML =
+        '<span class="tpill tpill-danger">Heatwave Active</span><span class="tpill tpill-danger">No Ice — Emergency</span>';
+    } else if (dev.status === 'warning') {
+      banner.classList.add('triage-warn');
+      dot.classList.add('dot-warn');
+      triTitle.style.color = 'var(--warn)';
+      triTitle.textContent = 'Triage: Warning — Partial Cooling';
+      document.getElementById('triage-desc').textContent =
+        'Ice partially formed. Solar yield low. Monitor closely — cooling may be insufficient tonight.';
+      document.getElementById('triage-pills').innerHTML =
+        '<span class="tpill tpill-warn">Low Solar Yield</span><span class="tpill tpill-warn">Partial Ice</span>';
+    } else {
+      banner.classList.add('triage-ok');
+      dot.classList.add('dot-ok');
+      triTitle.style.color = 'var(--success)';
+      triTitle.textContent = r.heatwave_active ? 'Triage: Cooling Ready' : 'Triage: Standby — No Heatwave';
+      document.getElementById('triage-desc').textContent = r.heatwave_active
+        ? 'Heatwave detected + ice successfully formed — unit will deliver cooling tonight. Stakeholders notified.'
+        : 'No active heatwave. Device on standby. All systems nominal.';
+      document.getElementById('triage-pills').innerHTML = r.heatwave_active
+        ? '<span class="tpill tpill-warn">Heatwave Active</span><span class="tpill tpill-ok">Ice Formed</span>'
+        : '<span class="tpill tpill-ok">All Clear</span>';
+    }
+
+    // Thermal comfort
+    const feelsLike = Math.round(r.outdoor_temp_c + (r.humidity_pct > 50 ? (r.humidity_pct - 50) * 0.1 : 0));
+    document.getElementById('d-outdoor-temp').textContent = r.outdoor_temp_c;
+    document.getElementById('d-outdoor-sub').textContent = '↑ ' + (r.outdoor_temp_c - 28).toFixed(1) + '° above 28°C comfort line';
+    document.getElementById('d-night-temp').textContent = r.indoor_temp_c;
+    document.getElementById('d-humidity').textContent = r.humidity_pct;
+    document.getElementById('d-humidity-sub').textContent = r.humidity_pct > 70 ? 'High — reduces evaporative relief' : 'Moderate humidity';
+    document.getElementById('d-feels-like').textContent = feelsLike;
+
+    // Passive cooling
+    document.getElementById('d-ice-status').textContent = r.ice_status.split('—')[0].trim();
+    document.getElementById('d-ice-kg').textContent = r.ice_formed_kg;
+    document.getElementById('d-ice-bar').style.width = r.ice_target_pct + '%';
+    document.getElementById('d-ice-pct').textContent = r.ice_target_pct + '% of daily target';
+    document.getElementById('d-delta-t').textContent = r.delta_t_c;
+    document.getElementById('d-cooling-hrs').textContent = r.cooling_window_hrs;
+    document.getElementById('d-melt-rate').textContent = 'At ' + r.melt_rate_kg_hr + ' kg/hr melt rate';
+
+    // Climate context
+    document.getElementById('d-hw-duration').textContent = c.heatwave_duration_days;
+    document.getElementById('d-hw-day').textContent = 'Day ' + c.heatwave_current_day + ' of current event';
+    document.getElementById('d-uhi').textContent = c.urban_heat_island_c;
+    document.getElementById('d-night-avg').textContent = c.night_avg_30d_c;
+    document.getElementById('d-night-delta').textContent = '↑ ' + c.night_avg_30d_delta_vs_2023 + '° vs. same period 2023';
+    document.getElementById('d-hw-events').textContent = c.heatwave_events_this_season;
+
+    // Operational
+    document.getElementById('d-solar-kwh').textContent = r.solar_yield_kwh;
+    document.getElementById('d-solar-bar').style.width = r.solar_capacity_pct + '%';
+    document.getElementById('d-solar-pct').textContent = r.solar_capacity_pct + '% of peak capacity';
+    document.getElementById('d-uptime').textContent = r.uptime_30d_pct;
+    document.getElementById('d-field-check').textContent = r.last_field_check_days_ago + ' days ago';
+    const fieldWarn = document.getElementById('d-field-warn');
+    fieldWarn.textContent = r.last_field_check_days_ago >= 5 ? '⚠ Inspection recommended' : '✓ Recently inspected';
+    fieldWarn.className = r.last_field_check_days_ago >= 5 ? 'm-sub-warn' : 'm-sub';
+    document.getElementById('d-sh-notified').textContent = r.stakeholders_notified;
+  }
+
+  /* ═══ NETWORK ═══ */
+  function populateNetwork(data) {
+    const net = data.network;
+    document.getElementById('net-online').textContent = net.onlineDevices;
+    document.getElementById('net-total').textContent = net.totalDevices;
+    document.getElementById('net-critical').textContent = net.criticalAlerts;
+    const critDev = data.devices.find(d => d.status === 'critical');
+    document.getElementById('net-critical-sub').textContent = critDev
+      ? critDev.city + ' · heatwave + no ice' : 'No critical alerts';
+    document.getElementById('net-stakeholders').textContent = net.activeStakeholders;
+    document.getElementById('net-uptime').textContent = net.uptimePercent;
+  }
+
+  /* ═══ ACTIVITY FEED ═══ */
+  function populateActivityFeed(data) {
+    const feed = document.getElementById('activity-feed');
+    if (!feed) return;
+    feed.innerHTML = data.activityFeed.map(item => `
+      <div class="activity-item">
+        <div class="activity-dot" style="background:var(--${item.color})"></div>
+        <div class="activity-body">
+          <div class="activity-msg">${item.message}</div>
+          <div class="activity-meta">${item.source} · ${item.display}</div>
+        </div>
+      </div>`).join('');
+  }
+
+  /* ═══ ALERTS ═══ */
+  function populateAlerts(data) {
+    const s = data.alertSummary;
+    document.getElementById('alt-critical').textContent = s.critical;
+    document.getElementById('alt-critical-sub').textContent = s.critical_stakeholders_alerted + ' stakeholders alerted';
+    document.getElementById('alt-warnings').textContent = s.warnings;
+    document.getElementById('alt-info').textContent = s.informational;
+    document.getElementById('alt-resolved').textContent = s.resolved_today;
+
+    const sevMap = {
+      critical: ['sev-critical','Critical'],
+      warning:  ['sev-warning','Warning'],
+      info:     ['sev-info','Info'],
+      ok:       ['sev-ok','OK']
+    };
+
+    const tbody = document.getElementById('alerts-tbody');
+    tbody.innerHTML = data.alerts.map(a => {
+      const [cls, label] = sevMap[a.severity] || ['sev-info','Info'];
+      const notified = a.stakeholders_notified.length
+        ? a.stakeholders_notified.map(sid => {
+            const sh = data.stakeholders.find(s => s.id === sid);
+            return sh ? `<span class="notif-chip">${sh.icon} ${sh.name}</span>` : '';
+          }).join('')
+        : `<span class="notif-chip">${a.note || 'Internal only'}</span>`;
+      const t = new Date(a.timestamp);
+      const timeStr = t.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+      const isToday = new Date().toDateString() === t.toDateString();
+      const displayTime = (isToday ? 'Today ' : 'Yesterday ') + timeStr;
+      const statusHtml = a.status === 'active'
+        ? `<span style="color:var(--danger);font-size:12px;font-weight:500">● Active</span>`
+        : `<span style="color:var(--success);font-size:12px">✓ Resolved</span>`;
+      const actionBtn = a.status === 'active' && a.severity === 'critical'
+        ? `<button class="btn btn-sm btn-danger">Respond</button>`
+        : `<button class="btn btn-sm btn-ghost">${a.status === 'active' ? 'Assign' : 'View'}</button>`;
+      return `<tr>
+        <td><span class="sev-badge ${cls}"><span class="sev-dot"></span>${label}</span></td>
+        <td><span class="device-mono">${a.device_id}</span></td>
+        <td class="alert-msg">${a.message}</td>
+        <td><div class="notified-chips">${notified}</div></td>
+        <td class="td-time">${displayTime}</td>
+        <td>${statusHtml}</td>
+        <td>${actionBtn}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  /* ═══ NAV BADGE ═══ */
+  function updateNavBadge(data) {
+    const active = data.alerts.filter(a => a.status === 'active').length;
+    const badge = document.getElementById('nav-alert-badge');
+    badge.textContent = active + ' active alert' + (active !== 1 ? 's' : '');
+  }
+
+  /* ═══ THEME TOGGLE ═══ */
+  function toggleSentinelTheme() {
+    document.body.classList.toggle('light-mode');
+    const btn = document.getElementById('sentinel-theme-btn');
+    btn.textContent = document.body.classList.contains('light-mode') ? '🌑' : '🌙';
+    localStorage.setItem('sentinel-theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+  }
+  if (localStorage.getItem('sentinel-theme') === 'light') {
+    document.body.classList.add('light-mode');
+    document.getElementById('sentinel-theme-btn').textContent = '🌑';
+  }
+
+  /* ═══ MONGODB via NETLIFY FUNCTION ═══ */
+  const API = '/.netlify/functions/mongo';
+
+  async function handleSignup() {
+    const firstname = document.getElementById('signup-firstname').value.trim();
+    const lastname  = document.getElementById('signup-lastname').value.trim();
+    const org       = document.getElementById('signup-org').value.trim();
+    const email     = document.getElementById('signup-email').value.trim();
+    const role      = document.getElementById('signup-role').value;
+    const password  = document.getElementById('signup-password').value;
+    const confirm   = document.getElementById('signup-confirm').value;
+    const errBox    = document.getElementById('signup-error');
+    const okBox     = document.getElementById('signup-success');
+    errBox.style.display = 'none';
+    okBox.style.display  = 'none';
+
+    if (!firstname || !email || !password) {
+      errBox.textContent = 'Please fill in all required fields.';
+      errBox.style.display = 'block'; return;
+    }
+    if (password !== confirm) {
+      errBox.textContent = 'Passwords do not match.';
+      errBox.style.display = 'block'; return;
+    }
+    try {
+      const res  = await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'signup', first_name: firstname, last_name: lastname, organization: org, email, role, password })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        okBox.textContent = data.message || 'Account created! Welcome to the Sentinel network.';
+        okBox.style.display = 'block';
+        setTimeout(() => enterApp(), 1200);
+      } else {
+        errBox.textContent = data.error || 'Signup failed. Please try again.';
+        errBox.style.display = 'block';
+      }
+    } catch(e) {
+      errBox.textContent = 'Network error — please try again.';
+      errBox.style.display = 'block';
+    }
+  }
+
+  async function handleDeviceRegister() {
+    const errBox = document.getElementById('device-error');
+    const okBox  = document.getElementById('device-success');
+    errBox.style.display = 'none';
+    okBox.style.display  = 'none';
+
+    const inputs = document.querySelectorAll('#page-devices input, #page-devices select, #page-devices textarea');
+    const vals = {};
+    inputs.forEach(i => { if(i.id || i.name) vals[i.id || i.name] = i.value; });
+
+    const deviceName = document.querySelector('#page-devices input[type="text"]')?.value?.trim();
+    const unitId     = document.querySelectorAll('#page-devices input[type="text"]')[1]?.value?.trim();
+
+    if (!deviceName || !unitId) {
+      errBox.textContent = 'Device name and Unit ID are required.';
+      errBox.style.display = 'block'; return;
+    }
+    try {
+      const allInputs = document.querySelectorAll('#page-devices input');
+      const res = await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'register_device',
+          device_name: allInputs[0]?.value,
+          unit_id:     allInputs[1]?.value,
+          cluster:     allInputs[2]?.value,
+          site:        allInputs[4]?.value,
+          city:        allInputs[5]?.value,
+          lat:         allInputs[7]?.value,
+          lng:         allInputs[8]?.value,
+          elevation:   allInputs[9]?.value,
+          solar_w:     allInputs[10]?.value,
+          ice_kg:      allInputs[11]?.value,
+          notes:       document.querySelector('#page-devices textarea')?.value
+        })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        okBox.textContent = data.message || 'Device registered successfully!';
+        okBox.style.display = 'block';
+        setTimeout(() => navTo('stakeholders', document.querySelectorAll('.nav-link')[2]), 1500);
+      } else {
+        errBox.textContent = data.error || 'Registration failed.';
+        errBox.style.display = 'block';
+      }
+    } catch(e) {
+      errBox.textContent = 'Network error — please try again.';
+      errBox.style.display = 'block';
+    }
+  }
+
+</script>
+</body>
+</html>
