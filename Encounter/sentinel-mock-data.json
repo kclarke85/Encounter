@@ -1,0 +1,499 @@
+{
+  "_info": "Sentinel Mock Data — maps to all sections of sentinel-portal-v2.html",
+  "_version": "1.0.0",
+  "_lastUpdated": "2026-04-19T18:42:00Z",
+
+  "network": {
+    "onlineDevices": 4,
+    "totalDevices": 4,
+    "criticalAlerts": 1,
+    "activeStakeholders": 11,
+    "uptimePercent": 99.1
+  },
+
+  "devices": [
+    {
+      "id": "S-MUM-04",
+      "name": "Sentinel-Mumbai-04",
+      "city": "Mumbai",
+      "country": "India",
+      "site": "Dharavi Community Centre, Block 7",
+      "lat": 19.0372,
+      "lng": 72.8552,
+      "elevation_m": 11,
+      "type": "Sentinel Mk I (Solar-Ice)",
+      "status": "ok",
+      "solar_panel_w": 400,
+      "ice_target_kg_day": 20,
+      "threshold_alert_c": 28,
+      "triage_intelligence": true,
+      "technician_notes": "Entry via south gate. Contact Priya on +91-98XXX-XXXXX.",
+      "readings": {
+        "outdoor_temp_c": 33.4,
+        "indoor_temp_c": 28.7,
+        "humidity_pct": 78,
+        "ice_formed_kg": 18.4,
+        "ice_target_pct": 92,
+        "delta_t_c": -4.7,
+        "cooling_window_hrs": 22,
+        "melt_rate_kg_hr": 0.8,
+        "solar_yield_kwh": 6.8,
+        "solar_capacity_pct": 85,
+        "uptime_30d_pct": 98.2,
+        "last_field_check_days_ago": 6,
+        "stakeholders_notified": 6,
+        "heatwave_active": false,
+        "ice_status": "Complete"
+      },
+      "climate": {
+        "heatwave_duration_days": 7,
+        "heatwave_current_day": 4,
+        "urban_heat_island_c": 3.2,
+        "night_avg_30d_c": 29.6,
+        "night_avg_30d_delta_vs_2023": 1.8,
+        "heatwave_events_this_season": 3
+      },
+      "stakeholder_ids": ["SH-001", "SH-002", "SH-003"]
+    },
+    {
+      "id": "S-PHX-01",
+      "name": "Sentinel-Phoenix-01",
+      "city": "Phoenix",
+      "country": "United States",
+      "site": "South Mountain Community Centre",
+      "lat": 33.3528,
+      "lng": -112.0657,
+      "elevation_m": 340,
+      "type": "Sentinel Mk I (Solar-Ice)",
+      "status": "critical",
+      "solar_panel_w": 400,
+      "ice_target_kg_day": 20,
+      "threshold_alert_c": 28,
+      "triage_intelligence": true,
+      "technician_notes": "Access via east parking lot. Contact facility manager.",
+      "readings": {
+        "outdoor_temp_c": 41.2,
+        "indoor_temp_c": 39.8,
+        "humidity_pct": 12,
+        "ice_formed_kg": 0,
+        "ice_target_pct": 0,
+        "delta_t_c": -1.4,
+        "cooling_window_hrs": 0,
+        "melt_rate_kg_hr": 0,
+        "solar_yield_kwh": 7.1,
+        "solar_capacity_pct": 89,
+        "uptime_30d_pct": 96.4,
+        "last_field_check_days_ago": 2,
+        "stakeholders_notified": 3,
+        "heatwave_active": true,
+        "ice_status": "Not formed — emergency condition"
+      },
+      "climate": {
+        "heatwave_duration_days": 5,
+        "heatwave_current_day": 5,
+        "urban_heat_island_c": 4.8,
+        "night_avg_30d_c": 34.1,
+        "night_avg_30d_delta_vs_2023": 2.3,
+        "heatwave_events_this_season": 4
+      },
+      "stakeholder_ids": ["SH-004", "SH-005", "SH-006"]
+    },
+    {
+      "id": "S-NAI-02",
+      "name": "Sentinel-Nairobi-02",
+      "city": "Nairobi",
+      "country": "Kenya",
+      "site": "Kibera Health Outpost, Zone C",
+      "lat": -1.3133,
+      "lng": 36.7879,
+      "elevation_m": 1680,
+      "type": "Sentinel Mk II",
+      "status": "warning",
+      "solar_panel_w": 350,
+      "ice_target_kg_day": 18,
+      "threshold_alert_c": 28,
+      "triage_intelligence": true,
+      "technician_notes": "Solar panels may need repositioning — shading issue noted.",
+      "readings": {
+        "outdoor_temp_c": 29.6,
+        "indoor_temp_c": 27.1,
+        "humidity_pct": 65,
+        "ice_formed_kg": 9.2,
+        "ice_target_pct": 51,
+        "delta_t_c": -2.5,
+        "cooling_window_hrs": 11,
+        "melt_rate_kg_hr": 0.8,
+        "solar_yield_kwh": 3.1,
+        "solar_capacity_pct": 53,
+        "uptime_30d_pct": 94.7,
+        "last_field_check_days_ago": 3,
+        "stakeholders_notified": 2,
+        "heatwave_active": false,
+        "ice_status": "Partial — low solar yield"
+      },
+      "climate": {
+        "heatwave_duration_days": 3,
+        "heatwave_current_day": 2,
+        "urban_heat_island_c": 2.1,
+        "night_avg_30d_c": 28.4,
+        "night_avg_30d_delta_vs_2023": 1.2,
+        "heatwave_events_this_season": 2
+      },
+      "stakeholder_ids": ["SH-007", "SH-008"]
+    },
+    {
+      "id": "S-DAK-03",
+      "name": "Sentinel-Dakar-03",
+      "city": "Dakar",
+      "country": "Senegal",
+      "site": "Médina Refugee Support Centre",
+      "lat": 14.6937,
+      "lng": -17.4441,
+      "elevation_m": 22,
+      "type": "Sentinel Field (Portable)",
+      "status": "ok",
+      "solar_panel_w": 300,
+      "ice_target_kg_day": 15,
+      "threshold_alert_c": 28,
+      "triage_intelligence": true,
+      "technician_notes": "Portable unit — check mounting bracket weekly.",
+      "readings": {
+        "outdoor_temp_c": 27.3,
+        "indoor_temp_c": 24.9,
+        "humidity_pct": 71,
+        "ice_formed_kg": 15.0,
+        "ice_target_pct": 100,
+        "delta_t_c": -2.4,
+        "cooling_window_hrs": 18,
+        "melt_rate_kg_hr": 0.8,
+        "solar_yield_kwh": 5.9,
+        "solar_capacity_pct": 98,
+        "uptime_30d_pct": 99.6,
+        "last_field_check_days_ago": 1,
+        "stakeholders_notified": 2,
+        "heatwave_active": false,
+        "ice_status": "Complete"
+      },
+      "climate": {
+        "heatwave_duration_days": 2,
+        "heatwave_current_day": 0,
+        "urban_heat_island_c": 1.8,
+        "night_avg_30d_c": 26.9,
+        "night_avg_30d_delta_vs_2023": 0.9,
+        "heatwave_events_this_season": 1
+      },
+      "stakeholder_ids": ["SH-009", "SH-010"]
+    }
+  ],
+
+  "stakeholders": [
+    {
+      "id": "SH-001",
+      "name": "KEM Hospital",
+      "type": "Hospital / Clinic",
+      "icon": "🏥",
+      "contact_name": "Dr. Priya Mehta",
+      "contact_email": "pmehta@kem.hospital",
+      "contact_phone": "+91-98200-00001",
+      "linked_devices": ["S-MUM-04"],
+      "delivery": "Portal + SMS + Email",
+      "status": "active",
+      "subscriptions": {
+        "critical_alerts": true,
+        "heatwave_warnings": true,
+        "cooling_ready": true,
+        "maintenance": false,
+        "impact_reports": true
+      }
+    },
+    {
+      "id": "SH-002",
+      "name": "CARE India",
+      "type": "NGO",
+      "icon": "🤝",
+      "contact_name": "Arun Sharma",
+      "contact_email": "asharma@care.org",
+      "contact_phone": "+91-98200-00002",
+      "linked_devices": ["S-MUM-04"],
+      "delivery": "Portal + Email",
+      "status": "active",
+      "subscriptions": {
+        "critical_alerts": true,
+        "heatwave_warnings": true,
+        "cooling_ready": false,
+        "maintenance": false,
+        "impact_reports": true
+      }
+    },
+    {
+      "id": "SH-003",
+      "name": "BMC Mumbai",
+      "type": "City Government",
+      "icon": "🏛",
+      "contact_name": "Commissioner Nair",
+      "contact_email": "commissioner@mcgm.gov.in",
+      "contact_phone": "+91-22-00000003",
+      "linked_devices": ["S-MUM-04"],
+      "delivery": "Portal + SMS + Email",
+      "status": "active",
+      "subscriptions": {
+        "critical_alerts": true,
+        "heatwave_warnings": true,
+        "cooling_ready": true,
+        "maintenance": false,
+        "impact_reports": false
+      }
+    },
+    {
+      "id": "SH-004",
+      "name": "Banner Health",
+      "type": "Hospital / Clinic",
+      "icon": "🏥",
+      "contact_name": "Dr. Lisa Ramos",
+      "contact_email": "lramos@bannerhealth.com",
+      "contact_phone": "+1-602-000-0004",
+      "linked_devices": ["S-PHX-01"],
+      "delivery": "Portal + SMS + Email",
+      "status": "active",
+      "subscriptions": {
+        "critical_alerts": true,
+        "heatwave_warnings": true,
+        "cooling_ready": true,
+        "maintenance": false,
+        "impact_reports": false
+      }
+    },
+    {
+      "id": "SH-005",
+      "name": "Maricopa County",
+      "type": "City Government",
+      "icon": "🏛",
+      "contact_name": "James Ortega",
+      "contact_email": "jortega@maricopa.gov",
+      "contact_phone": "+1-602-000-0005",
+      "linked_devices": ["S-PHX-01"],
+      "delivery": "Portal + SMS + Email",
+      "status": "active",
+      "subscriptions": {
+        "critical_alerts": true,
+        "heatwave_warnings": true,
+        "cooling_ready": false,
+        "maintenance": false,
+        "impact_reports": true
+      }
+    },
+    {
+      "id": "SH-006",
+      "name": "AZ Emergency Management",
+      "type": "Emergency Management",
+      "icon": "🚨",
+      "contact_name": "Director Sarah Kim",
+      "contact_email": "skim@azdema.gov",
+      "contact_phone": "+1-602-000-0006",
+      "linked_devices": ["S-PHX-01"],
+      "delivery": "SMS only",
+      "status": "active",
+      "subscriptions": {
+        "critical_alerts": true,
+        "heatwave_warnings": true,
+        "cooling_ready": false,
+        "maintenance": false,
+        "impact_reports": false
+      }
+    },
+    {
+      "id": "SH-007",
+      "name": "WHO Africa",
+      "type": "UN Agency",
+      "icon": "🌍",
+      "contact_name": "Dr. Amara Diallo",
+      "contact_email": "dialloa@who.int",
+      "contact_phone": "+254-700-000007",
+      "linked_devices": ["S-NAI-02"],
+      "delivery": "Portal + Email",
+      "status": "active",
+      "subscriptions": {
+        "critical_alerts": true,
+        "heatwave_warnings": true,
+        "cooling_ready": false,
+        "maintenance": false,
+        "impact_reports": true
+      }
+    },
+    {
+      "id": "SH-008",
+      "name": "CARE Kenya",
+      "type": "NGO",
+      "icon": "🤝",
+      "contact_name": "Moses Ochieng",
+      "contact_email": "mochieng@care.org",
+      "contact_phone": "+254-700-000008",
+      "linked_devices": ["S-NAI-02"],
+      "delivery": "Portal + SMS + Email",
+      "status": "active",
+      "subscriptions": {
+        "critical_alerts": true,
+        "heatwave_warnings": true,
+        "cooling_ready": true,
+        "maintenance": true,
+        "impact_reports": true
+      }
+    },
+    {
+      "id": "SH-009",
+      "name": "UNHCR Dakar",
+      "type": "UN Agency",
+      "icon": "🏕",
+      "contact_name": "Fatou Mbaye",
+      "contact_email": "fmbaye@unhcr.org",
+      "contact_phone": "+221-33-000-0009",
+      "linked_devices": ["S-DAK-03"],
+      "delivery": "Portal + SMS + Email",
+      "status": "active",
+      "subscriptions": {
+        "critical_alerts": true,
+        "heatwave_warnings": true,
+        "cooling_ready": true,
+        "maintenance": false,
+        "impact_reports": true
+      }
+    },
+    {
+      "id": "SH-010",
+      "name": "WHO West Africa",
+      "type": "UN Agency",
+      "icon": "🌍",
+      "contact_name": "Dr. Jean-Pierre Kofi",
+      "contact_email": "kofij@who.int",
+      "contact_phone": "+221-33-000-0010",
+      "linked_devices": ["S-DAK-03"],
+      "delivery": "Portal + Email",
+      "status": "active",
+      "subscriptions": {
+        "critical_alerts": true,
+        "heatwave_warnings": true,
+        "cooling_ready": false,
+        "maintenance": false,
+        "impact_reports": true
+      }
+    }
+  ],
+
+  "alerts": [
+    {
+      "id": "ALT-001",
+      "severity": "critical",
+      "device_id": "S-PHX-01",
+      "message": "Heatwave active — ice not formed. Triage: emergency condition tonight.",
+      "stakeholders_notified": ["SH-004", "SH-005", "SH-006"],
+      "timestamp": "2026-04-19T18:42:00Z",
+      "status": "active"
+    },
+    {
+      "id": "ALT-002",
+      "severity": "warning",
+      "device_id": "S-MUM-04",
+      "message": "Field inspection overdue — last check 6 days ago.",
+      "stakeholders_notified": [],
+      "note": "Internal only",
+      "timestamp": "2026-04-19T09:00:00Z",
+      "status": "active"
+    },
+    {
+      "id": "ALT-003",
+      "severity": "warning",
+      "device_id": "S-NAI-02",
+      "message": "Solar yield below 60% for 3 consecutive days.",
+      "stakeholders_notified": ["SH-007"],
+      "timestamp": "2026-04-18T15:10:00Z",
+      "status": "active"
+    },
+    {
+      "id": "ALT-004",
+      "severity": "ok",
+      "device_id": "S-MUM-04",
+      "message": "Ice formation complete: 18.4kg (92%). Cooling ready.",
+      "stakeholders_notified": ["SH-001", "SH-002", "SH-003"],
+      "timestamp": "2026-04-19T14:55:00Z",
+      "status": "resolved"
+    },
+    {
+      "id": "ALT-005",
+      "severity": "info",
+      "device_id": "S-DAK-03",
+      "message": "Night temperature dropped below 28°C. Cooling suspended automatically.",
+      "stakeholders_notified": ["SH-009", "SH-010"],
+      "timestamp": "2026-04-18T22:15:00Z",
+      "status": "resolved"
+    },
+    {
+      "id": "ALT-006",
+      "severity": "info",
+      "device_id": "S-MUM-04",
+      "message": "Solar panel output restored to normal after cloud cover cleared.",
+      "stakeholders_notified": [],
+      "timestamp": "2026-04-18T11:30:00Z",
+      "status": "resolved"
+    },
+    {
+      "id": "ALT-007",
+      "severity": "info",
+      "device_id": "S-DAK-03",
+      "message": "Device rebooted successfully after firmware update v2.3.1.",
+      "stakeholders_notified": [],
+      "timestamp": "2026-04-17T08:00:00Z",
+      "status": "resolved"
+    }
+  ],
+
+  "activityFeed": [
+    {
+      "type": "critical",
+      "color": "danger",
+      "message": "🚨 Critical — S-PHX-01: heatwave active, ice not formed. Banner Health + Maricopa County notified.",
+      "source": "S-PHX-01",
+      "timestamp": "2026-04-19T18:42:00Z",
+      "display": "Today 18:42"
+    },
+    {
+      "type": "alert",
+      "color": "danger",
+      "message": "AZ Emergency Management alerted via SMS + portal. Response team dispatched.",
+      "source": "System",
+      "timestamp": "2026-04-19T18:43:00Z",
+      "display": "Today 18:43"
+    },
+    {
+      "type": "ok",
+      "color": "success",
+      "message": "S-MUM-04: Ice formation complete 18.4kg. KEM Hospital, CARE India, BMC Mumbai notified.",
+      "source": "S-MUM-04",
+      "timestamp": "2026-04-19T14:55:00Z",
+      "display": "Today 14:55"
+    },
+    {
+      "type": "warning",
+      "color": "warn",
+      "message": "S-NAI-02: Solar yield 53% — third consecutive day below threshold.",
+      "source": "S-NAI-02",
+      "timestamp": "2026-04-18T15:10:00Z",
+      "display": "Yesterday 15:10"
+    },
+    {
+      "type": "info",
+      "color": "info",
+      "message": "S-DAK-03: Night temp 27.3°C — below 28°C threshold. Cooling suspended.",
+      "source": "S-DAK-03",
+      "timestamp": "2026-04-18T22:15:00Z",
+      "display": "Yesterday 22:15"
+    }
+  ],
+
+  "alertSummary": {
+    "critical": 1,
+    "critical_stakeholders_alerted": 3,
+    "warnings": 2,
+    "informational": 4,
+    "resolved_today": 7
+  }
+}

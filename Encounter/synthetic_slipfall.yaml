@@ -1,0 +1,4 @@
+train: synthetic_slipfall\train/images
+val: synthetic_slipfall\val/images
+nc: 2
+names: ['normal', 'slip_fall']

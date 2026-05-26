@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: aliyah
+Version: 0.1.0
+Summary: Empirical and classical linear predictors with agreement metrics
+Author: Kevin
+Requires-Python: >=3.7
+Requires-Dist: numpy
+Requires-Dist: scipy
+Dynamic: author
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

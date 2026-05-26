@@ -1,0 +1,6 @@
+create the app.py
+to accommodate the about page as well as the other labels
+I'd say you're working on a paper
+hi my name is Zuri
+I'm working on a paper
+it's about this and that

@@ -1,0 +1,85 @@
+Metadata-Version: 2.4
+Name: aliyah-predictor
+Version: 0.1.2
+Summary: Empirical and classical linear predictors with agreement metrics
+Home-page: https://github.com/yourusername/aliyah-predictor
+Author: Kevin Clarke
+Author-email: your_email@example.com
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+Requires-Dist: scipy
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# Aliyah
+
+Aliyah is a Python package for predictive modeling using **Maximum Agreement Linear Predictor (MALP)** and **Least Squares Linear Predictor (LSLP)**. It includes agreement metrics like **Concordance Correlation Coefficient (CCC)** and **Pearson Correlation Coefficient (PCC)**, plus confidence intervals and mean squared error (MSE) for model evaluation.
+
+Designed for data scientists, engineers, and consultants who need interpretable, statistically grounded predictions.
+
+---
+
+## 🚀 Features
+
+- ✅ Fit MALP and LSLP models
+- 📈 Predict new values with confidence intervals
+- 📊 Evaluate model agreement using CCC, PCC, and MSE
+- 🧠 Supports multivariate and univariate predictors
+- 🔍 Lightweight and dependency-friendly (NumPy + SciPy)
+
+---
+
+## 📦 Installation
+
+```bash
+pip install aliyah
+
+Useage
+from aliyah_predictor import LinearPredictors
+
+# Sample data
+X = [[1, 2], [2, 3], [3, 4]]
+y = [2, 3, 5]
+
+# Initialize predictor with MALP method
+model = LinearPredictors(method="malp")
+
+# Fit and predict
+model.fit(X, y)
+predictions = model.predict(X)
+
+# Evaluate agreement
+metrics = model.evaluate(y, predictions)
+print(metrics)
+
+Expected Output
+
+{
+    'CCC': 0.98,
+    'PCC': 0.99,
+    'MSE': 0.12
+}
+
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+Author
+Created by Kevin Clarke For consulting, integration, or support, visit GitHub or reach out via email.
