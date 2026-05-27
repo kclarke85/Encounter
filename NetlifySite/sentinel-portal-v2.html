@@ -252,6 +252,14 @@ body.light-mode input,body.light-mode select,body.light-mode textarea{background
 /* ── THEME TOGGLE BUTTON ── */
 #sentinel-theme-btn{background:none;border:1px solid var(--border2);color:var(--txt2);border-radius:var(--r-sm);padding:5px 10px;cursor:pointer;font-size:12px;font-family:var(--font);transition:border-color 0.15s,color 0.15s;}
 #sentinel-theme-btn:hover{border-color:var(--teal);color:var(--teal);}
+
+  .hub-av{width:28px !important;height:28px !important;border-radius:50% !important;display:inline-flex !important;align-items:center !important;justify-content:center !important;font-size:10px !important;font-weight:600 !important;flex-shrink:0 !important;}
+  .hub-nc{display:flex !important;align-items:center !important;gap:10px !important;}
+  .hub-pill{padding:5px 16px !important;border-radius:20px !important;border:1px solid var(--border2) !important;background:none !important;color:var(--txt2) !important;font-size:12px !important;cursor:pointer !important;font-family:var(--font) !important;}
+  .hub-pill.active{background:var(--teal-faint) !important;color:var(--teal) !important;border-color:var(--teal) !important;}
+#page-hub{display:none;}#page-hub.active{display:block;position:fixed;top:52px;left:0;right:0;bottom:0;overflow-y:auto;padding:28px 32px;background:var(--bg);z-index:50;}
+#page-hub{display:none;}#page-hub.active{display:block;position:fixed;top:52px;left:0;right:0;bottom:0;overflow-y:auto;padding:28px 32px;background:var(--bg);z-index:50;}
+#page-hub{display:none;}#page-hub.active{display:block;position:fixed;top:52px;left:0;right:0;bottom:0;overflow-y:auto;padding:28px 32px;background:var(--bg);z-index:50;}
 </style>
 </head>
 <body>
@@ -315,13 +323,13 @@ body.light-mode input,body.light-mode select,body.light-mode textarea{background
     <div class="auth-main">
       <div class="auth-box">
         <h1>Create your account</h1>
-        <p class="sub">Already have an account? <a href="#" onclick="show('page-login')">Sign in</a></p>
+        <p class="sub">Already have an account? <a href="#" onclick="show('page-login')">Sign in</a>
         <div class="form-row">
-          <div class="form-group"><label>First name</label><input type="text" placeholder="Kevin"></div>
-          <div class="form-group"><label>Last name</label><input type="text" placeholder="Osei"></div>
+          <div class="form-group"><label>First name</label><input type="text" id="signup-firstname" placeholder="Kevin"></div>
+          <div class="form-group"><label>Last name</label><input type="text" id="signup-lastname" placeholder="Osei"></div>
         </div>
-        <div class="form-group"><label>Organization</label><input type="text" placeholder="Encounter Engineering / NGO name"></div>
-        <div class="form-group"><label>Work email</label><input type="email" placeholder="you@organization.org"></div>
+        <div class="form-group"><label>Organization</label><input type="text" id="signup-org" placeholder="Encounter Engineering / NGO name"></div>
+        <div class="form-group"><label>Work email</label><input type="email" id="signup-email" placeholder="you@organization.org"></div>
         <div class="form-group">
           <label>Role</label>
           <select>
@@ -356,7 +364,8 @@ body.light-mode input,body.light-mode select,body.light-mode textarea{background
       <button class="nav-link" onclick="navTo('stakeholders',this)">Stakeholders</button>
       <button class="nav-link" onclick="navTo('devices',this)">Devices</button>
       <button class="nav-link" onclick="navTo('alerts',this)">Alerts</button>
-    </div>
+      <button class="nav-link" onclick="navTo('hub',this);loadHub()">Network Hub</button>
+          </div>
     <div class="nav-right">
       <span class="nav-badge" id="nav-alert-badge" onclick="navTo('alerts',document.querySelectorAll('.nav-link')[4])">3 active alerts</span>
       <button id="sentinel-theme-btn" onclick="toggleSentinelTheme()" title="Toggle light/dark mode">🌙</button>
@@ -910,32 +919,32 @@ body.light-mode input,body.light-mode select,body.light-mode textarea{background
         <div class="card" style="margin-bottom:12px">
           <div style="font-size:13px;font-weight:500;color:var(--txt);margin-bottom:14px">Device identity</div>
           <div class="form-row">
-            <div class="form-group"><label>Device name</label><input type="text" value="Sentinel-Mumbai-04"></div>
-            <div class="form-group"><label>Serial / Unit ID</label><input type="text" value="S-MUM-04" style="font-family:var(--mono)"></div>
+            <div class="form-group"><label>Device name</label><input type="text" id="dev-name" value="Sentinel-Mumbai-04"></div>
+            <div class="form-group"><label>Serial / Unit ID</label><input type="text" id="dev-serial" value="S-MUM-04" style="font-family:var(--mono)"></div>
           </div>
           <div class="form-row">
-            <div class="form-group"><label>Cluster / Zone</label><input type="text" placeholder="Mumbai Cluster 04"></div>
+            <div class="form-group"><label>Cluster / Zone</label><input type="text" id="dev-cluster" placeholder="Mumbai Cluster 04"></div>
             <div class="form-group"><label>Device type</label><select><option>Sentinel Mk I (Solar-Ice)</option><option>Sentinel Mk II</option><option>Sentinel Field (Portable)</option></select></div>
           </div>
         </div>
         <div class="card" style="margin-bottom:12px">
           <div style="font-size:13px;font-weight:500;color:var(--txt);margin-bottom:14px">Location</div>
-          <div class="form-group"><label>Deployment site</label><input type="text" value="Dharavi Community Centre, Block 7"></div>
+          <div class="form-group"><label>Deployment site</label><input type="text" id="dev-site" value="Dharavi Community Centre, Block 7"></div>
           <div class="form-row">
-            <div class="form-group"><label>City / Region</label><input type="text" value="Mumbai"></div>
+            <div class="form-group"><label>City / Region</label><input type="text" id="dev-city" value="Mumbai"></div>
             <div class="form-group"><label>Country</label><select><option selected>India</option><option>Kenya</option><option>Senegal</option><option>Bangladesh</option><option>United States</option><option>Other</option></select></div>
           </div>
           <div class="form-row-3">
-            <div class="form-group"><label>Latitude</label><input type="text" value="19.0372" style="font-family:var(--mono)"></div>
-            <div class="form-group"><label>Longitude</label><input type="text" value="72.8552" style="font-family:var(--mono)"></div>
-            <div class="form-group"><label>Elevation (m)</label><input type="text" value="11" style="font-family:var(--mono)"></div>
+            <div class="form-group"><label>Latitude</label><input type="text" id="dev-lat" value="19.0372" style="font-family:var(--mono)"></div>
+            <div class="form-group"><label>Longitude</label><input type="text" id="dev-lng" value="72.8552" style="font-family:var(--mono)"></div>
+            <div class="form-group"><label>Elevation (m)</label><input type="text" id="dev-elev" value="11" style="font-family:var(--mono)"></div>
           </div>
         </div>
         <div class="card" style="margin-bottom:12px">
           <div style="font-size:13px;font-weight:500;color:var(--txt);margin-bottom:14px">Solar &amp; cooling config</div>
           <div class="form-row">
-            <div class="form-group"><label>Solar panel (W)</label><input type="number" value="400" style="font-family:var(--mono)"></div>
-            <div class="form-group"><label>Ice target (kg/day)</label><input type="number" value="20" style="font-family:var(--mono)"></div>
+            <div class="form-group"><label>Solar panel (W)</label><input type="number" id="dev-solar" value="400" style="font-family:var(--mono)"></div>
+            <div class="form-group"><label>Ice target (kg/day)</label><input type="number" id="dev-ice" value="20" style="font-family:var(--mono)"></div>
           </div>
           <div class="form-row">
             <div class="form-group"><label>28°C threshold alert</label><select><option>Enabled — trigger at 28°C</option><option>Enabled — trigger at 30°C</option><option>Disabled</option></select></div>
@@ -953,290 +962,124 @@ body.light-mode input,body.light-mode select,body.light-mode textarea{background
           <div class="dp-row"><span class="dp-key">Next step</span><span class="dp-val" style="color:var(--teal)">Assign stakeholders →</span></div>
         </div>
         <div class="btn-row">
-          <button class="btn btn-primary" onclick="navTo('stakeholders',document.querySelectorAll('.nav-link')[2])">Register &amp; assign stakeholders →</button>
+          <button class="btn btn-primary" onclick="handleRegisterDevice(event);navTo('stakeholders',document.querySelectorAll('.nav-link')[2])">Register &amp; assign stakeholders →</button>
           <button class="btn btn-ghost">Save draft</button>
-        </div>
+
+
+
+
+    
+
+
+    
+    <!-- HUB -->
+    <div class="page" id="page-hub">
+      <div class="page-header">
+        <div><div class="page-title">Network Hub</div><div class="page-subtitle">Live registry across your network</div></div>
+        <input type="text" id="hub-q" placeholder="Search..." oninput="hubSearch()" style="width:200px">
+      </div>
+
+      <div class="grid-4" id="hub-kpi-accounts" style="margin-bottom:16px">
+        <div class="card"><div class="m-label">Total accounts</div><div class="m-val" id="kpi-acc-total">-</div></div>
+        <div class="card"><div class="m-label">Active</div><div class="m-val" id="kpi-acc-active" style="color:var(--success)">-</div></div>
+        <div class="card"><div class="m-label">Organizations</div><div class="m-val" id="kpi-acc-orgs">-</div></div>
+        <div class="card"><div class="m-label">Countries</div><div class="m-val" id="kpi-acc-countries">-</div></div>
+      </div>
+      <div class="grid-4" id="hub-kpi-devices" style="margin-bottom:16px;display:none">
+        <div class="card"><div class="m-label">Total devices</div><div class="m-val" id="kpi-dev-total">-</div></div>
+        <div class="card"><div class="m-label">Online</div><div class="m-val" id="kpi-dev-online" style="color:var(--success)">-</div></div>
+        <div class="card"><div class="m-label">Critical</div><div class="m-val" id="kpi-dev-critical" style="color:var(--danger)">-</div></div>
+        <div class="card"><div class="m-label">Countries</div><div class="m-val" id="kpi-dev-countries">-</div></div>
+      </div>
+      <div class="grid-4" id="hub-kpi-stakeholders" style="margin-bottom:16px;display:none">
+        <div class="card"><div class="m-label">Total stakeholders</div><div class="m-val" id="kpi-sh-total">-</div></div>
+        <div class="card"><div class="m-label">Active</div><div class="m-val" id="kpi-sh-active" style="color:var(--success)">-</div></div>
+        <div class="card"><div class="m-label">Hospitals</div><div class="m-val" id="kpi-sh-hosp">-</div></div>
+        <div class="card"><div class="m-label">Gov agencies</div><div class="m-val" id="kpi-sh-gov">-</div></div>
+      </div>
+      <div class="grid-4" id="hub-kpi-alerts" style="margin-bottom:16px;display:none">
+        <div class="card"><div class="m-label">Critical</div><div class="m-val" id="kpi-alt-crit" style="color:var(--danger)">-</div></div>
+        <div class="card"><div class="m-label">Warnings</div><div class="m-val" id="kpi-alt-warn" style="color:var(--warn)">-</div></div>
+        <div class="card"><div class="m-label">Resolved</div><div class="m-val" id="kpi-alt-res" style="color:var(--success)">-</div></div>
+        <div class="card"><div class="m-label">Total alerts</div><div class="m-val" id="kpi-alt-total">-</div></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:16px;">
+        <button class="nav-link active" id="hub-tab-accounts" onclick="hubTab('accounts',this)" style="text-align:center;border:1px solid var(--border2);border-radius:var(--r-sm);">Accounts</button>
+        <button class="nav-link" id="hub-tab-devices" onclick="hubTab('devices',this)" style="text-align:center;border:1px solid var(--border2);border-radius:var(--r-sm);">Devices</button>
+        <button class="nav-link" id="hub-tab-stakeholders" onclick="hubTab('stakeholders',this)" style="text-align:center;border:1px solid var(--border2);border-radius:var(--r-sm);">Stakeholders</button>
+        <button class="nav-link" id="hub-tab-alerts" onclick="hubTab('alerts',this)" style="text-align:center;border:1px solid var(--border2);border-radius:var(--r-sm);">Alerts</button>
+      </div>
+
+      <div id="hub-panel-accounts">
+        <div class="alerts-table"><table><thead><tr>
+          <th style="width:36px"><input type="checkbox" onchange="toggleAll(this,'hb-accounts')"></th>
+          <th>Name</th><th>Organization</th><th>Email</th><th>Role</th><th>Created</th>
+        </tr></thead><tbody id="hb-accounts"><tr><td colspan="6" style="text-align:center;padding:20px;color:var(--txt2)">Loading...</td></tr></tbody></table></div>
+      </div>
+      <div id="hub-panel-devices" style="display:none">
+        <div class="alerts-table"><table><thead><tr>
+          <th style="width:36px"><input type="checkbox" onchange="toggleAll(this,'hb-devices')"></th>
+          <th>Serial ID</th><th>Device name</th><th>City</th><th>Country</th><th>Solar W</th><th>Ice kg</th>
+        </tr></thead><tbody id="hb-devices"><tr><td colspan="7" style="text-align:center;padding:20px;color:var(--txt2)">Loading...</td></tr></tbody></table></div>
+      </div>
+      <div id="hub-panel-stakeholders" style="display:none">
+        <div class="alerts-table"><table><thead><tr>
+          <th style="width:36px"><input type="checkbox" onchange="toggleAll(this,'hb-stakeholders')"></th>
+          <th>ID</th><th>Organization</th><th>Type</th><th>Contact</th><th>Delivery</th>
+        </tr></thead><tbody id="hb-stakeholders"><tr><td colspan="6" style="text-align:center;padding:20px;color:var(--txt2)">Loading...</td></tr></tbody></table></div>
+      </div>
+      <div id="hub-panel-alerts" style="display:none">
+        <div class="alerts-table"><table><thead><tr>
+          <th style="width:36px"><input type="checkbox" onchange="toggleAll(this,'hb-alerts')"></th>
+          <th>Severity</th><th>Device</th><th>Message</th><th>Time</th><th>Status</th>
+        </tr></thead><tbody id="hb-alerts"><tr><td colspan="6" style="text-align:center;padding:20px;color:var(--txt2)">Loading...</td></tr></tbody></table></div>
       </div>
     </div>
-
   </div><!-- /app-body -->
 </div><!-- /app -->
-
-<!-- ═══ ADD STAKEHOLDER MODAL ═══ -->
-<div class="modal-overlay" id="modal-add-sh">
-  <div class="modal">
-    <div class="modal-header">
-      <h3>Add stakeholder</h3>
-      <button class="modal-close" onclick="document.getElementById('modal-add-sh').classList.remove('open')">×</button>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label>Organization name</label><input type="text" placeholder="e.g. Aga Khan Hospital"></div>
-      <div class="form-group"><label>Type</label><select><option>Hospital / Clinic</option><option>City Government</option><option>Emergency Management</option><option>NGO</option><option>UN Agency</option><option>Donor / Funder</option></select></div>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label>Contact name</label><input type="text" placeholder="Dr. Amara Diallo"></div>
-      <div class="form-group"><label>Contact email</label><input type="email" placeholder="contact@org.org"></div>
-    </div>
-    <div class="form-group"><label>Contact phone (for SMS alerts)</label><input type="tel" placeholder="+1 555 000 0000"></div>
-    <div class="form-group"><label>Linked devices</label><select><option>All devices</option><option>S-MUM-04 · Mumbai</option><option>S-PHX-01 · Phoenix</option><option>S-NAI-02 · Nairobi</option><option>S-DAK-03 · Dakar</option></select></div>
-    <hr class="divider">
-    <div style="font-size:12px;font-weight:500;color:var(--txt);margin-bottom:10px">Alert subscriptions</div>
-    <div class="alert-toggle-row">
-      <div><div class="toggle-label">Critical alerts</div><div class="toggle-desc">Heatwave + no ice — emergency condition</div></div>
-      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-    </div>
-    <div class="alert-toggle-row">
-      <div><div class="toggle-label">Heatwave warnings</div><div class="toggle-desc">Active heatwave event in device zone</div></div>
-      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-    </div>
-    <div class="alert-toggle-row">
-      <div><div class="toggle-label">Cooling ready notifications</div><div class="toggle-desc">Ice formed — cooling confirmed for tonight</div></div>
-      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-    </div>
-    <div class="alert-toggle-row">
-      <div><div class="toggle-label">Device maintenance alerts</div><div class="toggle-desc">Solar, inspection, or hardware issues</div></div>
-      <div class="toggle" onclick="this.classList.toggle('on')"></div>
-    </div>
-    <div class="alert-toggle-row">
-      <div><div class="toggle-label">Impact reports</div><div class="toggle-desc">Weekly and seasonal summaries</div></div>
-      <div class="toggle" onclick="this.classList.toggle('on')"></div>
-    </div>
-    <hr class="divider">
-    <div class="form-group"><label>Delivery method</label><select><option>Portal + SMS + Email</option><option>Portal + Email</option><option>SMS only</option><option>Portal only</option><option>API webhook</option></select></div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="document.getElementById('modal-add-sh').classList.remove('open')">Add stakeholder →</button>
-      <button class="btn btn-ghost" onclick="document.getElementById('modal-add-sh').classList.remove('open')">Cancel</button>
-    </div>
-  </div>
-</div>
-
 <script>
-  /* ═══ EXISTING NAV FUNCTIONS ═══ */
   function show(id){document.querySelectorAll('.auth-page').forEach(p=>p.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');}
   function enterApp(){document.querySelectorAll('.auth-page').forEach(p=>p.classList.add('hidden'));document.getElementById('app').classList.add('active');if(window._sentinelData)populateAll(window._sentinelData);}
   function signOut(){document.getElementById('app').classList.remove('active');document.querySelectorAll('.auth-page').forEach(p=>p.classList.add('hidden'));document.getElementById('page-login').classList.remove('hidden');}
-  function navTo(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+id).classList.add('active');document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));if(btn)btn.classList.add('active');}
-  document.getElementById('modal-add-sh').addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
-
-  /* ═══ DATA LOADING ═══ */
-  let _data = null;
-  let _currentDeviceId = null;
-
-  fetch('sentinel-mock-data.json')
-    .then(r => r.json())
-    .then(data => {
-      _data = data;
-      window._sentinelData = data;
-      populateAll(data);
-    })
-    .catch(err => console.warn('Could not load sentinel-mock-data.json:', err));
-
-  function populateAll(data) {
-    populateDeviceSelector(data);
-    populateDashboard(data, data.devices[0]);
-    populateNetwork(data);
-    populateAlerts(data);
-    populateActivityFeed(data);
-    updateNavBadge(data);
-  }
-
-  /* ═══ DEVICE SELECTOR ═══ */
-  function populateDeviceSelector(data) {
-    const sel = document.getElementById('device-selector');
-    sel.innerHTML = '';
-    data.devices.forEach(d => {
-      const opt = document.createElement('option');
-      opt.value = d.id;
-      opt.textContent = d.id + ' · ' + d.city;
-      sel.appendChild(opt);
+  function navTo(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+id).classList.add('active');if(id==='hub'){document.getElementById('page-devices').style.display='block';}else{document.getElementById('page-devices').style.removeProperty('display');}document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));if(btn)btn.classList.add('active');}
+  function handleLogin(e){e.preventDefault();var em=document.querySelector('#page-login input[type=email]').value.trim();var pw=document.querySelector('#page-login input[type=password]').value;var btn=document.querySelector('#page-login .btn-primary');btn.disabled=true;btn.innerText='Signing in...';fetch('/.netlify/functions/mongo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'login',email:em,password:pw})}).then(r=>r.json()).then(d=>{if(d.ok){enterApp();}else{alert(d.error||'Login failed');btn.disabled=false;btn.innerText='Sign in';}}).catch(()=>{alert('Connection error');btn.disabled=false;btn.innerText='Sign in';});}
+  function handleSignup(e){e.preventDefault();var p={action:'signup',first_name:document.getElementById('signup-firstname').value.trim(),last_name:document.getElementById('signup-lastname').value.trim(),organization:document.getElementById('signup-org').value.trim(),email:document.getElementById('signup-email').value.trim(),role:'Field Engineer',password:document.querySelector('#page-signup input[type=password]').value};fetch('/.netlify/functions/mongo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)}).then(r=>r.json()).then(d=>{if(d.ok){enterApp();}else{alert(d.error||'Signup failed');}}).catch(()=>alert('Connection error'));}
+  function handleRegisterDevice(e){e.preventDefault();var p={action:'register_device',device_name:document.getElementById('dev-name').value.trim(),serial_id:document.getElementById('dev-serial').value.trim(),cluster_zone:document.getElementById('dev-cluster').value.trim(),device_type:'Sentinel Mk I',deployment_site:document.getElementById('dev-site').value.trim(),city_region:document.getElementById('dev-city').value.trim(),country:'',latitude:document.getElementById('dev-lat').value.trim(),longitude:document.getElementById('dev-lng').value.trim(),elevation:document.getElementById('dev-elev').value.trim(),solar_panel_w:document.getElementById('dev-solar').value.trim(),ice_target_kg:document.getElementById('dev-ice').value.trim(),technician_notes:''};fetch('/.netlify/functions/mongo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)}).then(r=>r.json()).then(d=>{if(d.ok){alert('Device registered!');}else{alert(d.error||'Failed');}}).catch(()=>alert('Connection error'));}
+  function handleAddStakeholder(e){e.preventDefault();var p={action:'add_stakeholder',name:document.getElementById('sh-name').value.trim(),type:document.getElementById('sh-type').value,icon:'org',contact_name:document.getElementById('sh-contact-name').value.trim(),contact_email:document.getElementById('sh-contact-email').value.trim(),contact_phone:document.getElementById('sh-phone').value.trim(),linked_devices:[document.getElementById('sh-devices').value],delivery:document.getElementById('sh-delivery').value,subscriptions:{}};fetch('/.netlify/functions/mongo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)}).then(r=>r.json()).then(d=>{if(d.ok){alert('Stakeholder added!');document.getElementById('modal-add-sh').classList.remove('open');}else{alert(d.error||'Failed');}}).catch(()=>alert('Connection error'));}
+  var hubLoaded=false,hubCur='accounts';
+  function hubTab(name,btn){
+    document.querySelectorAll('#page-hub .nav-link').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    ['accounts','devices','stakeholders','alerts'].forEach(t=>{
+      document.getElementById('hub-panel-'+t).style.display=t===name?'block':'none';
+      document.getElementById('hub-kpi-'+t).style.display=t===name?'grid':'none';
     });
-    sel.addEventListener('change', () => {
-      const dev = data.devices.find(d => d.id === sel.value);
-      if (dev) populateDashboard(data, dev);
-    });
+    hubCur=name;
+    var qi=document.getElementById('hub-q');if(qi)qi.value='';
   }
-
-  /* ═══ DASHBOARD ═══ */
-  function populateDashboard(data, dev) {
-    _currentDeviceId = dev.id;
-    const r = dev.readings;
-    const c = dev.climate;
-
-    // Header
-    const statusLabel = r.heatwave_active
-      ? (r.ice_formed_kg > 0 ? 'Cooling Ready' : 'Critical — No Ice')
-      : 'Standby';
-    document.getElementById('dash-title').textContent = statusLabel;
-    document.getElementById('dash-subtitle').textContent =
-      dev.city + ' Cluster · ' + dev.site;
-
-    // Triage banner
-    const banner = document.getElementById('triage-banner');
-    const dot = document.getElementById('triage-dot');
-    const triTitle = document.getElementById('triage-title');
-    banner.className = 'triage-banner';
-    dot.className = 'triage-dot';
-    if (dev.status === 'critical') {
-      banner.classList.add('triage-alert');
-      dot.classList.add('dot-alert');
-      triTitle.style.color = 'var(--danger)';
-      triTitle.textContent = 'Triage: Emergency — No Cooling Tonight';
-      document.getElementById('triage-desc').textContent =
-        'Heatwave active but ice has NOT formed. Stakeholders alerted. Immediate action required.';
-      document.getElementById('triage-pills').innerHTML =
-        '<span class="tpill tpill-danger">Heatwave Active</span><span class="tpill tpill-danger">No Ice — Emergency</span>';
-    } else if (dev.status === 'warning') {
-      banner.classList.add('triage-warn');
-      dot.classList.add('dot-warn');
-      triTitle.style.color = 'var(--warn)';
-      triTitle.textContent = 'Triage: Warning — Partial Cooling';
-      document.getElementById('triage-desc').textContent =
-        'Ice partially formed. Solar yield low. Monitor closely — cooling may be insufficient tonight.';
-      document.getElementById('triage-pills').innerHTML =
-        '<span class="tpill tpill-warn">Low Solar Yield</span><span class="tpill tpill-warn">Partial Ice</span>';
-    } else {
-      banner.classList.add('triage-ok');
-      dot.classList.add('dot-ok');
-      triTitle.style.color = 'var(--success)';
-      triTitle.textContent = r.heatwave_active ? 'Triage: Cooling Ready' : 'Triage: Standby — No Heatwave';
-      document.getElementById('triage-desc').textContent = r.heatwave_active
-        ? 'Heatwave detected + ice successfully formed — unit will deliver cooling tonight. Stakeholders notified.'
-        : 'No active heatwave. Device on standby. All systems nominal.';
-      document.getElementById('triage-pills').innerHTML = r.heatwave_active
-        ? '<span class="tpill tpill-warn">Heatwave Active</span><span class="tpill tpill-ok">Ice Formed</span>'
-        : '<span class="tpill tpill-ok">All Clear</span>';
-    }
-
-    // Thermal comfort
-    const feelsLike = Math.round(r.outdoor_temp_c + (r.humidity_pct > 50 ? (r.humidity_pct - 50) * 0.1 : 0));
-    document.getElementById('d-outdoor-temp').textContent = r.outdoor_temp_c;
-    document.getElementById('d-outdoor-sub').textContent = '↑ ' + (r.outdoor_temp_c - 28).toFixed(1) + '° above 28°C comfort line';
-    document.getElementById('d-night-temp').textContent = r.indoor_temp_c;
-    document.getElementById('d-humidity').textContent = r.humidity_pct;
-    document.getElementById('d-humidity-sub').textContent = r.humidity_pct > 70 ? 'High — reduces evaporative relief' : 'Moderate humidity';
-    document.getElementById('d-feels-like').textContent = feelsLike;
-
-    // Passive cooling
-    document.getElementById('d-ice-status').textContent = r.ice_status.split('—')[0].trim();
-    document.getElementById('d-ice-kg').textContent = r.ice_formed_kg;
-    document.getElementById('d-ice-bar').style.width = r.ice_target_pct + '%';
-    document.getElementById('d-ice-pct').textContent = r.ice_target_pct + '% of daily target';
-    document.getElementById('d-delta-t').textContent = r.delta_t_c;
-    document.getElementById('d-cooling-hrs').textContent = r.cooling_window_hrs;
-    document.getElementById('d-melt-rate').textContent = 'At ' + r.melt_rate_kg_hr + ' kg/hr melt rate';
-
-    // Climate context
-    document.getElementById('d-hw-duration').textContent = c.heatwave_duration_days;
-    document.getElementById('d-hw-day').textContent = 'Day ' + c.heatwave_current_day + ' of current event';
-    document.getElementById('d-uhi').textContent = c.urban_heat_island_c;
-    document.getElementById('d-night-avg').textContent = c.night_avg_30d_c;
-    document.getElementById('d-night-delta').textContent = '↑ ' + c.night_avg_30d_delta_vs_2023 + '° vs. same period 2023';
-    document.getElementById('d-hw-events').textContent = c.heatwave_events_this_season;
-
-    // Operational
-    document.getElementById('d-solar-kwh').textContent = r.solar_yield_kwh;
-    document.getElementById('d-solar-bar').style.width = r.solar_capacity_pct + '%';
-    document.getElementById('d-solar-pct').textContent = r.solar_capacity_pct + '% of peak capacity';
-    document.getElementById('d-uptime').textContent = r.uptime_30d_pct;
-    document.getElementById('d-field-check').textContent = r.last_field_check_days_ago + ' days ago';
-    const fieldWarn = document.getElementById('d-field-warn');
-    fieldWarn.textContent = r.last_field_check_days_ago >= 5 ? '⚠ Inspection recommended' : '✓ Recently inspected';
-    fieldWarn.className = r.last_field_check_days_ago >= 5 ? 'm-sub-warn' : 'm-sub';
-    document.getElementById('d-sh-notified').textContent = r.stakeholders_notified;
+  function hubSearch(){
+    var q=document.getElementById('hub-q').value.toLowerCase();
+    document.querySelectorAll('#hb-'+hubCur+' tr').forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(q)?'':'none';});
   }
-
-  /* ═══ NETWORK ═══ */
-  function populateNetwork(data) {
-    const net = data.network;
-    document.getElementById('net-online').textContent = net.onlineDevices;
-    document.getElementById('net-total').textContent = net.totalDevices;
-    document.getElementById('net-critical').textContent = net.criticalAlerts;
-    const critDev = data.devices.find(d => d.status === 'critical');
-    document.getElementById('net-critical-sub').textContent = critDev
-      ? critDev.city + ' · heatwave + no ice' : 'No critical alerts';
-    document.getElementById('net-stakeholders').textContent = net.activeStakeholders;
-    document.getElementById('net-uptime').textContent = net.uptimePercent;
-  }
-
-  /* ═══ ACTIVITY FEED ═══ */
-  function populateActivityFeed(data) {
-    const feed = document.getElementById('activity-feed');
-    if (!feed) return;
-    feed.innerHTML = data.activityFeed.map(item => `
-      <div class="activity-item">
-        <div class="activity-dot" style="background:var(--${item.color})"></div>
-        <div class="activity-body">
-          <div class="activity-msg">${item.message}</div>
-          <div class="activity-meta">${item.source} · ${item.display}</div>
-        </div>
-      </div>`).join('');
-  }
-
-  /* ═══ ALERTS ═══ */
-  function populateAlerts(data) {
-    const s = data.alertSummary;
-    document.getElementById('alt-critical').textContent = s.critical;
-    document.getElementById('alt-critical-sub').textContent = s.critical_stakeholders_alerted + ' stakeholders alerted';
-    document.getElementById('alt-warnings').textContent = s.warnings;
-    document.getElementById('alt-info').textContent = s.informational;
-    document.getElementById('alt-resolved').textContent = s.resolved_today;
-
-    const sevMap = {
-      critical: ['sev-critical','Critical'],
-      warning:  ['sev-warning','Warning'],
-      info:     ['sev-info','Info'],
-      ok:       ['sev-ok','OK']
-    };
-
-    const tbody = document.getElementById('alerts-tbody');
-    tbody.innerHTML = data.alerts.map(a => {
-      const [cls, label] = sevMap[a.severity] || ['sev-info','Info'];
-      const notified = a.stakeholders_notified.length
-        ? a.stakeholders_notified.map(sid => {
-            const sh = data.stakeholders.find(s => s.id === sid);
-            return sh ? `<span class="notif-chip">${sh.icon} ${sh.name}</span>` : '';
-          }).join('')
-        : `<span class="notif-chip">${a.note || 'Internal only'}</span>`;
-      const t = new Date(a.timestamp);
-      const timeStr = t.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
-      const isToday = new Date().toDateString() === t.toDateString();
-      const displayTime = (isToday ? 'Today ' : 'Yesterday ') + timeStr;
-      const statusHtml = a.status === 'active'
-        ? `<span style="color:var(--danger);font-size:12px;font-weight:500">● Active</span>`
-        : `<span style="color:var(--success);font-size:12px">✓ Resolved</span>`;
-      const actionBtn = a.status === 'active' && a.severity === 'critical'
-        ? `<button class="btn btn-sm btn-danger">Respond</button>`
-        : `<button class="btn btn-sm btn-ghost">${a.status === 'active' ? 'Assign' : 'View'}</button>`;
-      return `<tr>
-        <td><span class="sev-badge ${cls}"><span class="sev-dot"></span>${label}</span></td>
-        <td><span class="device-mono">${a.device_id}</span></td>
-        <td class="alert-msg">${a.message}</td>
-        <td><div class="notified-chips">${notified}</div></td>
-        <td class="td-time">${displayTime}</td>
-        <td>${statusHtml}</td>
-        <td>${actionBtn}</td>
-      </tr>`;
-    }).join('');
-  }
-
-  /* ═══ NAV BADGE ═══ */
-  function updateNavBadge(data) {
-    const active = data.alerts.filter(a => a.status === 'active').length;
-    const badge = document.getElementById('nav-alert-badge');
-    badge.textContent = active + ' active alert' + (active !== 1 ? 's' : '');
-  }
-
-  /* ═══ THEME TOGGLE ═══ */
-  function toggleSentinelTheme() {
-    document.body.classList.toggle('light-mode');
-    const btn = document.getElementById('sentinel-theme-btn');
-    btn.textContent = document.body.classList.contains('light-mode') ? '🌑' : '🌙';
-    localStorage.setItem('sentinel-theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
-  }
-  if (localStorage.getItem('sentinel-theme') === 'light') {
-    document.body.classList.add('light-mode');
-    document.getElementById('sentinel-theme-btn').textContent = '🌑';
-  }
+  
+  function loadHub(){if(hubLoaded)return;hubLoaded=true;var S='padding:11px 16px;border-bottom:1px solid var(--border);font-size:13px;';var C='width:36px;padding:11px 16px;border-bottom:1px solid var(--border);';var S='padding:11px 16px;border-bottom:1px solid var(--border);font-size:13px;';var C='width:36px;padding:11px 16px;border-bottom:1px solid var(--border);';fetch('/.netlify/functions/mongo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'get_records',collection:'users'})}).then(r=>r.json()).then(d=>{if(!d.ok)return;document.getElementById('kpi-acc-total').textContent=d.records.length;
+        document.getElementById('kpi-acc-active').textContent=d.records.length;
+        document.getElementById('kpi-acc-orgs').textContent=[...new Set(d.records.map(x=>x.organization).filter(Boolean))].length;
+        document.getElementById('kpi-acc-countries').textContent=[...new Set(d.records.map(x=>x.country).filter(Boolean))].length||'n/a';
+        document.getElementById('hb-accounts').innerHTML=d.records.filter(x=>x.first_name).map(x=>'<tr><td style="'+C+'"><input type="checkbox"></td><td style="'+S+'">'+(x.first_name||'')+' '+(x.last_name||'')+'</td><td style="'+S+'">'+(x.organization||'')+'</td><td style="'+S+'">'+(x.email||'')+'</td><td style="'+S+'">'+(x.role||'')+'</td><td style="'+S+'">'+(x.created_at?new Date(x.created_at).toLocaleDateString():'')+'</td></tr>').join('')||'<tr><td colspan="6" style="padding:20px;text-align:center;color:var(--txt2)">No records</td></tr>';});fetch('/.netlify/functions/mongo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'get_records',collection:'devices'})}).then(r=>r.json()).then(d=>{if(!d.ok)return;document.getElementById('kpi-dev-total').textContent=d.records.length;
+        document.getElementById('kpi-dev-online').textContent=d.records.length;
+        document.getElementById('kpi-dev-critical').textContent=0;
+        document.getElementById('kpi-dev-countries').textContent=[...new Set(d.records.map(x=>x.country).filter(Boolean))].length;
+        document.getElementById('hb-devices').innerHTML=d.records.map(x=>'<tr><td style="'+C+'"><input type="checkbox"></td><td style="'+S+'">'+(x.serial_id||'')+'</td><td style="'+S+'">'+(x.device_name||'')+'</td><td style="'+S+'">'+(x.city_region||'')+'</td><td style="'+S+'">'+(x.country||'')+'</td><td style="'+S+'">'+(x.solar_panel_w||'')+'</td><td style="'+S+'">'+(x.ice_target_kg||'')+'</td></tr>').join('')||'<tr><td colspan="7" style="padding:20px;text-align:center;color:var(--txt2)">No records</td></tr>';});fetch('/.netlify/functions/mongo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'get_records',collection:'stakeholders'})}).then(r=>r.json()).then(d=>{if(!d.ok)return;document.getElementById('kpi-sh-total').textContent=d.records.length;
+        document.getElementById('kpi-sh-active').textContent=d.records.filter(x=>x.status==='active').length;
+        document.getElementById('kpi-sh-hosp').textContent=d.records.filter(x=>(x.type||'').includes('Hospital')).length;
+        document.getElementById('kpi-sh-gov').textContent=d.records.filter(x=>(x.type||'').includes('Government')||(x.type||'').includes('Agency')).length;
+        document.getElementById('hb-stakeholders').innerHTML=d.records.map(x=>'<tr><td style="'+C+'"><input type="checkbox"></td><td style="'+S+'">'+(x.id||'')+'</td><td style="'+S+'">'+(x.name||'')+'</td><td style="'+S+'">'+(x.type||'')+'</td><td style="'+S+'">'+(x.contact_name||'')+'</td><td style="'+S+'">'+(x.delivery||'')+'</td></tr>').join('')||'<tr><td colspan="6" style="padding:20px;text-align:center;color:var(--txt2)">No records</td></tr>';});fetch('/.netlify/functions/mongo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'get_records',collection:'alerts'})}).then(r=>r.json()).then(d=>{if(!d.ok||!d.records.length){document.getElementById('hb-alerts').innerHTML='<tr><td colspan="6" style="padding:20px;text-align:center;color:var(--txt2)">No records</td></tr>';return;}document.getElementById('hb-alerts').innerHTML=d.records.map(x=>'<tr><td style="'+C+'"><input type="checkbox"></td><td style="'+S+'">'+(x.severity||'')+'</td><td style="'+S+'">'+(x.device_id||'')+'</td><td style="'+S+'">'+((x.message||'').substring(0,50))+'</td><td style="'+S+'">'+(x.timestamp?new Date(x.timestamp).toLocaleDateString():'')+'</td><td style="'+S+'">'+(x.status||'')+'</td></tr>').join('');});}
+  
+  
+  
+  function toggleSentinelTheme(){document.body.classList.toggle('light-mode');var btn=document.getElementById('sentinel-theme-btn');btn.textContent=document.body.classList.contains('light-mode')?'Moon':'Sun';}
 </script>
 </body>
 </html>
