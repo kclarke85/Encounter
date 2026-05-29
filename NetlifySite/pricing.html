@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — Encounter Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal: #00C9B1;
+    --teal-dark: #00a08e;
+    --teal-deeper: #006e5a;
+    --teal-light: #e0faf6;
+    --teal-mid: #d4f5ef;
+    --navy: #1a2a35;
+    --muted: #5a7080;
+    --hint: #8a9faa;
+    --bg: #EEF4F6;
+    --bg-hero: #e4f2f7;
+    --white: #ffffff;
+    --border: rgba(0,0,0,0.07);
+    --border-light: rgba(0,0,0,0.05);
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--navy);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2.5rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    text-decoration: none;
+    letter-spacing: -0.3px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  .nav-links a {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--navy); }
+  .nav-links a.active { color: var(--teal-dark); }
+  .btn-outline {
+    padding: 7px 16px;
+    border: 1.5px solid var(--teal);
+    border-radius: 4px;
+    color: var(--teal);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .btn-outline:hover { background: var(--teal-light); }
+  .btn-solid {
+    padding: 7px 16px;
+    border: none;
+    border-radius: 4px;
+    background: var(--teal);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .btn-solid:hover { background: var(--teal-dark); }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #e8f4f8 0%, #dff0f5 50%, #e4f2f7 100%);
+    padding: 4rem 2.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-globe {
+    position: absolute;
+    right: -60px;
+    top: -60px;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,201,177,0.15);
+    pointer-events: none;
+  }
+  .hero-globe2 {
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,201,177,0.1);
+    pointer-events: none;
+  }
+  .hero-globe3 {
+    position: absolute;
+    right: 100px;
+    top: 100px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,201,177,0.08);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 580px; }
+  .eyebrow {
+    display: inline-block;
+    border: 1px solid rgba(0,201,177,0.5);
+    padding: 5px 14px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal-dark);
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--navy);
+    margin-bottom: 1rem;
+  }
+  .hero h1 .accent { color: var(--teal); }
+  .hero-sub {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    max-width: 460px;
+  }
+
+  /* BUYER SELECTOR */
+  .buyer-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .buyer-btn {
+    padding: 9px 22px;
+    border: 1.5px solid rgba(0,0,0,0.12);
+    border-radius: 3px;
+    background: var(--white);
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: all 0.15s;
+  }
+  .buyer-btn:hover { border-color: var(--teal); color: var(--teal-dark); }
+  .buyer-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+  /* MAIN BODY */
+  main { padding: 2.5rem 2.5rem; max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--hint);
+    margin-bottom: 1rem;
+  }
+
+  /* TIER CARDS */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 2.5rem;
+  }
+  .tier-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.5rem;
+  }
+  .tier-card.featured { border: 2px solid var(--teal); }
+  .tier-badge {
+    display: inline-block;
+    background: var(--teal-light);
+    color: var(--teal-deeper);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+  .tier-vol { font-size: 11px; color: var(--hint); margin-bottom: 6px; letter-spacing: 0.02em; }
+  .tier-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .tier-unit { font-size: 12px; color: var(--hint); margin-top: 4px; margin-bottom: 14px; }
+  .tier-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    padding-top: 14px;
+    border-top: 1px solid #f0f4f5;
+  }
+
+  /* INCLUDES */
+  .includes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 2.5rem;
+  }
+  .inc-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.5rem;
+  }
+  .inc-icon {
+    font-size: 24px;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+  .inc-title { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+  .inc-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ESTIMATOR */
+  .estimator {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+  }
+  .estimator h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 1.5rem;
+  }
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .slider-row label {
+    font-size: 12px;
+    color: var(--muted);
+    min-width: 180px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .slider-row input[type=range] {
+    flex: 1;
+    accent-color: var(--teal);
+    cursor: pointer;
+  }
+  .slider-row .val {
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 48px;
+    text-align: right;
+    color: var(--navy);
+  }
+  .est-result {
+    background: linear-gradient(135deg, var(--teal-light), var(--teal-mid));
+    border: 1px solid rgba(0,201,177,0.2);
+    border-radius: 6px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .est-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--teal-dark);
+    margin-bottom: 4px;
+  }
+  .est-detail { font-size: 12px; color: var(--teal-dark); }
+  .est-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--teal-deeper);
+  }
+
+  /* CTA */
+  .cta-block {
+    background: var(--navy);
+    border-radius: 6px;
+    padding: 2rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+  .cta-block h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .cta-block p { font-size: 13px; color: #8aaab8; line-height: 1.6; max-width: 400px; font-weight: 300; }
+  .cta-btns { display: flex; gap: 10px; flex-shrink: 0; }
+  .cta-ghost {
+    padding: 11px 22px;
+    border: 1.5px solid rgba(255,255,255,0.25);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .cta-ghost:hover { border-color: rgba(255,255,255,0.5); }
+  .cta-primary {
+    padding: 11px 22px;
+    border: none;
+    border-radius: 4px;
+    background: var(--teal);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .cta-primary:hover { background: var(--teal-dark); }
+
+  /* PROOF STRIP */
+  .proof-strip {
+    background: #deeaee;
+    border-top: 1px solid var(--border);
+    padding: 1.25rem 2.5rem;
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .proof-item { display: flex; align-items: center; gap: 8px; }
+  .proof-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
+  .proof-text { font-size: 12px; color: var(--muted); }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  footer .f-logo { font-size: 14px; font-weight: 600; color: var(--white); }
+  footer p { font-size: 12px; color: #8aaab8; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .tier-grid, .includes-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 36px; }
+    .nav-links { display: none; }
+    main { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Encounter.Engineering</a>
+  <div class="nav-links">
+    <a href="#">Mission</a>
+    <a href="#">Services</a>
+    <a href="#">Impact</a>
+    <a href="#" class="btn-outline">Sentinel</a>
+    <a href="#" class="btn-solid">Partner with us</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-globe"></div>
+  <div class="hero-globe2"></div>
+  <div class="hero-globe3"></div>
+  <div class="hero-content">
+    <div class="eyebrow">Pricing</div>
+    <h1>Pay for nights<br>that <span class="accent">matter.</span></h1>
+    <p class="hero-sub">Usage-based pricing tied to verified cooling nights — when ambient temperature exceeds 28°C after sunset. No heat event, no charge.</p>
+    <div class="buyer-row">
+      <button class="buyer-btn active" onclick="setBuyer('city', this)">City / municipality</button>
+      <button class="buyer-btn" onclick="setBuyer('state', this)">State agency</button>
+      <button class="buyer-btn" onclick="setBuyer('ngo', this)">NGO / nonprofit</button>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <p class="section-label" id="tier-label">Usage rate — city / municipality</p>
+  <div class="tier-grid">
+    <div class="tier-card">
+      <div class="tier-vol">1 – 500 nights / yr</div>
+      <div class="tier-price" id="r1">$4.50</div>
+      <div class="tier-unit">per cooling night</div>
+      <div class="tier-desc">Pilot programs, single district, summer trial deployments</div>
+    </div>
+    <div class="tier-card featured">
+      <div class="tier-badge">Most common</div>
+      <div class="tier-vol">501 – 10,000 nights / yr</div>
+      <div class="tier-price" id="r2">$3.00</div>
+      <div class="tier-unit">per cooling night</div>
+      <div class="tier-desc">City-scale deployment across multiple cooling sites and districts</div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-vol">10,000+ nights / yr</div>
+      <div class="tier-price" id="r3">$2.25</div>
+      <div class="tier-unit">per cooling night</div>
+      <div class="tier-desc">Multi-district or multi-season contracts — negotiated rate</div>
+    </div>
+  </div>
+
+  <p class="section-label">What's included</p>
+  <div class="includes-grid">
+    <div class="inc-card">
+      <div class="inc-icon">&#9632;</div>
+      <div class="inc-title">Device lease</div>
+      <div class="inc-desc" id="inc-lease">$180–$240 / unit / yr. Hardware, last-mile logistics, and full maintenance SLA.</div>
+    </div>
+    <div class="inc-card">
+      <div class="inc-icon">&#9632;</div>
+      <div class="inc-title">Sentinel Triage dashboard</div>
+      <div class="inc-desc">Real-time cooling status, heat alerts, and fleet overview. Full API access included.</div>
+    </div>
+    <div class="inc-card">
+      <div class="inc-icon">&#9632;</div>
+      <div class="inc-title">Impact reporting</div>
+      <div class="inc-desc" id="inc-report">Annual report formatted for FEMA BRIC grant and municipal budget justification.</div>
+    </div>
+  </div>
+
+  <div class="estimator">
+    <h2>Estimate your cost</h2>
+    <div class="slider-row">
+      <label for="sl-units">Units deployed</label>
+      <input type="range" id="sl-units" min="10" max="300" step="10" value="50" oninput="calc()">
+      <span class="val" id="out-units">50</span>
+    </div>
+    <div class="slider-row">
+      <label for="sl-nights">Heat nights / unit / yr</label>
+      <input type="range" id="sl-nights" min="20" max="150" step="5" value="75" oninput="calc()">
+      <span class="val" id="out-nights">75</span>
+    </div>
+    <div class="est-result">
+      <div>
+        <div class="est-label">Estimated annual cost</div>
+        <div class="est-detail" id="est-detail">50 units · 3,750 nights · $3.00 / night</div>
+      </div>
+      <div class="est-value" id="est-total">$22,750</div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <div>
+      <h3 id="cta-title">Request a pilot proposal</h3>
+      <p id="cta-sub">We'll scope a 25–50 unit deployment and provide FEMA BRIC-compatible budget language for your district.</p>
+    </div>
+    <div class="cta-btns">
+      <button class="cta-ghost">Download overview</button>
+      <button class="cta-primary" id="cta-btn">Get proposal</button>
+    </div>
+  </div>
+
+</main>
+
+<div class="proof-strip">
+  <div class="proof-item"><div class="proof-dot"></div><div class="proof-text">Phoenix / Maricopa — summer 2025 pilot</div></div>
+  <div class="proof-item"><div class="proof-dot"></div><div class="proof-text">Cal OES heat response program</div></div>
+  <div class="proof-item"><div class="proof-dot"></div><div class="proof-text">Direct Relief partnership</div></div>
+</div>
+
+<footer>
+  <div class="f-logo">Encounter.Engineering</div>
+  <p>&copy; 2026 Encounter Engineering. All rights reserved.</p>
+</footer>
+
+<script>
+  const data = {
+    city:  { r:[4.50,3.00,2.25], lm:210, lease:'$180–$240 / unit / yr. Hardware, last-mile logistics, and full maintenance SLA.', report:'Annual report formatted for FEMA BRIC grant and municipal budget justification.', label:'Usage rate — city / municipality', cta:'Request a pilot proposal', sub:"We'll scope a 25–50 unit deployment and provide FEMA BRIC-compatible budget language for your district.", btn:'Get proposal' },
+    state: { r:[4.00,2.60,1.90], lm:210, lease:'$200–$220 / unit / yr. Statewide deployment with dedicated field tech SLA.', report:'Quarterly data exports and annual legislative impact brief included.', label:'Usage rate — state agency', cta:'Schedule a briefing', sub:"We'll walk your emergency preparedness team through statewide deployment options and NOAA alert integration.", btn:'Schedule call' },
+    ngo:   { r:[2.50,1.60,1.25], lm:126, lease:'$108–$144 / unit / yr. 40% reduction for qualifying nonprofit organizations.', report:'Donor-ready impact metrics and co-branded annual reporting included.', label:'Usage rate — NGO / nonprofit', cta:'Apply for partnership pricing', sub:'Tell us about your mission and deployment region. Grant writing support available for qualifying organizations.', btn:'Apply now' }
+  };
+  let buyer = 'city';
+
+  function bracket(n) { return n <= 500 ? 0 : n <= 10000 ? 1 : 2; }
+
+  function calc() {
+    const u = parseInt(document.getElementById('sl-units').value);
+    const n = parseInt(document.getElementById('sl-nights').value);
+    document.getElementById('out-units').textContent = u;
+    document.getElementById('out-nights').textContent = n;
+    const total = u * n;
+    const bi = bracket(total);
+    const rate = data[buyer].r[bi];
+    const grand = Math.round(total * rate + u * data[buyer].lm + (total < 500 ? 0 : 1000));
+    document.getElementById('est-total').textContent = '$' + grand.toLocaleString();
+    document.getElementById('est-detail').textContent = u + ' units · ' + total.toLocaleString() + ' nights · $' + rate.toFixed(2) + ' / night';
+  }
+
+  function setBuyer(b, el) {
+    buyer = b;
+    document.querySelectorAll('.buyer-btn').forEach(x => x.classList.remove('active'));
+    el.classList.add('active');
+    const d = data[b];
+    document.getElementById('r1').textContent = '$' + d.r[0].toFixed(2);
+    document.getElementById('r2').textContent = '$' + d.r[1].toFixed(2);
+    document.getElementById('r3').textContent = '$' + d.r[2].toFixed(2);
+    document.getElementById('tier-label').textContent = d.label;
+    document.getElementById('inc-lease').textContent = d.lease;
+    document.getElementById('inc-report').textContent = d.report;
+    document.getElementById('cta-title').textContent = d.cta;
+    document.getElementById('cta-sub').textContent = d.sub;
+    document.getElementById('cta-btn').textContent = d.btn;
+    calc();
+  }
+
+  calc();
+</script>
+</body>
+</html>
