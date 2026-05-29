@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGO_URI = process.env.MONGO_URI;
 
 // ── PRICING TIERS ──
 function getRate(buyerType, totalNights) {
@@ -41,7 +41,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid JSON' }) };
   }
 
-  const client = new MongoClient(MONGODB_URI);
+  const client = new MongoClient(MONGO_URI);
 
   try {
     await client.connect();
