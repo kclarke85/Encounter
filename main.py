@@ -1,5 +1,37 @@
 from fastapi import FastAPI, HTTPException
-from pymongo import MongoClient
+from contextlib import asynccontextmanager
+import asyncio
+from azure.eventhub.aio import EventHubConsumerClient
+
+EVENTHUB_CONN_STR = os.getenv("EVENTHUB_CONN_STR")
+EVENTHUB_NAME = "encounter"
+
+async def on_event(partition_context, event):
+    try:
+        data = json.loads(event.body_as_str())
+        data["receivedAt"] = datetime.utcnow().isoformat()
+        telemetry_col.insert_one(data)
+        print(f"Ingested: {data.get('triage', {}).get('classification', 'unknown')}")
+        await partition_context.update_checkpoint(event)
+    except Exception as e:
+        print(f"Ingest error: {e}")
+
+async def start_eventhub_listener():
+    client = EventHubConsumerClient.from_connection_string(
+        EVENTHUB_CONN_STR,
+        consumer_group="sentinel-consumer",
+        eventhub_name=EVENTHUB_NAME
+    )
+    async with client:
+        await client.receive(on_event=on_event, starting_position="-1")
+
+@asynccontextmanager
+async def lifespan(app):
+    asyncio.create_task(start_eventhub_listener())
+    yield
+
+from fastapi.middleware.cors import CORSMiddleware
+from pymongo import MongoClient, DESCENDING
 from dotenv import load_dotenv
 from datetime import datetime
 from azure.cosmos import CosmosClient
@@ -8,9 +40,16 @@ import json
 
 load_dotenv()
 
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 
-# ── MongoDB (existing) ───────────────────────────
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# ── MongoDB ───────────────────────────────────────
 MONGO_URI = os.getenv("MONGO_URI")
 client = MongoClient(
     MONGO_URI,
@@ -24,11 +63,14 @@ devices_col      = db["devices"]
 alerts_col       = db["alerts"]
 network_col      = db["network"]
 stakeholders_col = db["stakeholders"]
+telemetry_col    = db["sentinel_telemetry"]   # ← Hive Mind live data
 
-# ── Cosmos DB (IoT reading) ─────────────────────
+# ── Cosmos DB ─────────────────────────────────────
 COSMOS_URI = os.getenv("COSMOS_URI")
 COSMOS_KEY = os.getenv("COSMOS_KEY")
 
+
+# ── Existing routes ───────────────────────────────
 
 @app.get("/")
 def read_root():
@@ -111,3 +153,41 @@ def seed_data():
     stakeholders_col.insert_many(data["stakeholders"])
     network_col.insert_one(data["network"])
     return {"message": f"Seeded {len(data['devices'])} devices, {len(data['alerts'])} alerts"}
+
+
+# ── Sentinel Hive Mind telemetry routes ───────────
+
+@app.get("/sentinel/telemetry/latest")
+def get_latest_telemetry():
+    """Latest reading per device — portal polls this every 30s."""
+    pipeline = [
+        {"$sort": {"receivedAt": -1}},
+        {"$group": {"_id": "$deviceId", "latest": {"$first": "$$ROOT"}}},
+        {"$replaceRoot": {"newRoot": "$latest"}},
+        {"$project": {"_id": 0}}
+    ]
+    results = list(telemetry_col.aggregate(pipeline))
+    return {"ok": True, "count": len(results), "devices": results}
+
+
+@app.get("/sentinel/telemetry/{device_id}")
+def get_device_telemetry(device_id: str, limit: int = 50):
+    """Last N readings for a single device — used by device detail panel."""
+    docs = list(
+        telemetry_col
+        .find({"deviceId": device_id}, {"_id": 0})
+        .sort("receivedAt", DESCENDING)
+        .limit(limit)
+    )
+    if not docs:
+        raise HTTPException(status_code=404, detail=f"No telemetry for {device_id}")
+    return {"ok": True, "deviceId": device_id, "readings": docs}
+
+
+@app.post("/sentinel/ingest")
+def ingest_telemetry(data: dict):
+    """Direct HTTP ingest — fallback if MQTT bridge is down."""
+    data["receivedAt"] = datetime.utcnow().isoformat()
+    telemetry_col.insert_one(data)
+    return {"ok": True, "message": "Telemetry ingested"}
+
