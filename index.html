@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encounter Engineering</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cyan: #00C2D4; --teal: #007A8C; --navy: #0A1628;
+    --midnight: #060E1A; --white: #F5F8FA; --gold: #E8B84B; --muted: #8FA3B0;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--midnight); color: var(--white); overflow-x: hidden; }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 5vw;
+    background: rgba(6,14,26,0.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,194,212,0.12);
+  }
+  .logo { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.04em; color: var(--white); }
+  .logo span { color: var(--cyan); }
+  nav ul { list-style: none; display: flex; gap: 2.5rem; }
+  nav ul a { text-decoration: none; color: var(--muted); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; cursor: pointer; }
+  nav ul a:hover { color: var(--cyan); }
+  .nav-cta { background: var(--cyan); color: var(--midnight) !important; padding: 0.5rem 1.2rem; border-radius: 2px; font-weight: 500; }
+  .nav-cta:hover { background: #00d8ed; color: var(--midnight) !important; }
+  .nav-sentinel { color: var(--cyan) !important; border: 1px solid rgba(0,194,212,0.45); padding: 0.4rem 1.1rem; border-radius: 2px; font-weight: 500; letter-spacing: 0.08em; transition: background 0.2s !important; }
+  .nav-sentinel:hover { background: rgba(0,194,212,0.1); border-color: var(--cyan); }
+  .nav-products { color: var(--muted); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; background: none; border: none; font-family: 'DM Sans', sans-serif; transition: color 0.2s; padding: 0; }
+  .nav-products:hover, .nav-products.active { color: var(--cyan); }
+
+  /* PRODUCTS PANEL */
+  #products-panel {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 99; background: var(--midnight);
+    overflow-y: auto; padding: 7rem 5vw 4rem;
+  }
+  #products-panel.open { display: block; animation: fadeUp 0.4s ease both; }
+
+  .products-hero-tag { display: inline-block; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cyan); border: 1px solid rgba(0,194,212,0.4); padding: 0.35rem 0.9rem; border-radius: 2px; margin-bottom: 1.5rem; }
+  .products-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem,4vw,3rem); font-weight: 700; margin-bottom: 0.75rem; }
+  .products-title em { color: var(--cyan); font-style: normal; }
+  .products-sub { font-size: 1rem; color: var(--muted); line-height: 1.75; max-width: 640px; margin-bottom: 0.75rem; }
+  .billing-note { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--cyan); background: rgba(0,194,212,0.08); border: 1px solid rgba(0,194,212,0.2); padding: 0.5rem 1rem; border-radius: 2px; margin-bottom: 3rem; }
+
+  .products-section-tag { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); margin: 2.5rem 0 1.2rem; display: flex; align-items: center; gap: 0.75rem; }
+  .products-section-tag::after { content: ''; flex: 1; height: 1px; background: rgba(0,194,212,0.15); }
+
+  .products-grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 1.25rem; margin-bottom: 1rem; }
+  .products-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1.25rem; margin-bottom: 1rem; }
+
+  .p-card { background: rgba(10,22,40,0.7); border: 1px solid rgba(0,194,212,0.12); border-radius: 4px; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
+  .p-card:hover { border-color: rgba(0,194,212,0.4); transform: translateY(-3px); }
+  .p-card.field { border-top: 3px solid var(--teal); }
+  .p-card.urban { border-top: 3px solid var(--cyan); }
+  .p-card img { width: 100%; height: 180px; object-fit: cover; display: block; }
+  .p-card-body { padding: 1.1rem; }
+  .p-badge { display: inline-block; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; margin-bottom: 0.6rem; }
+  .p-badge.field { background: rgba(0,122,140,0.2); color: var(--cyan); border: 1px solid rgba(0,194,212,0.2); }
+  .p-badge.urban { background: rgba(0,194,212,0.1); color: var(--cyan); border: 1px solid rgba(0,194,212,0.25); }
+  .p-name { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--white); margin: 0 0 0.4rem; }
+  .p-desc { font-size: 0.82rem; color: var(--muted); margin: 0 0 0.75rem; line-height: 1.55; }
+  .p-spec { font-size: 0.78rem; color: var(--muted); display: flex; align-items: center; gap: 0.4rem; margin-bottom: 3px; }
+  .p-spec::before { content: '—'; color: var(--cyan); font-size: 0.7rem; }
+
+  .products-footer { border-top: 1px solid rgba(0,194,212,0.12); padding-top: 2rem; margin-top: 1rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .products-footer p { font-size: 0.82rem; color: var(--muted); }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+  /* MAIN SITE */
+  #hero { min-height:100vh; display:grid; place-items:center; position:relative; overflow:hidden; padding:8rem 5vw 5rem; }
+  .hero-bg { position:absolute; inset:0; background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(0,122,140,0.35) 0%, transparent 65%), radial-gradient(ellipse 50% 40% at 20% 80%, rgba(0,194,212,0.12) 0%, transparent 60%), var(--midnight); }
+  .hero-bg::before { content:''; position:absolute; inset:0; background-image: linear-gradient(rgba(0,194,212,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,194,212,0.05) 1px, transparent 1px); background-size:60px 60px; animation:gridDrift 20s linear infinite; }
+  @keyframes gridDrift { 0%{transform:translate(0,0);} 100%{transform:translate(60px,60px);} }
+  .globe-wrap { position:absolute; right:-4vw; top:50%; transform:translateY(-50%); width:clamp(300px,45vw,650px); opacity:0.18; animation:rotate 60s linear infinite; }
+  @keyframes rotate { to{transform:translateY(-50%) rotate(360deg);} }
+  .hero-content { position:relative; z-index:2; max-width:700px; animation:fadeUp 1s ease both; }
+  .hero-tag { display:inline-block; font-size:0.75rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--cyan); border:1px solid rgba(0,194,212,0.4); padding:0.35rem 0.9rem; border-radius:2px; margin-bottom:2rem; }
+  h1 { font-family:'Playfair Display',serif; font-size:clamp(2.8rem,6vw,5rem); font-weight:900; line-height:1.05; margin-bottom:1.5rem; }
+  h1 em { color:var(--cyan); font-style:normal; }
+  .hero-sub { font-size:1.1rem; line-height:1.75; color:var(--muted); max-width:540px; margin-bottom:2.5rem; }
+  .btn-row { display:flex; gap:1rem; flex-wrap:wrap; }
+  .btn-primary { background:var(--cyan); color:var(--midnight); padding:0.85rem 2rem; border-radius:2px; font-weight:600; font-size:0.9rem; letter-spacing:0.05em; text-decoration:none; transition:background 0.2s,transform 0.2s; display:inline-block; }
+  .btn-primary:hover { background:#00d8ed; transform:translateY(-2px); }
+  .btn-secondary { border:1px solid rgba(0,194,212,0.4); color:var(--cyan); padding:0.85rem 2rem; border-radius:2px; font-size:0.9rem; letter-spacing:0.05em; text-decoration:none; transition:border-color 0.2s,transform 0.2s; display:inline-block; }
+  .btn-secondary:hover { border-color:var(--cyan); transform:translateY(-2px); }
+  .stats-bar { position:absolute; bottom:0; left:0; right:0; display:flex; border-top:1px solid rgba(0,194,212,0.12); background:rgba(10,22,40,0.7); backdrop-filter:blur(8px); }
+  .stat { flex:1; padding:1.8rem 2rem; border-right:1px solid rgba(0,194,212,0.1); text-align:center; }
+  .stat:last-child { border-right:none; }
+  .stat-num { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:var(--cyan); }
+  .stat-label { font-size:0.78rem; color:var(--muted); margin-top:0.2rem; letter-spacing:0.06em; text-transform:uppercase; }
+  section { padding:7rem 5vw; }
+  .section-tag { font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--cyan); margin-bottom:0.8rem; }
+  h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); font-weight:700; line-height:1.15; margin-bottom:1.2rem; }
+  .section-lead { font-size:1.05rem; color:var(--muted); line-height:1.8; max-width:580px; }
+  #mission { background:var(--navy); display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+  .mission-visual { position:relative; height:380px; border:1px solid rgba(0,194,212,0.15); border-radius:4px; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .mission-visual::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(0,122,140,0.5) 0%, transparent 70%); }
+  .mission-icon { position:relative; z-index:1; font-size:8rem; animation:pulse 4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{transform:scale(1);opacity:0.9;} 50%{transform:scale(1.05);opacity:1;} }
+  .mission-pillars { display:flex; flex-direction:column; gap:1.2rem; margin-top:2rem; }
+  .pillar { display:flex; align-items:flex-start; gap:1rem; background:rgba(0,194,212,0.05); border:1px solid rgba(0,194,212,0.1); padding:1.2rem 1.4rem; border-radius:3px; transition:border-color 0.2s; }
+  .pillar:hover { border-color:rgba(0,194,212,0.4); }
+  .pillar-icon { font-size:1.5rem; flex-shrink:0; margin-top:0.1rem; }
+  .pillar h4 { font-size:0.95rem; font-weight:600; margin-bottom:0.3rem; }
+  .pillar p { font-size:0.85rem; color:var(--muted); line-height:1.6; }
+  #services { background:var(--midnight); }
+  .services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin-top:3.5rem; }
+  .service-card { background:rgba(10,22,40,0.6); border:1px solid rgba(0,194,212,0.1); border-radius:4px; padding:2.2rem; position:relative; overflow:hidden; transition:border-color 0.3s,transform 0.3s; }
+  .service-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--cyan),transparent); opacity:0; transition:opacity 0.3s; }
+  .service-card:hover { border-color:rgba(0,194,212,0.4); transform:translateY(-4px); }
+  .service-card:hover::before { opacity:1; }
+  .service-num { font-family:'Playfair Display',serif; font-size:3rem; font-weight:900; color:rgba(0,194,212,0.12); line-height:1; margin-bottom:1rem; }
+  .service-emoji { font-size:2rem; margin-bottom:1rem; display:block; }
+  .service-card h3 { font-size:1.1rem; font-weight:600; margin-bottom:0.8rem; }
+  .service-card p { font-size:0.875rem; color:var(--muted); line-height:1.7; }
+  #impact { background:var(--navy); display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+  .impact-list { display:flex; flex-direction:column; gap:1.5rem; margin-top:2.5rem; }
+  .impact-item { display:flex; gap:1.2rem; align-items:flex-start; padding-bottom:1.5rem; border-bottom:1px solid rgba(0,194,212,0.08); }
+  .impact-item:last-child { border-bottom:none; }
+  .impact-dot { width:10px; height:10px; border-radius:50%; background:var(--cyan); flex-shrink:0; margin-top:0.45rem; box-shadow:0 0 0 4px rgba(0,194,212,0.15); }
+  .impact-item h4 { font-size:1rem; font-weight:600; margin-bottom:0.3rem; }
+  .impact-item p { font-size:0.85rem; color:var(--muted); line-height:1.6; }
+  .impact-right { padding-top:5rem; }
+  .quote-block { border-left:3px solid var(--cyan); padding:1.5rem 1.8rem; background:rgba(0,194,212,0.04); border-radius:0 4px 4px 0; margin-bottom:2rem; }
+  .quote-block blockquote { font-family:'Playfair Display',serif; font-size:1.3rem; line-height:1.55; color:var(--white); margin-bottom:1rem; }
+  .quote-block cite { font-size:0.8rem; color:var(--muted); font-style:normal; letter-spacing:0.05em; }
+  .partners-label { font-size:0.72rem; color:var(--muted); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:1rem; }
+  .partner-tags { display:flex; flex-wrap:wrap; gap:0.6rem; }
+  .partner-tag { border:1px solid rgba(0,194,212,0.2); color:var(--muted); font-size:0.8rem; padding:0.4rem 0.9rem; border-radius:2px; letter-spacing:0.05em; }
+  #contact { background:var(--midnight); text-align:center; position:relative; overflow:hidden; }
+  #contact::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 50% at 50% 50%, rgba(0,122,140,0.2) 0%, transparent 70%); }
+  .contact-inner { position:relative; z-index:1; max-width:640px; margin:0 auto; }
+  #contact h2 { margin-bottom:1rem; }
+  #contact .section-lead { margin:0 auto 2.5rem; }
+  .contact-form { display:grid; gap:1rem; text-align:left; margin-top:2.5rem; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  input,textarea,select { background:rgba(10,22,40,0.8); border:1px solid rgba(0,194,212,0.2); color:var(--white); font-family:'DM Sans',sans-serif; font-size:0.9rem; padding:0.85rem 1rem; border-radius:2px; width:100%; outline:none; transition:border-color 0.2s; }
+  input:focus,textarea:focus,select:focus { border-color:var(--cyan); }
+  input::placeholder,textarea::placeholder { color:var(--muted); }
+  textarea { height:130px; resize:vertical; }
+  select option { background:var(--navy); }
+  .submit-btn { background:var(--cyan); color:var(--midnight); border:none; padding:1rem 2.5rem; border-radius:2px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; letter-spacing:0.04em; transition:background 0.2s,transform 0.2s; justify-self:start; }
+  .submit-btn:hover { background:#00d8ed; transform:translateY(-2px); }
+  footer { background:var(--navy); border-top:1px solid rgba(0,194,212,0.1); padding:2.5rem 5vw; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+  footer .logo { font-size:1rem; }
+  .footer-links { display:flex; gap:2rem; }
+  .footer-links a { color:var(--muted); font-size:0.82rem; text-decoration:none; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--cyan); }
+  .footer-copy { color:var(--muted); font-size:0.78rem; }
+  body.light-mode { --midnight:#F0F4F8; --navy:#E2E8F0; --white:#1A2535; --muted:#4A6070; background:#F0F4F8; color:#1A2535; }
+  body.light-mode nav { background:rgba(240,244,248,0.92); border-bottom:1px solid rgba(0,122,140,0.2); }
+  body.light-mode .hero-bg { background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(0,122,140,0.15) 0%, transparent 65%), radial-gradient(ellipse 50% 40% at 20% 80%, rgba(0,194,212,0.08) 0%, transparent 60%), #F0F4F8; }
+  body.light-mode .stats-bar { background:rgba(220,230,240,0.9); }
+  body.light-mode .service-card { background:#fff; border-color:rgba(0,122,140,0.15); }
+  body.light-mode .pillar { background:rgba(0,194,212,0.04); border-color:rgba(0,122,140,0.15); }
+  body.light-mode .quote-block { background:rgba(0,194,212,0.06); }
+  body.light-mode input,body.light-mode textarea,body.light-mode select { background:#fff; border-color:rgba(0,122,140,0.3); color:#1A2535; }
+  body.light-mode footer { background:#E2E8F0; }
+  body.light-mode #products-panel { background:#F0F4F8; }
+  body.light-mode .p-card { background:#fff; border-color:rgba(0,122,140,0.15); }
+  body.light-mode .p-name { color:#1A2535; }
+  #theme-toggle { background:none; border:1px solid rgba(0,194,212,0.4); color:var(--cyan); border-radius:2px; padding:0.4rem 0.7rem; cursor:pointer; font-size:0.85rem; transition:background 0.2s; margin-left:0.5rem; }
+  #theme-toggle:hover { background:rgba(0,194,212,0.1); }
+  @media(max-width:768px) { #mission,#impact{grid-template-columns:1fr;gap:3rem;} .form-row{grid-template-columns:1fr;} .stats-bar{flex-wrap:wrap;} .stat{flex:0 0 50%;} nav ul{display:none;} .globe-wrap{opacity:0.08;width:80vw;} .products-grid-4{grid-template-columns:1fr 1fr;} .products-grid-3{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Encounter<span>.</span>Engineering</div>
+  <ul>
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="sentinel-portal-v2.html" class="nav-sentinel">Sentinel</a></li>
+    <li><button class="nav-products" id="products-btn" onclick="toggleProducts()">Products</button></li>
+    <li><a href="#contact" class="nav-cta">Partner With Us</a></li>
+  </ul>
+  <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">🌙</button>
+</nav>
+
+<!-- PRODUCTS PANEL -->
+<div id="products-panel">
+  <div class="products-hero-tag">Sentinel cooling system</div>
+  <h2 class="products-title">Two platforms. <em>One mission.</em></h2>
+  <p class="products-sub">Solar-powered passive cooling with Hive Mind IoT triage — deployed from forward operating bases to urban health clinics worldwide.</p>
+  <p class="products-sub">Field series units are solar-charged and LoRaWAN connected — no grid power, no WiFi required. Urban series units connect via WiFi and standard AC power, optimized for city clinics and managed fleet deployments.</p>
+  <div class="billing-note">⚡ All units billed by usage — pay only for active deployments. No upfront licensing.</div>
+
+  <p class="products-section-tag">Field series — solar powered · LoRaWAN · off-grid</p>
+  <div class="products-grid-4">
+    <div class="p-card field">
+      <img src="images/sentinel-f1-combat.png" alt="Sentinel F1 Combat" />
+      <div class="p-card-body">
+        <span class="p-badge field">F1 · Tactical</span>
+        <p class="p-name">Sentinel F1 Combat</p>
+        <p class="p-desc">Military-grade MOLLE-compatible unit for forward deployments and disaster response.</p>
+        <div class="p-spec">Solar-charged · 72hr autonomous</div>
+        <div class="p-spec">LoRaWAN · 4km mesh range</div>
+        <div class="p-spec">MIL-STD-810 rated</div>
+      </div>
+    </div>
+    <div class="p-card field">
+      <img src="images/sentinel-f1-field.png" alt="Sentinel F1 Field" />
+      <div class="p-card-body">
+        <span class="p-badge field">F1 · Field</span>
+        <p class="p-name">Sentinel F1 Field</p>
+        <p class="p-desc">Roll-top weatherproof design for NGO and humanitarian deployments. Extreme heat rated.</p>
+        <div class="p-spec">Solar-charged · off-grid</div>
+        <div class="p-spec">LoRaWAN · TTN compatible</div>
+        <div class="p-spec">Active vent cool air delivery</div>
+      </div>
+    </div>
+    <div class="p-card field">
+      <img src="images/sentinel-f1-vent.png" alt="Sentinel F1 Maternal" />
+      <div class="p-card-body">
+        <span class="p-badge field">F1 · Medical</span>
+        <p class="p-name">Sentinel F1 Maternal</p>
+        <p class="p-desc">Quiet operation, bottom vent cool air for neonatal and maternal care deployments.</p>
+        <div class="p-spec">Solar-charged · no grid needed</div>
+        <div class="p-spec">LoRaWAN + SMS alert fallback</div>
+        <div class="p-spec">WHO EOPE protocol aligned</div>
+      </div>
+    </div>
+    <div class="p-card field">
+      <img src="images/sentinel-f1-solar.png" alt="Sentinel F1 Solar Pro" />
+      <div class="p-card-body">
+        <span class="p-badge field">F1 · Pro</span>
+        <p class="p-name">Sentinel F1 Solar Pro</p>
+        <p class="p-desc">Full-panel solar, OLED triage display, 4-button control panel. Maximum field autonomy.</p>
+        <div class="p-spec">Full-panel solar · extended runtime</div>
+        <div class="p-spec">OLED control panel · triage display</div>
+        <div class="p-spec">Hive Mind IoT triage built-in</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="products-section-tag">Urban series — WiFi · AC power · city deployment</p>
+  <div class="products-grid-3">
+    <div class="p-card urban">
+      <img src="images/sentinel-u1-arizona.png" alt="Sentinel U1 Arizona" />
+      <div class="p-card-body">
+        <span class="p-badge urban">U1 · City</span>
+        <p class="p-name">Sentinel U1 Arizona</p>
+        <p class="p-desc">Lightweight civilian unit for urban heat response. Designed for hot dry climates like Phoenix and Scottsdale.</p>
+        <div class="p-spec">AC powered · USB-C backup</div>
+        <div class="p-spec">WiFi · Azure IoT · Sentinel portal</div>
+        <div class="p-spec">LED triage · green / amber / red</div>
+      </div>
+    </div>
+    <div class="p-card urban">
+      <img src="images/sentinel-u1-solar.png" alt="Sentinel U1 Solar Hybrid" />
+      <div class="p-card-body">
+        <span class="p-badge urban">U1 · Hybrid</span>
+        <p class="p-name">Sentinel U1 Solar hybrid</p>
+        <p class="p-desc">Solar top panel for supplemental charging. Clean clinic aesthetic with gold accent trim.</p>
+        <div class="p-spec">Solar top panel + AC grid power</div>
+        <div class="p-spec">WiFi · real-time portal dashboard</div>
+        <div class="p-spec">Peltier cooling · 12kg ice capacity</div>
+      </div>
+    </div>
+    <div class="p-card urban">
+      <img src="images/sentinel-u2-clinic.png" alt="Sentinel U2 Clinic Fleet" />
+      <div class="p-card-body">
+        <span class="p-badge urban">U2 · Fleet</span>
+        <p class="p-name">Sentinel U2 Clinic fleet</p>
+        <p class="p-desc">Multi-unit managed deployment for health clinics. Hive Network dashboard and stakeholder alerts included.</p>
+        <div class="p-spec">AC powered · grid connected</div>
+        <div class="p-spec">WiFi fleet management</div>
+        <div class="p-spec">Hive Mind triage · all units</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="products-footer">
+    <p>All units include Hive Mind IoT triage · Patent pending · Billed by usage · Encounter Engineering © 2026</p>
+    <a href="#contact" onclick="closeProducts()" class="btn-primary" style="text-decoration:none;">Partner with us →</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <svg class="globe-wrap" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="200" cy="200" r="195" stroke="#00C2D4" stroke-width="1.5"/>
+    <ellipse cx="200" cy="200" rx="100" ry="195" stroke="#00C2D4" stroke-width="1"/>
+    <ellipse cx="200" cy="200" rx="195" ry="80" stroke="#00C2D4" stroke-width="1"/>
+    <line x1="5" y1="200" x2="395" y2="200" stroke="#00C2D4" stroke-width="0.8"/>
+    <line x1="200" y1="5" x2="200" y2="395" stroke="#00C2D4" stroke-width="0.8"/>
+    <ellipse cx="200" cy="200" rx="50" ry="195" stroke="#00C2D4" stroke-width="0.5" opacity="0.5"/>
+    <ellipse cx="200" cy="200" rx="150" ry="195" stroke="#00C2D4" stroke-width="0.5" opacity="0.5"/>
+    <ellipse cx="200" cy="200" rx="195" ry="130" stroke="#00C2D4" stroke-width="0.5" opacity="0.5"/>
+    <ellipse cx="200" cy="200" rx="195" ry="40" stroke="#00C2D4" stroke-width="0.5" opacity="0.5"/>
+  </svg>
+  <div class="hero-content">
+    <div class="hero-tag">Engineering for a safer world</div>
+    <h1>Public Health.<br>Public Safety.<br><em>Global Scale.</em></h1>
+    <p class="hero-sub">Encounter Engineering partners with NGOs and international organizations to deliver evidence-based engineering solutions — from night heat mitigation to clean infrastructure — where they matter most.</p>
+    <div class="btn-row">
+      <a href="#services" class="btn-primary">Explore Our Work</a>
+      <a href="#contact" class="btn-secondary">Partner With Us</a>
+    </div>
+  </div>
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num">40+</div><div class="stat-label">Countries Served</div></div>
+    <div class="stat"><div class="stat-num">120+</div><div class="stat-label">NGO Partnerships</div></div>
+    <div class="stat"><div class="stat-num">2M+</div><div class="stat-label">Lives Impacted</div></div>
+    <div class="stat"><div class="stat-num">18yr</div><div class="stat-label">Global Experience</div></div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section id="mission">
+  <div class="mission-visual"><div class="mission-icon">🌍</div></div>
+  <div>
+    <p class="section-tag">Our Mission</p>
+    <h2>Engineering That Protects People First</h2>
+    <p class="section-lead">We believe that access to safe environments is a human right. Encounter Engineering bridges the gap between cutting-edge engineering knowledge and the communities that need it most.</p>
+    <div class="mission-pillars">
+      <div class="pillar"><div class="pillar-icon">🌡️</div><div><h4>Climate Resilience</h4><p>Designing cooling infrastructure and urban heat island interventions to protect vulnerable populations during extreme heat events.</p></div></div>
+      <div class="pillar"><div class="pillar-icon">🛡️</div><div><h4>Public Safety Systems</h4><p>Engineering early warning, shelter, and emergency response systems in partnership with local governments and NGOs.</p></div></div>
+      <div class="pillar"><div class="pillar-icon">💧</div><div><h4>Health Infrastructure</h4><p>Safe water, sanitation, and built environments that reduce disease burden and support community health outcomes.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="section-tag">What We Do</p>
+  <h2>Our Core Services</h2>
+  <div class="services-grid">
+    <div class="service-card"><div class="service-num">01</div><span class="service-emoji">🌙</span><h3>Night Heat Mitigation</h3><p>Evidence-based urban cooling strategies — reflective surfaces, green corridors, ventilation design — to reduce thermal risk during nighttime heat extremes.</p></div>
+    <div class="service-card"><div class="service-num">02</div><span class="service-emoji">🏥</span><h3>Public Health Engineering</h3><p>Designing safe water, sanitation, and medical facility infrastructure to improve health outcomes in underserved and conflict-affected regions.</p></div>
+    <div class="service-card"><div class="service-num">03</div><span class="service-emoji">🚨</span><h3>Disaster Risk Reduction</h3><p>Resilient infrastructure and community alert systems built to survive and respond to natural disasters, floods, and extreme weather events.</p></div>
+    <div class="service-card"><div class="service-num">04</div><span class="service-emoji">📊</span><h3>Field Assessment & Research</h3><p>Ground-truth data collection and engineering assessments that guide effective NGO programming and donor investment decisions.</p></div>
+    <div class="service-card"><div class="service-num">05</div><span class="service-emoji">🤝</span><h3>NGO Technical Advisory</h3><p>Embedded technical expertise for humanitarian organizations — bridging the gap between engineering best practice and on-the-ground implementation.</p></div>
+    <div class="service-card"><div class="service-num">06</div><span class="service-emoji">🏙️</span><h3>Urban Resilience Planning</h3><p>Long-term city and community planning to future-proof infrastructure against climate change, population growth, and evolving public health needs.</p></div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section id="impact">
+  <div>
+    <p class="section-tag">Our Impact</p>
+    <h2>Where We've Made a Difference</h2>
+    <p class="section-lead">From sub-Saharan Africa to Southeast Asia, our engineering solutions are improving lives at scale.</p>
+    <div class="impact-list">
+      <div class="impact-item"><div class="impact-dot"></div><div><h4>Night Heat Cooling — South Asia</h4><p>Delivered passive cooling retrofits for 200+ homes in climate-vulnerable communities, reducing nighttime temperatures by up to 4°C.</p></div></div>
+      <div class="impact-item"><div class="impact-dot"></div><div><h4>WASH Infrastructure — East Africa</h4><p>Engineered clean water access points serving 85,000 people across three drought-affected regions in partnership with UNICEF.</p></div></div>
+      <div class="impact-item"><div class="impact-dot"></div><div><h4>Flood Resilience — Southeast Asia</h4><p>Community shelter and drainage systems protecting 30,000 residents in flood-prone delta communities from seasonal flooding.</p></div></div>
+      <div class="impact-item"><div class="impact-dot"></div><div><h4>Health Facility Upgrades — West Africa</h4><p>Structural and systems upgrades across 12 rural clinics, improving medical care access for 150,000 people.</p></div></div>
+    </div>
+  </div>
+  <div class="impact-right">
+    <div class="quote-block">
+      <blockquote>"Encounter Engineering brought technical rigor to our programming that we simply could not source elsewhere. Their work on heat mitigation has been transformative."</blockquote>
+      <cite>— Senior Programme Officer, UN Office for the Coordination of Humanitarian Affairs</cite>
+    </div>
+    <div class="partners-label">Trusted by organizations including</div>
+    <div class="partner-tags">
+      <span class="partner-tag">UNICEF</span><span class="partner-tag">WHO</span><span class="partner-tag">UNHCR</span><span class="partner-tag">Red Cross</span><span class="partner-tag">CARE International</span><span class="partner-tag">Oxfam</span><span class="partner-tag">MSF</span><span class="partner-tag">World Bank</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <p class="section-tag">Get In Touch</p>
+    <h2>Ready to Build Something That Matters?</h2>
+    <p class="section-lead">Whether you're an NGO, government agency, or funding body — let's talk about how engineering can advance your mission.</p>
+    <div class="contact-form">
+      <div class="form-row">
+        <input type="text" placeholder="Your Name">
+        <input type="email" placeholder="Email Address">
+      </div>
+      <input type="text" placeholder="Organization / NGO Name">
+      <select><option value="" disabled selected>Area of Interest</option><option>Night Heat Mitigation</option><option>Public Health Engineering</option><option>Disaster Risk Reduction</option><option>Urban Resilience Planning</option><option>Technical Advisory</option><option>Sentinel Products</option><option>Other</option></select>
+      <textarea placeholder="Tell us about your project or challenge…"></textarea>
+      <button class="submit-btn">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Encounter<span>.</span>Engineering</div>
+  <div class="footer-links">
+    <a href="#mission">Mission</a>
+    <a href="#services">Services</a>
+    <a href="#impact">Impact</a>
+    <a onclick="toggleProducts()">Products</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 Encounter Engineering. All rights reserved.</div>
+</footer>
+
+<script>
+  function toggleProducts() {
+    const panel = document.getElementById('products-panel');
+    const btn = document.getElementById('products-btn');
+    const isOpen = panel.classList.contains('open');
+    if (isOpen) {
+      panel.classList.remove('open');
+      btn.classList.remove('active');
+      document.body.style.overflow = '';
+    } else {
+      panel.classList.add('open');
+      btn.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      panel.scrollTop = 0;
+    }
+  }
+  function closeProducts() {
+    document.getElementById('products-panel').classList.remove('open');
+    document.getElementById('products-btn').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  function toggleTheme() {
+    document.body.classList.toggle('light-mode');
+    const btn = document.getElementById('theme-toggle');
+    btn.textContent = document.body.classList.contains('light-mode') ? '🌑' : '🌙';
+    localStorage.setItem('enc-theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+  }
+  if (localStorage.getItem('enc-theme') === 'light') {
+    document.body.classList.add('light-mode');
+    document.getElementById('theme-toggle').textContent = '🌑';
+  }
+</script>
+</body>
+</html>
