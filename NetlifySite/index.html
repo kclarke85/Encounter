@@ -490,7 +490,7 @@
     <li><a href="#mission">Mission</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#impact">Impact</a></li>
-    <li><a href="sentinel-portal-v2.html" class="nav-sentinel">Sentinel</a></li><li><button class="nav-products" id="products-btn" onclick="toggleProducts()">Products</button></li>
+    <li><a href="sentinel-portal-v2.html" class="nav-sentinel">Sentinel</a></li><li><button class="nav-products" id="products-btn" onclick="document.getElementById('products-panel').classList.toggle('open');document.body.style.overflow=document.getElementById('products-panel').classList.contains('open')?'hidden':''">Products</button></li>
     <li><a href="#contact" class="nav-cta">Partner With Us</a></li>
   </ul>
   <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">🌙</button>
