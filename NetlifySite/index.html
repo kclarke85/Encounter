@@ -736,8 +736,8 @@
   function toggleTheme() {
     document.body.classList.toggle('light-mode');
     const btn = document.getElementById('theme-toggle');
-    btn.textContent = document.body.classList.contains('light-mode') &middot; '🌑' : '🌙';
-    localStorage.setItem('enc-theme', document.body.classList.contains('light-mode') &middot; 'light' : 'dark');
+    btn.textContent = document.body.classList.contains('light-mode') ? '🌑' : '🌙';
+    localStorage.setItem('enc-theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
   }
   if (localStorage.getItem('enc-theme') === 'light') {
     document.body.classList.add('light-mode');
