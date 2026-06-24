@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareRide — Encounter Engineering</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cyan: #00C2D4;
+    --teal: #007A8C;
+    --navy: #0A1628;
+    --midnight: #060E1A;
+    --white: #F5F8FA;
+    --gold: #E8B84B;
+    --muted: #8FA3B0;
+    --green: #1D9E75;
+    --green-light: #E1F5EE;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--midnight);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 5vw;
+    background: rgba(6,14,26,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,194,212,0.12);
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700; letter-spacing: 0.04em;
+    color: var(--white); text-decoration: none;
+  }
+  .logo span { color: var(--cyan); }
+  .logo .product-name {
+    color: var(--cyan);
+    font-size: 0.8rem; font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-left: 0.75rem; padding-left: 0.75rem;
+    border-left: 1px solid rgba(0,194,212,0.3);
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .logo .product-name:hover { opacity: 0.75; }
+  nav ul { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
+  nav ul a {
+    text-decoration: none; color: var(--muted);
+    font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  nav ul a:hover { color: var(--cyan); }
+  .nav-cta {
+    background: var(--cyan); color: var(--midnight) !important;
+    padding: 0.5rem 1.2rem; border-radius: 2px; font-weight: 500;
+  }
+  .nav-cta:hover { background: #00d8ed !important; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid; place-items: center;
+    position: relative; overflow: hidden;
+    padding: 9rem 5vw 7rem;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 65% 45%, rgba(29,158,117,0.22) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 15% 75%, rgba(0,194,212,0.1) 0%, transparent 60%),
+      var(--midnight);
+  }
+  .hero-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,194,212,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,194,212,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridDrift 22s linear infinite;
+  }
+  @keyframes gridDrift {
+    0% { transform: translate(0,0); }
+    100% { transform: translate(60px, 60px); }
+  }
+
+  /* Tablet illustration floating right */
+  .hero-device {
+    position: absolute; right: 4vw; top: 50%;
+    transform: translateY(-50%);
+    width: clamp(260px, 32vw, 420px);
+    animation: floatUp 6s ease-in-out infinite;
+    opacity: 0.92;
+  }
+  @keyframes floatUp {
+    0%, 100% { transform: translateY(-50%); }
+    50% { transform: translateY(calc(-50% - 12px)); }
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 640px;
+    animation: fadeUp 0.9s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--cyan); border: 1px solid rgba(0,194,212,0.4);
+    padding: 0.35rem 0.9rem; border-radius: 2px; margin-bottom: 2rem;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 5.5vw, 4.6rem);
+    font-weight: 900; line-height: 1.06; margin-bottom: 1.5rem;
+  }
+  h1 em { color: var(--cyan); font-style: normal; }
+  .hero-sub {
+    font-size: 1.08rem; line-height: 1.78;
+    color: var(--muted); max-width: 520px; margin-bottom: 2.5rem;
+  }
+  .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--cyan); color: var(--midnight);
+    padding: 0.85rem 2rem; border-radius: 2px;
+    font-weight: 600; font-size: 0.9rem; letter-spacing: 0.05em;
+    text-decoration: none; transition: background 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #00d8ed; transform: translateY(-2px); }
+  .btn-secondary {
+    border: 1px solid rgba(0,194,212,0.4);
+    color: var(--cyan); padding: 0.85rem 2rem; border-radius: 2px;
+    font-size: 0.9rem; letter-spacing: 0.05em;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--cyan); transform: translateY(-2px); }
+
+  .stats-bar {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    display: flex;
+    border-top: 1px solid rgba(0,194,212,0.12);
+    background: rgba(10,22,40,0.7);
+    backdrop-filter: blur(8px);
+  }
+  .stat { flex: 1; padding: 1.6rem 2rem; border-right: 1px solid rgba(0,194,212,0.1); text-align: center; }
+  .stat:last-child { border-right: none; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 700; color: var(--cyan); }
+  .stat-label { font-size: 0.76rem; color: var(--muted); margin-top: 0.2rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* ── SHARED SECTION STYLES ── */
+  section { padding: 7rem 5vw; }
+  .section-tag {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 0.8rem;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.9rem, 3.8vw, 2.9rem);
+    font-weight: 700; line-height: 1.15; margin-bottom: 1.2rem;
+  }
+  h2 em { color: var(--cyan); font-style: normal; }
+  .section-lead {
+    font-size: 1.02rem; color: var(--muted);
+    line-height: 1.8; max-width: 580px;
+  }
+
+  /* ── PROBLEM ── */
+  #problem {
+    background: var(--navy);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+  }
+  .problem-visual {
+    position: relative; height: 360px;
+    border: 1px solid rgba(0,194,212,0.15); border-radius: 4px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .problem-visual::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(0,122,140,0.4) 0%, transparent 70%);
+  }
+  .problem-icon { position: relative; z-index: 1; font-size: 7rem; animation: pulse 4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{transform:scale(1);opacity:.9} 50%{transform:scale(1.06);opacity:1} }
+  .problem-list { display: flex; flex-direction: column; gap: 1.1rem; margin-top: 2rem; }
+  .problem-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    background: rgba(0,194,212,0.04);
+    border: 1px solid rgba(0,194,212,0.1);
+    padding: 1.1rem 1.3rem; border-radius: 3px;
+    transition: border-color 0.2s;
+  }
+  .problem-item:hover { border-color: rgba(0,194,212,0.35); }
+  .pi-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .problem-item h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; }
+  .problem-item p { font-size: 0.84rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── HOW IT WORKS ── */
+  #how { background: var(--midnight); }
+  .steps-wrap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 3.5rem; position: relative; }
+  .steps-wrap::before {
+    content: '';
+    position: absolute; top: 2.8rem; left: calc(16.6% + 1rem); right: calc(16.6% + 1rem);
+    height: 1px; background: linear-gradient(90deg, var(--cyan), rgba(0,194,212,0.2), var(--cyan));
+  }
+  .step {
+    padding: 0 2rem 0 0; display: flex; flex-direction: column; align-items: flex-start;
+  }
+  .step:last-child { padding-right: 0; }
+  .step-num-wrap { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+  .step-num {
+    width: 56px; height: 56px; border-radius: 50%;
+    border: 1.5px solid var(--cyan);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--cyan);
+    background: var(--midnight); position: relative; z-index: 1; flex-shrink: 0;
+  }
+  .step h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.6rem; }
+  .step p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+
+  /* ── THREE SCREENS ── */
+  #screens {
+    background: var(--navy);
+    padding-top: 7rem; padding-bottom: 7rem;
+  }
+  .screens-header { margin-bottom: 3.5rem; }
+  .screens-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .screen-card {
+    background: rgba(6,14,26,0.65);
+    border: 1px solid rgba(0,194,212,0.12);
+    border-radius: 4px; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+  }
+  .screen-card:hover { border-color: rgba(0,194,212,0.4); transform: translateY(-5px); }
+  .screen-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .screen-card:hover::before { opacity: 1; }
+  .sc-patient::before { background: linear-gradient(90deg, #1D9E75, transparent); }
+  .sc-family::before { background: linear-gradient(90deg, var(--cyan), transparent); }
+  .sc-operator::before { background: linear-gradient(90deg, var(--gold), transparent); }
+  .sc-preview {
+    height: 200px; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .sc-patient .sc-preview { background: linear-gradient(135deg, #0F3D2E 0%, #0A2820 100%); }
+  .sc-family .sc-preview { background: linear-gradient(135deg, #0A1628 0%, #06111F 100%); }
+  .sc-operator .sc-preview { background: linear-gradient(135deg, #0A1218 0%, #060C12 100%); }
+  .sc-icon { font-size: 4rem; opacity: 0.9; }
+  .sc-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 1rem 1.2rem 0.8rem;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+  }
+  .sc-live {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(29,158,117,0.85); border-radius: 2px;
+    padding: 3px 8px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; color: white;
+  }
+  .sc-live-dot { width: 5px; height: 5px; border-radius: 50%; background: white; animation: blink 1.6s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+  .sc-body { padding: 1.5rem; }
+  .sc-badge {
+    display: inline-block; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 3px 8px; border-radius: 2px; margin-bottom: 0.7rem;
+  }
+  .sc-patient .sc-badge { background: rgba(29,158,117,0.15); color: #5DCAA5; border: 1px solid rgba(29,158,117,0.3); }
+  .sc-family .sc-badge { background: rgba(0,194,212,0.1); color: var(--cyan); border: 1px solid rgba(0,194,212,0.25); }
+  .sc-operator .sc-badge { background: rgba(232,184,75,0.1); color: var(--gold); border: 1px solid rgba(232,184,75,0.25); }
+  .sc-body h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.6rem; }
+  .sc-body p { font-size: 0.84rem; color: var(--muted); line-height: 1.65; margin-bottom: 1rem; }
+  .sc-feat { font-size: 0.8rem; color: var(--muted); padding: 4px 0; display: flex; gap: 8px; align-items: flex-start; border-bottom: 1px solid rgba(0,194,212,0.07); }
+  .sc-feat:last-child { border-bottom: none; }
+  .sc-feat::before { content: '—'; color: var(--cyan); flex-shrink: 0; font-size: 0.75rem; margin-top: 1px; }
+
+  /* ── WHO BUYS IT ── */
+  #buyers { background: var(--midnight); }
+  .buyers-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem; margin-top: 3rem; }
+  .buyer-card {
+    background: rgba(10,22,40,0.6);
+    border: 1px solid rgba(0,194,212,0.1);
+    border-radius: 4px; padding: 2rem;
+    display: flex; gap: 1.4rem; align-items: flex-start;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .buyer-card:hover { border-color: rgba(0,194,212,0.35); transform: translateY(-3px); }
+  .buyer-icon { font-size: 2.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .buyer-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
+  .buyer-card p { font-size: 0.84rem; color: var(--muted); line-height: 1.65; margin-bottom: 0.75rem; }
+  .buyer-tag {
+    display: inline-block; font-size: 0.72rem; padding: 2px 8px;
+    border: 1px solid rgba(0,194,212,0.25); color: var(--cyan); border-radius: 2px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── PRICING ── */
+  #pricing { background: var(--navy); }
+  .pricing-intro { max-width: 560px; margin-bottom: 3.5rem; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+  .p-tier {
+    background: rgba(6,14,26,0.65);
+    border: 1px solid rgba(0,194,212,0.12);
+    border-radius: 4px; padding: 2.2rem;
+    position: relative; transition: border-color 0.3s, transform 0.3s;
+  }
+  .p-tier:hover { transform: translateY(-4px); }
+  .p-tier.featured {
+    border-color: var(--cyan);
+    background: rgba(0,194,212,0.04);
+  }
+  .p-tier.featured::before {
+    content: 'Most Popular';
+    position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+    background: var(--cyan); color: var(--midnight);
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 14px; border-radius: 0 0 4px 4px;
+  }
+  .pt-name { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+  .pt-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem; font-weight: 700; color: var(--white);
+    display: flex; align-items: baseline; gap: 0.3rem; margin-bottom: 0.3rem;
+  }
+  .pt-price span { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--muted); font-weight: 400; }
+  .pt-desc { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(0,194,212,0.1); }
+  .pt-feat { font-size: 0.83rem; color: var(--muted); padding: 6px 0; display: flex; gap: 9px; align-items: flex-start; line-height: 1.5; }
+  .pt-feat .check { color: var(--cyan); flex-shrink: 0; font-size: 0.9rem; }
+  .pt-feat .no { color: rgba(143,163,176,0.3); flex-shrink: 0; font-size: 0.9rem; }
+  .pt-cta {
+    display: block; margin-top: 1.8rem; text-align: center;
+    padding: 0.8rem; border-radius: 2px; font-size: 0.88rem; font-weight: 600;
+    text-decoration: none; transition: background 0.2s, transform 0.2s;
+    letter-spacing: 0.04em;
+  }
+  .p-tier.featured .pt-cta { background: var(--cyan); color: var(--midnight); }
+  .p-tier.featured .pt-cta:hover { background: #00d8ed; }
+  .p-tier:not(.featured) .pt-cta {
+    border: 1px solid rgba(0,194,212,0.35); color: var(--cyan);
+  }
+  .p-tier:not(.featured) .pt-cta:hover { border-color: var(--cyan); transform: translateY(-1px); }
+
+  /* Hardware note */
+  .hw-note {
+    margin-top: 2rem; padding: 1.2rem 1.6rem;
+    background: rgba(0,194,212,0.05); border: 1px solid rgba(0,194,212,0.15);
+    border-radius: 3px; display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .hw-note-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .hw-note p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+  .hw-note strong { color: var(--white); }
+
+  /* ── MOAT ── */
+  #moat {
+    background: var(--midnight);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+  }
+  .moat-list { display: flex; flex-direction: column; gap: 1.4rem; margin-top: 2rem; }
+  .moat-item { display: flex; gap: 1.2rem; align-items: flex-start; padding-bottom: 1.4rem; border-bottom: 1px solid rgba(0,194,212,0.08); }
+  .moat-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .moat-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--cyan); flex-shrink: 0; margin-top: 0.5rem; box-shadow: 0 0 0 4px rgba(0,194,212,0.12); }
+  .moat-item h4 { font-size: 0.98rem; font-weight: 600; margin-bottom: 0.3rem; }
+  .moat-item p { font-size: 0.84rem; color: var(--muted); line-height: 1.65; }
+  .moat-right { padding-top: 4rem; }
+  .quote-block {
+    border-left: 3px solid var(--cyan);
+    padding: 1.4rem 1.7rem;
+    background: rgba(0,194,212,0.04);
+    border-radius: 0 4px 4px 0; margin-bottom: 2rem;
+  }
+  .quote-block blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; line-height: 1.58;
+    color: var(--white); margin-bottom: 0.9rem;
+  }
+  .quote-block cite { font-size: 0.78rem; color: var(--muted); font-style: normal; letter-spacing: 0.05em; }
+  .gap-tags-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
+  .gap-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .gap-tag { border: 1px solid rgba(0,194,212,0.2); color: var(--muted); font-size: 0.8rem; padding: 0.4rem 0.9rem; border-radius: 2px; letter-spacing: 0.04em; }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--navy);
+    text-align: center; position: relative; overflow: hidden;
+  }
+  #contact::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(29,158,117,0.12) 0%, transparent 70%);
+  }
+  .contact-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+  #contact h2 { margin-bottom: 1rem; }
+  #contact .section-lead { margin: 0 auto 2.5rem; }
+  .contact-form { display: grid; gap: 1rem; text-align: left; margin-top: 2.5rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  input, textarea, select {
+    background: rgba(6,14,26,0.8);
+    border: 1px solid rgba(0,194,212,0.2);
+    color: var(--white); font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; padding: 0.85rem 1rem; border-radius: 2px;
+    width: 100%; outline: none; transition: border-color 0.2s;
+  }
+  input:focus, textarea:focus, select:focus { border-color: var(--cyan); }
+  input::placeholder, textarea::placeholder { color: var(--muted); }
+  textarea { height: 120px; resize: vertical; }
+  select option { background: var(--navy); }
+  .submit-btn {
+    background: var(--cyan); color: var(--midnight);
+    border: none; padding: 1rem 2.5rem; border-radius: 2px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600;
+    cursor: pointer; letter-spacing: 0.04em;
+    transition: background 0.2s, transform 0.2s; justify-self: start;
+  }
+  .submit-btn:hover { background: #00d8ed; transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--midnight);
+    border-top: 1px solid rgba(0,194,212,0.1);
+    padding: 2.2rem 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { color: var(--muted); font-size: 0.82rem; text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--cyan); }
+  .footer-copy { color: var(--muted); font-size: 0.78rem; }
+  .patent-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.72rem; color: var(--cyan); letter-spacing: 0.06em;
+    background: rgba(0,194,212,0.08); border: 1px solid rgba(0,194,212,0.2);
+    padding: 3px 10px; border-radius: 2px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    #problem, #moat { grid-template-columns: 1fr; gap: 3rem; }
+    .steps-wrap { grid-template-columns: 1fr; gap: 2rem; }
+    .steps-wrap::before { display: none; }
+    .screens-grid, .pricing-grid { grid-template-columns: 1fr; }
+    .buyers-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .stats-bar { flex-wrap: wrap; }
+    .stat { flex: 0 0 50%; }
+    nav ul { display: none; }
+    .hero-device { opacity: 0.1; width: 60vw; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://encounterengineering.org" class="logo">
+    Encounter<span>.</span>Engineering
+    <a href="careride-product-page.html" class="product-name">CareRide</a>
+  </a>
+  <ul>
+    <li><a href="#problem">The Problem</a></li>
+    <li><a href="#screens">Platform</a></li>
+    <li><a href="#buyers">Who It's For</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact" class="nav-cta">Book a Demo</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+
+  <!-- Floating device illustration -->
+  <div class="hero-device" aria-hidden="true">
+    <svg viewBox="0 0 320 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Tablet body -->
+      <rect x="20" y="10" width="280" height="460" rx="18" fill="#0A1628" stroke="rgba(0,194,212,0.3)" stroke-width="1.5"/>
+      <!-- Screen -->
+      <rect x="30" y="20" width="260" height="440" rx="12" fill="#060E1A"/>
+      <!-- Green header bar -->
+      <rect x="30" y="20" width="260" height="72" rx="12" fill="#0F3D2E"/>
+      <rect x="30" y="68" width="260" height="24" fill="#0F3D2E"/>
+      <!-- Header text lines -->
+      <rect x="48" y="36" width="6" height="6" rx="3" fill="#5DCAA5"/>
+      <rect x="62" y="35" width="100" height="8" rx="2" fill="rgba(157,225,203,0.5)"/>
+      <rect x="48" y="54" width="160" height="14" rx="2" fill="rgba(255,255,255,0.12)"/>
+      <!-- Teal ETA band -->
+      <rect x="30" y="92" width="260" height="58" fill="#1D9E75"/>
+      <rect x="48" y="104" width="80" height="8" rx="2" fill="rgba(255,255,255,0.5)"/>
+      <rect x="48" y="116" width="120" height="14" rx="2" fill="rgba(255,255,255,0.8)"/>
+      <rect x="230" y="102" width="36" height="36" rx="4" fill="rgba(255,255,255,0.12)"/>
+      <rect x="236" y="112" width="24" height="16" rx="2" fill="rgba(255,255,255,0.5)"/>
+      <!-- Driver section -->
+      <rect x="30" y="150" width="260" height="80" rx="0" fill="rgba(10,22,40,0.5)"/>
+      <circle cx="66" cy="190" r="22" fill="#FAC775" opacity="0.9"/>
+      <rect x="96" y="178" width="90" height="10" rx="2" fill="rgba(255,255,255,0.6)"/>
+      <rect x="96" y="194" width="60" height="8" rx="2" fill="rgba(143,163,176,0.5)"/>
+      <rect x="96" y="207" width="70" height="7" rx="2" fill="rgba(143,163,176,0.35)"/>
+      <!-- Video section -->
+      <rect x="30" y="230" width="260" height="130" rx="0" fill="#111519"/>
+      <ellipse cx="160" cy="278" rx="32" ry="40" fill="#2C2420"/>
+      <ellipse cx="160" cy="258" rx="18" ry="22" fill="#4A3228"/>
+      <ellipse cx="160" cy="254" rx="15" ry="18" fill="#6B4535"/>
+      <!-- Live dot overlay -->
+      <circle cx="50" cy="244" r="5" fill="#5DCAA5" opacity="0.9"/>
+      <rect x="62" y="238" width="80" height="12" rx="2" fill="rgba(0,0,0,0.55)"/>
+      <!-- Talk button -->
+      <rect x="90" y="338" width="140" height="32" rx="16" fill="#1D9E75"/>
+      <rect x="110" y="346" width="100" height="16" rx="2" fill="rgba(255,255,255,0.5)"/>
+      <!-- Help buttons -->
+      <rect x="36" y="382" width="114" height="46" rx="8" fill="rgba(10,22,40,0.7)" stroke="rgba(0,194,212,0.15)" stroke-width="1"/>
+      <rect x="170" y="382" width="114" height="46" rx="8" fill="rgba(10,22,40,0.7)" stroke="rgba(0,194,212,0.15)" stroke-width="1"/>
+      <rect x="36" y="436" width="248" height="20" rx="4" fill="#E24B4A" opacity="0.9"/>
+      <!-- Glow effect -->
+      <rect x="20" y="10" width="280" height="460" rx="18" fill="none" stroke="rgba(0,194,212,0.15)" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-tag">CareRide · by Encounter Engineering</div>
+    <h1>The ride<br>your family<br>can <em>see.</em></h1>
+    <p class="hero-sub">
+      A headrest-mounted tablet platform for medical transport vehicles. Families watch live. Operators prove service. The first visibility infrastructure purpose-built for the NEMT industry.
+    </p>
+    <div class="btn-row">
+      <a href="#contact" class="btn-primary">Request a Demo</a>
+      <a href="#screens" class="btn-secondary">See the Platform</a>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-num">$16.2B</div>
+      <div class="stat-label">NEMT Market 2024</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">36.8M</div>
+      <div class="stat-label">Medical Rides / Year</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3.6M</div>
+      <div class="stat-label">Americans Miss Care / Year</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Competitors Doing This</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="problem-visual">
+    <div class="problem-icon">📵</div>
+  </div>
+  <div>
+    <p class="section-tag">The Problem</p>
+    <h2>Every ride goes <em>dark.</em></h2>
+    <p class="section-lead">
+      The moment a vulnerable patient gets into a transport vehicle, their family loses all visibility. Every competitor — Uber Health, Modivcare, RouteGenie — puts technology in the family's hands. Nobody puts it in the vehicle, facing the patient.
+    </p>
+    <div class="problem-list">
+      <div class="problem-item">
+        <div class="pi-icon">📞</div>
+        <div>
+          <h4>"Where is my mom?" calls flood your dispatch</h4>
+          <p>NEMT operators receive dozens of inbound calls daily from anxious family members. Each call pulls dispatch staff off live operations.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="pi-icon">📋</div>
+        <div>
+          <h4>No documented proof-of-service after the ride</h4>
+          <p>Hospital discharge coordinators need a paper trail. Insurance billing requires it. Right now there's nothing — just a driver's word that the ride happened.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="pi-icon">😟</div>
+        <div>
+          <h4>Patients are invisible cargo</h4>
+          <p>Elderly or cognitively impaired passengers have no way to reach their family, no reassurance about where they're going, and no emergency option that works.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <p class="section-tag">How It Works</p>
+  <h2>Set up in 20 minutes. <em>Peace of mind all day.</em></h2>
+  <div class="steps-wrap">
+    <div class="step">
+      <div class="step-num-wrap">
+        <div class="step-num">01</div>
+      </div>
+      <h3>Operator mounts the tablet</h3>
+      <p>A ruggedized Samsung tablet locks into a custom headrest mount. Pre-configured, LTE-connected, MDM-managed. No IT team required. 20 minutes per vehicle.</p>
+    </div>
+    <div class="step">
+      <div class="step-num-wrap">
+        <div class="step-num">02</div>
+      </div>
+      <h3>Family gets a free app</h3>
+      <p>The patient's family member downloads the CareRide app. They receive a live map, real-time video feed, driver credentials, and push alerts the moment pickup and arrival happen.</p>
+    </div>
+    <div class="step">
+      <div class="step-num-wrap">
+        <div class="step-num">03</div>
+      </div>
+      <h3>Patient sees their family, not a blank screen</h3>
+      <p>The headrest tablet shows the patient their destination, ETA, driver name, and a live video thumbnail of the family member watching. One tap to call. One tap for emergency.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THREE SCREENS -->
+<section id="screens">
+  <div class="screens-header">
+    <p class="section-tag">The Platform</p>
+    <h2>Three screens. <em>One connected ride.</em></h2>
+  </div>
+  <div class="screens-grid">
+
+    <div class="screen-card sc-patient">
+      <div class="sc-preview">
+        <span class="sc-icon">🖥️</span>
+        <div class="sc-overlay">
+          <div class="sc-live"><span class="sc-live-dot"></span> IN VEHICLE</div>
+        </div>
+      </div>
+      <div class="sc-body">
+        <span class="sc-badge">Patient · Headrest Tablet</span>
+        <h3>Martha's screen</h3>
+        <p>Designed for elderly passengers. 28px minimum text, high-contrast, never more than 3 choices visible at once.</p>
+        <div class="sc-feat">Personalized greeting by name</div>
+        <div class="sc-feat">Destination + giant ETA countdown</div>
+        <div class="sc-feat">Driver name, photo, CNA badge, star rating</div>
+        <div class="sc-feat">Live video thumbnail — family watching</div>
+        <div class="sc-feat">One-tap "Talk to Jennifer" call button</div>
+        <div class="sc-feat">Full-width red "I need help" emergency button</div>
+      </div>
+    </div>
+
+    <div class="screen-card sc-family">
+      <div class="sc-preview">
+        <span class="sc-icon">📱</span>
+        <div class="sc-overlay">
+          <div class="sc-live"><span class="sc-live-dot"></span> LIVE TRACKING</div>
+        </div>
+      </div>
+      <div class="sc-body">
+        <span class="sc-badge">Caregiver · Mobile App</span>
+        <h3>Jennifer's app</h3>
+        <p>Free to the patient's family. Real-time visibility that eliminates the anxious phone call — and locks families to your platform.</p>
+        <div class="sc-feat">Live GPS map + ETA countdown</div>
+        <div class="sc-feat">Two-way video feed to patient</div>
+        <div class="sc-feat">Driver credentials + speed display</div>
+        <div class="sc-feat">Pickup and arrival push notifications</div>
+        <div class="sc-feat">Tiered emergency alert system</div>
+        <div class="sc-feat">Post-ride CNA observation note</div>
+      </div>
+    </div>
+
+    <div class="screen-card sc-operator">
+      <div class="sc-preview">
+        <span class="sc-icon">📊</span>
+        <div class="sc-overlay">
+          <div class="sc-live" style="background:rgba(232,184,75,0.85)"><span class="sc-live-dot"></span> FLEET LIVE</div>
+        </div>
+      </div>
+      <div class="sc-body">
+        <span class="sc-badge">Operator · Web Dashboard</span>
+        <h3>Your fleet command</h3>
+        <p>Every vehicle, every ride, every document — in one dashboard. Reduce dispatch calls and generate proof-of-service automatically.</p>
+        <div class="sc-feat">Live fleet map — all vehicles</div>
+        <div class="sc-feat">Ride scheduling + driver dispatch</div>
+        <div class="sc-feat">Auto-generated proof-of-service docs</div>
+        <div class="sc-feat">HIPAA-compliant audit log</div>
+        <div class="sc-feat">Patient profiles + conditions per ride</div>
+        <div class="sc-feat">Ride analytics and on-time reporting</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHO BUYS -->
+<section id="buyers">
+  <p class="section-tag">Who It's For</p>
+  <h2>Four industries. <em>One shared problem.</em></h2>
+  <p class="section-lead">Any organization that moves vulnerable patients and answers to anxious families is a CareRide customer.</p>
+  <div class="buyers-grid">
+    <div class="buyer-card">
+      <div class="buyer-icon">🚐</div>
+      <div>
+        <h3>NEMT Operators</h3>
+        <p>Small to mid-size transport companies (5–100 vehicles) running under Medicaid and Medicare Advantage contracts. CareRide eliminates their #1 complaint call and becomes a differentiator to win hospital and senior living contracts.</p>
+        <span class="buyer-tag">Primary customer · fastest yes</span>
+      </div>
+    </div>
+    <div class="buyer-card">
+      <div class="buyer-icon">🏥</div>
+      <div>
+        <h3>Hospital Discharge Teams</h3>
+        <p>Hospitals are penalized financially for readmissions. A documented, verified transport chain post-discharge is a compliance requirement, not a nice-to-have. CareRide provides the audit trail automatically.</p>
+        <span class="buyer-tag">Anchor account · drives operator adoption</span>
+      </div>
+    </div>
+    <div class="buyer-card">
+      <div class="buyer-icon">🏡</div>
+      <div>
+        <h3>Senior Living Facilities</h3>
+        <p>Assisted living, independent living, and memory care communities transport residents to appointments constantly. They are liable for resident safety the entire time — and often run their own small fleet.</p>
+        <span class="buyer-tag">Fast sales cycle · direct fleet sale</span>
+      </div>
+    </div>
+    <div class="buyer-card">
+      <div class="buyer-icon">💉</div>
+      <div>
+        <h3>Dialysis Transport Companies</h3>
+        <p>Dialysis patients ride 3× per week, 52 weeks per year — 156 rides annually per patient. Maximum frequency, medically fragile riders, highest family anxiety. CareRide's ROI is immediate.</p>
+        <span class="buyer-tag">High frequency · premium emotional value</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="pricing-intro">
+    <p class="section-tag">Pricing</p>
+    <h2>Per vehicle. Per month. <em>No surprises.</em></h2>
+    <p class="section-lead">Hardware kit sold separately at near cost. Your margin is in the SaaS subscription — and so is ours.</p>
+  </div>
+  <div class="pricing-grid">
+
+    <div class="p-tier">
+      <div class="pt-name">Starter</div>
+      <div class="pt-price">$99<span>/ vehicle / mo</span></div>
+      <div class="pt-desc">1–10 vehicles · Small NEMT operators</div>
+      <div class="pt-feat"><span class="check">✓</span> In-vehicle GPS display</div>
+      <div class="pt-feat"><span class="check">✓</span> Family push notifications</div>
+      <div class="pt-feat"><span class="check">✓</span> Caregiver mobile app</div>
+      <div class="pt-feat"><span class="check">✓</span> Driver mobile app</div>
+      <div class="pt-feat"><span class="check">✓</span> Operator web dashboard</div>
+      <div class="pt-feat"><span class="check">✓</span> Ride history + receipts</div>
+      <div class="pt-feat"><span class="no">—</span> <span style="opacity:.4">Live two-way video feed</span></div>
+      <div class="pt-feat"><span class="no">—</span> <span style="opacity:.4">Clinical notes / billing docs</span></div>
+      <div class="pt-feat"><span class="no">—</span> <span style="opacity:.4">Hospital portal</span></div>
+      <a href="#contact" class="pt-cta">Get Started</a>
+    </div>
+
+    <div class="p-tier featured">
+      <div class="pt-name">Professional</div>
+      <div class="pt-price">$179<span>/ vehicle / mo</span></div>
+      <div class="pt-desc">10–50 vehicles · Growing operators</div>
+      <div class="pt-feat"><span class="check">✓</span> Everything in Starter</div>
+      <div class="pt-feat"><span class="check">✓</span> Two-way live video feed</div>
+      <div class="pt-feat"><span class="check">✓</span> CNA clinical observation notes</div>
+      <div class="pt-feat"><span class="check">✓</span> Proof-of-service auto-docs</div>
+      <div class="pt-feat"><span class="check">✓</span> Family ride scheduling portal</div>
+      <div class="pt-feat"><span class="check">✓</span> Emergency alert system</div>
+      <div class="pt-feat"><span class="check">✓</span> Hardware management portal</div>
+      <div class="pt-feat"><span class="no">—</span> <span style="opacity:.4">Hospital / facility portal</span></div>
+      <div class="pt-feat"><span class="no">—</span> <span style="opacity:.4">White-label branding</span></div>
+      <a href="#contact" class="pt-cta">Book a Demo</a>
+    </div>
+
+    <div class="p-tier">
+      <div class="pt-name">Enterprise</div>
+      <div class="pt-price">$249<span>/ vehicle / mo</span></div>
+      <div class="pt-desc">50+ vehicles · Hospital-contracted fleets</div>
+      <div class="pt-feat"><span class="check">✓</span> Everything in Professional</div>
+      <div class="pt-feat"><span class="check">✓</span> Hospital / facility portal</div>
+      <div class="pt-feat"><span class="check">✓</span> EHR / EMR integration</div>
+      <div class="pt-feat"><span class="check">✓</span> White-label tablet + apps</div>
+      <div class="pt-feat"><span class="check">✓</span> HIPAA BAA included</div>
+      <div class="pt-feat"><span class="check">✓</span> Custom reporting + API</div>
+      <div class="pt-feat"><span class="check">✓</span> Dedicated account manager</div>
+      <div class="pt-feat"><span class="check">✓</span> SLA + uptime guarantee</div>
+      <div class="pt-feat"><span class="check">✓</span> Volume hardware pricing</div>
+      <a href="#contact" class="pt-cta">Contact Sales</a>
+    </div>
+
+  </div>
+  <div class="hw-note">
+    <div class="hw-note-icon">📦</div>
+    <p><strong>Hardware kit — $649 one-time per vehicle.</strong> Includes Samsung Galaxy Tab Active5 (MIL-STD-810H rated, LTE), Arkon LockVise locking headrest mount, right-angle USB-C power cable, and rugged case. Hardware is sold at near cost — our business is the SaaS subscription. Volume discounts available at 10+ units.</p>
+  </div>
+</section>
+
+<!-- WHY NOW / MOAT -->
+<section id="moat">
+  <div>
+    <p class="section-tag">Why Now</p>
+    <h2>A gap nobody else <em>is filling.</em></h2>
+    <p class="section-lead">The NEMT market is $16.2B and growing at 7% annually. The largest broker just emerged from bankruptcy. No competitor offers in-vehicle patient visibility. The window is open.</p>
+    <div class="moat-list">
+      <div class="moat-item">
+        <div class="moat-dot"></div>
+        <div>
+          <h4>Modivcare's bankruptcy signals the old model is broken</h4>
+          <p>The largest NEMT broker filed Chapter 11 in 2025 on $2.79B revenue with a 5.8% margin. The race-to-bottom Medicaid broker model is failing. Operators need new tools to differentiate.</p>
+        </div>
+      </div>
+      <div class="moat-item">
+        <div class="moat-dot"></div>
+        <div>
+          <h4>Prior art search confirmed: nobody has built this</h4>
+          <p>A comprehensive Google Patents search across vehicle monitoring, caregiver notification, and medical transport reveals zero existing products matching the CareRide system combination.</p>
+        </div>
+      </div>
+      <div class="moat-item">
+        <div class="moat-dot"></div>
+        <div>
+          <h4>Uber Health and RouteGenie solve the wrong side of the problem</h4>
+          <p>Both platforms put notifications in the family's phone. Neither puts a screen in the vehicle facing the patient. The direction of the interface is what makes CareRide novel.</p>
+        </div>
+      </div>
+      <div class="moat-item">
+        <div class="moat-dot"></div>
+        <div>
+          <h4>Patent pending on the core system architecture</h4>
+          <p>A provisional patent application is in process covering the specific combination of passenger-facing headrest display, bidirectional caregiver video, and clinical observation logging tied to a scheduled medical transport event.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="moat-right">
+    <div class="quote-block">
+      <blockquote>"The direction of the interface is flipped. Every competitor puts the technology in the family's hands. CareRide puts the technology in the vehicle, facing the patient. That changes everything."</blockquote>
+      <cite>— CareRide Product Brief, Encounter Engineering 2026</cite>
+    </div>
+    <div class="gap-tags-label">Verified competitive gaps</div>
+    <div class="gap-tags">
+      <span class="gap-tag">No elderly-specialist driver training</span>
+      <span class="gap-tag">No in-vehicle patient screen</span>
+      <span class="gap-tag">No family video feed</span>
+      <span class="gap-tag">No door-to-chair documentation</span>
+      <span class="gap-tag">No self-pay premium lane</span>
+      <span class="gap-tag">No post-ride clinical notes</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <p class="section-tag">Get In Touch</p>
+    <h2>See CareRide in your fleet.</h2>
+    <p class="section-lead">Request a live demo, ask about pilot pricing, or talk through how CareRide fits your operation. We respond within one business day.</p>
+    <div class="contact-form">
+      <div class="form-row">
+        <input type="text" placeholder="Your Name">
+        <input type="email" placeholder="Email Address">
+      </div>
+      <input type="text" placeholder="Company / Organization Name">
+      <select>
+        <option value="" disabled selected>I operate…</option>
+        <option>NEMT transport company</option>
+        <option>Senior living / assisted living facility</option>
+        <option>Hospital system</option>
+        <option>Dialysis transport</option>
+        <option>Home health / hospice agency</option>
+        <option>PACE program</option>
+        <option>Other</option>
+      </select>
+      <input type="text" placeholder="Approximate fleet size (number of vehicles)">
+      <textarea placeholder="Tell us about your operation or what you'd like to see in a demo…"></textarea>
+      <button class="submit-btn">Request Demo →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="https://encounterengineering.org" class="logo">Encounter<span>.</span>Engineering</a>
+  <div class="footer-links">
+    <a href="#problem">The Problem</a>
+    <a href="#screens">Platform</a>
+    <a href="#buyers">Who It's For</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
+    <a href="https://encounterengineering.org">Back to Main Site</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+    <span class="patent-badge">⚙ Patent Pending</span>
+    <span class="footer-copy">© 2026 Encounter Engineering · CareRide</span>
+  </div>
+</footer>
+
+</body>
+</html>
