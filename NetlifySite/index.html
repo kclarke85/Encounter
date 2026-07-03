@@ -734,6 +734,7 @@
 <script>
   
   function toggleProducts() {
+    gtag('event', 'view_products', {'event_category': 'Engagement'});
     const panel = document.getElementById('products-panel');
     const btn = document.getElementById('products-btn');
     const isOpen = panel.classList.contains('open');
@@ -755,4 +756,5 @@
 </script>
 </body>
 </html>
+
 
